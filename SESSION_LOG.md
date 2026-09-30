@@ -27,3 +27,17 @@ This log records material prompts, design decisions, implementation results, val
 **Validation completed:** `npm run package` built the artifact and ran the static validator successfully. Validation confirmed **9 public HTML pages** and **26 required artifacts**, required accessibility/consent markers, canonical/indexing metadata, machine-discovery files, portal URL alignment, internal links, explicit image alternative text, no CSP-blocked inline styles, optional analytics defaults, empty provider configuration, zero portal/API runtime linkage, logo ™ glyphs, and self-contained/non-executable SVG assets. Local HTTP smoke tests passed for the landing page, process page, FAQ schema, `llms.txt`, and the 404 page. The generated static artifact contains 30 files; the final ZIP SHA-256 was recorded during validation. Source diff integrity checks passed.
 
 **Publication status:** Pending commit and push to the new private repository.
+
+---
+
+## 2026-09-30 — Responsive preview correction
+
+**User request:**
+
+> Can you show me what it looks like
+
+**Finding and correction:** A real 390 px mobile screenshot showed that the hero-card trademark lockup could exceed its responsive grid container because the SVG retained its intrinsic dimensions. Updated `.logo-lockup` with `width: 100%` while preserving its existing approved maximum width. The change constrains the brand mark to the available column without altering brand artwork or proportions. Temporary local screenshots remain ignored from version control.
+
+**Validation completed:** Rebuilt the static artifact and reran the full static validator successfully. Captured fresh desktop (1440 × 960) and mobile (390 × 844) Chromium previews. The full trademark lockup now scales within the hero card, and the mobile hero copy, menu, consent panel, and call-to-action all reflow without horizontal overflow.
+
+**Publication status:** Pending commit and push of the responsive correction.

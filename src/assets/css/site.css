@@ -96,7 +96,7 @@ p { margin: 0 0 1rem; }
 .grid-top-gap { margin-top: 2.6rem; }
 .card-heading { font-size: 1.4rem; }
 .contact-address { color: var(--body); font-style: normal; }
-.logo-lockup { max-width: 42rem; margin: 0 auto; }
+.logo-lockup { width: 100%; max-width: 42rem; margin: 0 auto; }
 .process-rail { display: grid; gap: 1rem; margin: 2rem 0 0; }
 .process-item { display: grid; gap: 1rem; grid-template-columns: 3rem 1fr; padding: 1rem 0; border-bottom: 1px solid var(--line); }
 .process-item strong { display: grid; width: 2.45rem; height: 2.45rem; place-items: center; border-radius: 50%; background: var(--navy); color: #fff; }
