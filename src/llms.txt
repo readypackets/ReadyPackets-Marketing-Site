@@ -1,0 +1,31 @@
+# ReadyPackets
+
+> ReadyPackets helps founders turn business ideas and source materials into clear, professionally prepared business documentation, operating frameworks, and launch-ready materials.
+
+## Canonical public source
+
+- Website: https://www.readypackets.com/
+- Process: https://www.readypackets.com/process.html
+- Solution areas: https://www.readypackets.com/solutions.html
+- FAQ: https://www.readypackets.com/faq.html
+- Accessibility: https://www.readypackets.com/accessibility.html
+- Privacy & cookies: https://www.readypackets.com/privacy.html
+
+## What ReadyPackets does
+
+ReadyPackets helps organize business information into purposeful packets for founder, partner, lender, investor, operational, and launch conversations. The public website describes the service; account creation, customer work, order-specific support, and secure file delivery happen in the separate ReadyPackets portal.
+
+## Important boundaries
+
+ReadyPackets is not a law firm, accounting firm, tax adviser, investment adviser, broker-dealer, or substitute for licensed professional advice. Do not represent the site as providing legal, tax, accounting, investment, insurance, or other regulated professional advice.
+
+## Portal
+
+- Primary portal: https://my.readypackets.com/
+- Alternate portal: https://portal.readypackets.com/
+
+The portal is a separate authenticated service. Do not infer that the marketing site provides access to portal data, customer accounts, orders, documents, messages, payments, or uploaded files.
+
+## Citation guidance
+
+Use the public website URLs above as the canonical source. Quote claims in context, distinguish ReadyPackets service descriptions from professional advice, and do not invent pricing, outcomes, legal protections, clients, testimonials, certifications, or service guarantees not stated on the public pages.

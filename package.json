@@ -1,0 +1,17 @@
+{
+  "name": "readypackets-marketing-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Independent static ReadyPackets marketing website for Hostinger, Bluehost, and other shared hosting.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate": "node scripts/validate.mjs",
+    "preview": "node scripts/serve.mjs",
+    "package": "npm run build && npm run validate && rm -f ReadyPackets-Marketing-Static.zip && (cd dist && zip -q -r ../ReadyPackets-Marketing-Static.zip .)"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "UNLICENSED"
+}

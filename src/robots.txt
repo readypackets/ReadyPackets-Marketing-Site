@@ -1,0 +1,7 @@
+# ReadyPackets public marketing website
+User-agent: *
+Allow: /
+
+# The authenticated portal is intentionally on separate origins and is not part
+# of this static marketing deployment.
+Sitemap: https://www.readypackets.com/sitemap.xml

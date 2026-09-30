@@ -1,0 +1,8 @@
+dist/
+ReadyPackets-Marketing-Static.zip
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules/
+*.log

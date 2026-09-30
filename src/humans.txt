@@ -1,0 +1,15 @@
+/* TEAM */
+Organization: ReadyPackets
+Website: https://www.readypackets.com/
+Primary portal: https://my.readypackets.com/
+
+/* SITE */
+Type: Independent static marketing website
+Hosting targets: Hostinger, Bluehost, or comparable static/shared hosting
+Runtime dependencies: None
+Portal code, portal secrets, customer data, and customer-session cookies: Not included
+Accessibility target: WCAG 2.2 AA design and test target
+Analytics: Optional Microsoft Clarity and/or PostHog, disabled until affirmative Analytics consent
+
+/* TECHNOLOGY */
+Standards: HTML, CSS, vanilla JavaScript, structured data, XML sitemap, robots.txt, llms.txt

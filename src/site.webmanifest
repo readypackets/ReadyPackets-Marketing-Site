@@ -1,0 +1,13 @@
+{
+  "name": "ReadyPackets",
+  "short_name": "ReadyPackets",
+  "description": "Structured business documentation and practical operating foundations for founders.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#0D1B2A",
+  "icons": [
+    { "src": "assets/brand/readypackets-mark-light-256.png", "sizes": "256x256", "type": "image/png" },
+    { "src": "assets/brand/readypackets-mark-light-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

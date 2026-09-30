@@ -1,0 +1,34 @@
+{
+  "package": "ReadyPackets Document-Flow Brand Package",
+  "version": "2026.09.30",
+  "status": "production-candidate",
+  "sourceOfTruth": "shared/brand.ts",
+  "tokens": {
+    "navy": { "hex": "#0D1B2A", "role": "light-mode Ready wordmark, packet face, dark surface" },
+    "navyRaised": { "hex": "#12263A", "role": "light-mode packet backing sheet" },
+    "navyElevated": { "hex": "#17304A", "role": "light-mode rear packet sheet" },
+    "teal": { "hex": "#20A090", "role": "light-mode process line and document outline" },
+    "tealDark": { "hex": "#1A7A6E", "role": "light-mode Packets wordmark" },
+    "tealLight": { "hex": "#2EC4B6", "role": "dark-mode Packets wordmark and document outline" },
+    "gold": { "hex": "#C9A84C", "role": "divider, quality point, dark-mode slogan" },
+    "goldDark": { "hex": "#A98C36", "role": "reserved supporting accent" },
+    "grayDark": { "hex": "#4A5568", "role": "light-mode slogan" },
+    "white": { "hex": "#FFFFFF", "role": "dark-mode Ready wordmark and packet face" }
+  },
+  "contrast": {
+    "navyOnWhite": 17.39,
+    "tealDarkOnWhite": 5.18,
+    "grayDarkOnWhite": 7.53,
+    "whiteOnNavy": 17.39,
+    "tealLightOnNavy": 8.02,
+    "goldOnNavy": 7.61,
+    "goldOnWhite": 2.29
+  },
+  "rules": {
+    "lightSlogan": "grayDark",
+    "darkSlogan": "gold",
+    "lightPackets": "tealDark",
+    "darkPackets": "tealLight",
+    "goldOnWhite": "decorative-only"
+  }
+}

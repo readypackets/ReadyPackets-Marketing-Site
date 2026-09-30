@@ -1,0 +1,36 @@
+name: Static marketing site validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Build and validate static artifact
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          check-latest: true
+      - name: Build static artifact
+        run: npm run build
+      - name: Validate static artifact
+        run: npm run validate
+      - name: Package release candidate
+        run: npm run package
+      - name: Upload release candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: ReadyPackets-Marketing-Static
+          path: ReadyPackets-Marketing-Static.zip
+          if-no-files-found: error
+          retention-days: 14
