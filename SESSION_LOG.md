@@ -26,7 +26,7 @@ This log records material prompts, design decisions, implementation results, val
 
 **Validation completed:** `npm run package` built the artifact and ran the static validator successfully. Validation confirmed **9 public HTML pages** and **26 required artifacts**, required accessibility/consent markers, canonical/indexing metadata, machine-discovery files, portal URL alignment, internal links, explicit image alternative text, no CSP-blocked inline styles, optional analytics defaults, empty provider configuration, zero portal/API runtime linkage, logo ™ glyphs, and self-contained/non-executable SVG assets. Local HTTP smoke tests passed for the landing page, process page, FAQ schema, `llms.txt`, and the 404 page. The generated static artifact contains 30 files; the final ZIP SHA-256 was recorded during validation. Source diff integrity checks passed.
 
-**Publication status:** Pending commit and push to the new private repository.
+**Publication status:** Published to the private GitHub repository as `3ebca412660b88babdaf1bb31a80b6d97a9acb3d` (`feat: launch independent static marketing website`).
 
 ---
 
@@ -40,4 +40,20 @@ This log records material prompts, design decisions, implementation results, val
 
 **Validation completed:** Rebuilt the static artifact and reran the full static validator successfully. Captured fresh desktop (1440 × 960) and mobile (390 × 844) Chromium previews. The full trademark lockup now scales within the hero card, and the mobile hero copy, menu, consent panel, and call-to-action all reflow without horizontal overflow.
 
-**Publication status:** Pending commit and push of the responsive correction.
+**Publication status:** Published to the private GitHub repository as `7929f03e0c919aa0aedb71b9d2cfcca9394fe50d` (`fix: constrain responsive hero logo lockup`).
+
+---
+
+## 2026-09-30 — Hostinger permanent deployment runbook
+
+**User request:**
+
+> Give me the instructions to deploy the site on Hostinger?
+
+**Decision and scope:** The supplied Hostinger **Unlimited** shared-hosting plan is sufficient for the independently built static marketing site; it is not a deployment target for the application portal. Prepared a Hostinger-specific production runbook that uses the reviewed static artifact and explicitly preserves the separate hardened portal hosts (`my.readypackets.com` and `portal.readypackets.com`), portal VPS, data, secrets, and configuration.
+
+**Runbook protections:** The guide requires artifact checksum verification; confirms the Hostinger document root before any placeholder removal; protects Cloudflare authority and non-marketing DNS records; points only `www` to Hostinger; configures a permanent apex-to-`www` redirect at Cloudflare; requires Hostinger origin TLS before Cloudflare Full (strict) proxying; includes content/portal boundary tests; and documents static-only rollback.
+
+**Validation completed:** Rebuilt and validated the current static release successfully: **9 public HTML pages** and **26 required artifacts** passed the static, accessibility, privacy, SEO, machine-discovery, asset-boundary, and portal-link checks. The runbook deliberately requires the SHA-256 from the exact archive uploaded to Hostinger because ZIP metadata can differ between independently built archives from the same reviewed commit.
+
+**Publication status:** Pending GitHub push.
