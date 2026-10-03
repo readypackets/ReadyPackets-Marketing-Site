@@ -45,10 +45,26 @@ The source repository’s **Publish Hostinger static branch** GitHub Actions wor
 3. Open the `hostinger-static` branch and confirm it has `index.html`, `.htaccess`, `assets/`, `robots.txt`, `sitemap.xml`, `llms.txt`, `ai.txt`, and `.well-known/security.txt` at its root.
 4. In Hostinger, choose **Push your code, we host it** / **Deploy from GitHub** for a custom HTML/static site—not the Node.js web-app path.
 5. Authorize Hostinger only for the `readypackets/ReadyPackets-Marketing-Site` repository when GitHub presents its authorization screen.
-6. Select branch **`hostinger-static`** and set the Hostinger root directory to **`public_html`**. Do not select the source branch `main`.
+6. Select branch **`hostinger-static`**. In Hostinger’s current **Review build settings** screen, leave **Root directory** as **`./`** (the repository root). This branch places `index.html` directly at that root. Do **not** enter `public_html` here—`public_html` is the File Manager/SFTP document-root name used only for the manual ZIP fallback, not a directory inside this Git branch. Do not select the source branch `main`.
 7. Turn on Hostinger auto-deployment only after the first production verification succeeds. Thereafter, a reviewed push to `main` builds the static branch through GitHub Actions, and Hostinger deploys that static branch.
 
 > Do not edit `hostinger-static` manually. It is regenerated from the validated `main` source and may be overwritten on the next approved release.
+
+### Current hPanel “Review build settings” values
+
+Hostinger may display a Node version even for a static project. In this workflow it is only the build environment; it does **not** make the deployed marketing site a Node.js application.
+
+| Field | Value for this repository |
+| --- | --- |
+| Framework preset | `Other` |
+| Branch | `hostinger-static` |
+| Node version | Leave the offered `22.x` value; no Node server is started |
+| Root directory | `./` |
+| Build command | Leave empty. If hPanel requires a value, use `true` as a no-op command. |
+| Output directory | `.` (the selected branch root); **not** `dist` |
+| Start command | Leave empty; this is a static deployment |
+
+Before selecting **Deploy**, check the hostname printed at the top of the screen. A deployment to `go.readypackets.com` is a staging deployment unless that is deliberately the public marketing hostname. The production runbook target remains `www.readypackets.com`; do not assume Hostinger will automatically move a deployment between subdomains.
 
 ### Option B — use the supplied release ZIP (fallback)
 

@@ -6,14 +6,14 @@
 
 | Topic | Official source | Key points applied to this repository |
 | --- | --- | --- |
-| Custom Git deployment | [How to deploy a Git repository in Hostinger](https://www.hostinger.com/support/1583302-how-to-deploy-a-git-repository-in-hostinger/) | Hostinger supports GitHub/GitLab OAuth deployment of custom PHP/HTML/static projects on web/cloud hosting. Operators select the repository, branch, and root directory (default `public_html`), and can enable/disable auto-deployment or invoke a manual redeploy. Changing the target repository can overwrite the destination directory. |
+| Custom Git deployment | [How to deploy a Git repository in Hostinger](https://www.hostinger.com/support/1583302-how-to-deploy-a-git-repository-in-hostinger/) | Hostinger supports GitHub/GitLab OAuth deployment of custom PHP/HTML/static projects on web/cloud hosting. Its classic **Advanced → Git** flow describes a target directory that defaults to `public_html`. The newer **Review build settings** flow shown in hPanel can instead present a project/source **Root directory** set to `./`. These are different UI contexts: `./` means the selected branch root, while `public_html` is the File Manager/SFTP document root. Operators can enable/disable auto-deployment or invoke a manual redeploy. Changing the target repository can overwrite the destination directory. |
 | Node.js web apps | [How to add a Node.js web app in Hostinger](https://www.hostinger.com/support/how-to-deploy-a-nodejs-website-in-hostinger/) | Node.js web apps are a separate managed application runtime on Business/Cloud plans, with supported-framework detection, build settings, output directories, and—where required—an entry file. They can also deploy from GitHub, but that model is unnecessary for a pre-rendered static site. |
 
 ## ReadyPackets decision
 
 - **Use Hostinger Git deployment for a custom HTML/static project**, not the Node.js web-app option.
 - Connect Hostinger only to `readypackets/ReadyPackets-Marketing-Site` and select the generated **`hostinger-static`** branch.
-- Deploy into the Hostinger marketing-site document root, normally `public_html`.
+- In Hostinger’s current **Review build settings** UI, leave the generated branch’s **Root directory** at `./`; the branch already places `index.html` at its repository root. Its build command and start command are empty, and its output directory is `.`. Use `public_html` only when manually extracting the fallback ZIP or uploading via SFTP/File Manager.
 - Do **not** connect Hostinger to source branch `main`; it includes build tooling and project documentation rather than only deployable web-root files.
 - Review Hostinger’s current plan support and the exact hPanel labels before enabling deployment; providers can change available options.
 

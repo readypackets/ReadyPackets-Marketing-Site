@@ -121,7 +121,7 @@ This log records material prompts, design decisions, implementation results, val
 
 **Deployment decision:** Kept the marketing website **static HTML/CSS/vanilla JavaScript**. Hostinger’s current Git integration supports custom HTML/static projects directly; a Node.js web-app runtime would add a managed build/runtime layer, operational surface, and a different deployment path without providing any capability this anonymous marketing site needs. The independent portal remains separately hosted on its hardened VPS.
 
-**Git deployment implementation:** Added `.github/workflows/publish-hostinger-static.yml`. On every source `main` push, it builds and validates the static site and force-updates a deploy-only `hostinger-static` branch. The branch includes only the exact static document-root output plus `.readypackets-source-commit`; it excludes source code, workflow files, package configuration, documentation, portal artifacts, credentials, and secrets. Hostinger must connect to **`hostinger-static`**, not `main`, with root directory `public_html`. GitHub Actions retains a 30-day static artifact for audit/rollback; the manual ZIP process remains the fallback.
+**Git deployment implementation:** Added `.github/workflows/publish-hostinger-static.yml`. On every source `main` push, it builds and validates the static site and force-updates a deploy-only `hostinger-static` branch. The branch includes only the exact static document-root output plus `.readypackets-source-commit`; it excludes source code, workflow files, package configuration, documentation, portal artifacts, credentials, and secrets. Hostinger must connect to **`hostinger-static`**, not `main`, with the Git-screen root directory left at `./` because `index.html` is already at the branch root. `public_html` applies only to manual File Manager/SFTP uploads. GitHub Actions retains a 30-day static artifact for audit/rollback; the manual ZIP process remains the fallback.
 
 **Icon theme control:** Replaced the header and static 404 text selector with a compact native button. It shows a device icon for System, sun for Light, and moon for Dark. Activation cycles **System → Light → Dark → System**. The current state and next action are conveyed through the button’s accessible name and tooltip; icon state has visible focus and works with keyboard, pointer, and touch. System remains the default, follows operating-system color preference, and only explicit Light/Dark overrides are saved locally.
 
@@ -147,3 +147,17 @@ This log records material prompts, design decisions, implementation results, val
 **Decision reaffirmed:** The independent public marketing site remains a static HTML/CSS/vanilla JavaScript deployment on the generated `hostinger-static` branch. Hostinger’s custom Git/static deployment path is suitable; a Node.js web-app runtime is unnecessary for this site and would increase operational surface without adding required capability.
 
 **Safety boundary:** The source notes reiterate that Hostinger receives only deployable public-site files. The portal, customer data, MySQL database, customer uploads, credentials, backups, and all portal configuration remain outside the marketing-host deployment.
+
+
+---
+
+## 2026-10-03 — Hostinger Git root-directory clarification
+
+**User-observed hPanel configuration:** The Hostinger Git deployment screen for `go.readypackets.com` presents **Root directory: `./`** with the generated `hostinger-static` branch selected. It does not present `public_html` as a selectable value.
+
+**Correction:** `./` is correct and must remain unchanged. In the Git deployment flow, **Root directory** is a path *inside the selected repository branch*. The generated `hostinger-static` branch already places `index.html`, assets, `.htaccess`, and `.well-known/security.txt` at that root. The File Manager/SFTP directory named `public_html` applies only to manual ZIP extraction or SFTP upload; it is not a subdirectory in the Git deployment branch and must not be entered in this UI.
+
+**Documentation correction:** Updated the Hostinger production runbook, shared-host deployment guide, provider source notes, application context, and prior session record to distinguish the Git repository path (`./`) from the File Manager document root (`public_html`).
+
+
+**Current hPanel build-screen values:** Confirmed the generated static branch should use Framework preset `Other`, branch `hostinger-static`, Root directory `./`, an empty build command (or `true` if Hostinger requires a command), output directory `.`, and an empty start command. The displayed Node 22.x value is only a build-environment option and does not create a Node.js runtime. The screen’s displayed target hostname must be reviewed independently: `go.readypackets.com` is not `www.readypackets.com`.

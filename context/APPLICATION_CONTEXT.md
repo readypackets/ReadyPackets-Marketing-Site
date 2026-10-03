@@ -61,7 +61,7 @@ These controls improve crawlability and factual retrieval; they do not guarantee
 
 ## Hosting
 
-Hostinger, Bluehost, or another static/shared host can serve `dist/`. For Hostinger, connect the Git integration to the generated `hostinger-static` branch, not source branch `main`; Hostinger receives only the static document-root contents. Keep the portal on the VPS. `.htaccess` provides an Apache/LiteSpeed security baseline; hosts that do not support it must configure equivalent security headers and canonical redirects in the host/CDN layer.
+Hostinger, Bluehost, or another static/shared host can serve `dist/`. For Hostinger, connect the Git integration to the generated `hostinger-static` branch, not source branch `main`; in the current **Review build settings** UI, leave the Git/project **Root directory** at `./`, leave build/start commands empty, and use output directory `.` because that branch places `index.html` at its root. These settings are distinct from the `public_html` File Manager directory used for a manual ZIP/SFTP upload. Confirm the intended hostname before each deployment: `go.readypackets.com` and `www.readypackets.com` are separate sites. Keep the portal on the VPS. `.htaccess` provides an Apache/LiteSpeed security baseline; hosts that do not support it must configure equivalent security headers and canonical redirects in the host/CDN layer.
 
 See `docs/HOSTINGER_PRODUCTION_DEPLOYMENT_RUNBOOK.md` for the guarded Hostinger production deployment and rollback process, `docs/HOSTINGER_GIT_DEPLOYMENT_SOURCE_NOTES.md` for the official provider capabilities underpinning the Git decision, and `docs/HOSTINGER_BLUEHOST_DEPLOYMENT.md` for the shared-host reference.
 
