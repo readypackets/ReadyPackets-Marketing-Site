@@ -72,4 +72,4 @@ This log records material prompts, design decisions, implementation results, val
 
 **Documentation update:** Hostinger and Bluehost build instructions now clone `ReadyPackets-Marketing-Site`, ensuring future operators deploy from the intended repository.
 
-**Validation/publication status:** Pending static artifact validation and first push to the new private repository.
+**Validation/publication status:** `npm run package` rebuilt and validated the static release successfully: **9 public HTML pages** and **26 required artifacts** passed static, accessibility, privacy, SEO, machine-discovery, portal-link, and self-hosted asset-boundary validation. The first independent publication is commit `860b166f4d16e6cf2d6c1440d5079890bb24b8fc` (`chore: publish independent marketing site repository`) on the new repository’s protected-by-default `main` branch.
