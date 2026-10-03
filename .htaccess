@@ -1,0 +1,46 @@
+# ReadyPackets independent static marketing site.
+# Requires Apache/LiteSpeed mod_headers and mod_rewrite. Hostinger/Bluehost
+# administrators should confirm these directives are enabled after upload.
+
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # HTTPS staging is intentionally served at go.readypackets.com for controlled
+  # review. Production remains canonically www.readypackets.com; see the
+  # noindex header below. Plain HTTP always redirects to production HTTPS.
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://www.readypackets.com%{REQUEST_URI} [R=301,L]
+  RewriteCond %{HTTP_HOST} !^(?:www|go)\.readypackets\.com$ [NC]
+  RewriteRule ^ https://www.readypackets.com%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+<IfModule mod_setenvif.c>
+  SetEnvIfNoCase Host "^go\.readypackets\.com(?::[0-9]+)?$" rp_staging_host=1
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "DENY"
+  Header always set Permissions-Policy "accelerometer=(), autoplay=(), camera=(), geolocation=(), microphone=(), payment=(), usb=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data:; style-src 'self'; script-src 'self' https://www.clarity.ms https://*.posthog.com; connect-src 'self' https://www.clarity.ms https://*.posthog.com; font-src 'self'; manifest-src 'self'; upgrade-insecure-requests; block-all-mixed-content"
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" env=HTTPS
+  Header always set X-Robots-Tag "noindex, nofollow, noarchive" env=rp_staging_host
+</IfModule>
+
+<FilesMatch "\.(?:css|js|svg|png|ico)$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=604800, immutable"
+  </IfModule>
+</FilesMatch>
+
+<FilesMatch "\.(?:html|xml|txt|json)$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, must-revalidate"
+  </IfModule>
+</FilesMatch>

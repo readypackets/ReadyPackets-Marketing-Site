@@ -1,0 +1,5 @@
+# ReadyPackets AI discovery
+Canonical machine-readable service summary: https://www.readypackets.com/llms.txt
+Public sitemap: https://www.readypackets.com/sitemap.xml
+
+ReadyPackets provides structured business documentation and practical operating foundations for founders. Portal services are separate and authenticated.
