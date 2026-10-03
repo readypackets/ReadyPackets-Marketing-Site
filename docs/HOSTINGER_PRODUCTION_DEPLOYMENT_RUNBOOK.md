@@ -2,7 +2,7 @@
 
 **Purpose:** Publish only the independent ReadyPackets static marketing website on Hostinger at `https://www.readypackets.com`.
 
-**Current reviewed source release:** [`7929f03e0c919aa0aedb71b9d2cfcca9394fe50d`](https://github.com/readypackets/ReadyPackets-Marketing-Website/commit/7929f03e0c919aa0aedb71b9d2cfcca9394fe50d)
+**Current reviewed source release:** [`7929f03e0c919aa0aedb71b9d2cfcca9394fe50d`](https://github.com/readypackets/ReadyPackets-Marketing-Site/commit/7929f03e0c919aa0aedb71b9d2cfcca9394fe50d)
 
 **Deployment artifact:** `ReadyPackets-Marketing-Static.zip`
 
@@ -57,8 +57,8 @@ The result must match the value above. If it does not, stop and build/download a
 Use this only on a trusted workstation with Node.js 22 or later:
 
 ```bash
-git clone https://github.com/readypackets/ReadyPackets-Marketing-Website.git
-cd ReadyPackets-Marketing-Website
+git clone https://github.com/readypackets/ReadyPackets-Marketing-Site.git
+cd ReadyPackets-Marketing-Site
 git checkout 7929f03e0c919aa0aedb71b9d2cfcca9394fe50d
 npm run package
 ```

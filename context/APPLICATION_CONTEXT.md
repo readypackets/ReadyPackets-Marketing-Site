@@ -60,7 +60,7 @@ These controls improve crawlability and factual retrieval; they do not guarantee
 
 Hostinger, Bluehost, or another static/shared host can serve `dist/`. Keep the portal on the VPS. `.htaccess` provides an Apache/LiteSpeed security baseline; hosts that do not support it must configure equivalent security headers and canonical redirects in the host/CDN layer.
 
-See `docs/HOSTINGER_BLUEHOST_DEPLOYMENT.md` for deployment and rollback steps.
+See `docs/HOSTINGER_PRODUCTION_DEPLOYMENT_RUNBOOK.md` for the guarded Hostinger production deployment and rollback process; `docs/HOSTINGER_BLUEHOST_DEPLOYMENT.md` remains the shared-host reference.
 
 ## Operating requirements
 

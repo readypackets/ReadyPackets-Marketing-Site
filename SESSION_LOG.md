@@ -57,3 +57,19 @@ This log records material prompts, design decisions, implementation results, val
 **Validation completed:** Rebuilt and validated the current static release successfully: **9 public HTML pages** and **26 required artifacts** passed the static, accessibility, privacy, SEO, machine-discovery, asset-boundary, and portal-link checks. The runbook deliberately requires the SHA-256 from the exact archive uploaded to Hostinger because ZIP metadata can differ between independently built archives from the same reviewed commit.
 
 **Publication status:** Published to the private GitHub repository in `88a6d4b727f7515bddb3f1b0cb5893acb65fac87` (`docs: add Hostinger production deployment runbook`).
+
+---
+
+## 2026-10-03 — Independent marketing-site repository publication
+
+**User request:**
+
+> Create a new GitHub repo and push the new marketing site to the new repo.
+
+**Repository:** Created a separate private repository, [`readypackets/ReadyPackets-Marketing-Site`](https://github.com/readypackets/ReadyPackets-Marketing-Site), from the reviewed independent marketing-site source at `f726ab9a04473ee92b8dcec70aeb0ba836b8fd31`. The prior `readypackets/ReadyPackets-Marketing-Website` repository remains unchanged and available as a rollback/history reference.
+
+**Boundary and provenance:** The new repository contains only the independent static marketing website, deployment documentation, brand assets, application context, and audit log. It contains no portal runtime, customer data, portal secrets, backups, private keys, or deployment credentials. The isolated worktree retains the prior source as a fetch-only reference with its push URL disabled; all new publication is directed solely to the new repository.
+
+**Documentation update:** Hostinger and Bluehost build instructions now clone `ReadyPackets-Marketing-Site`, ensuring future operators deploy from the intended repository.
+
+**Validation/publication status:** Pending static artifact validation and first push to the new private repository.

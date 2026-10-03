@@ -18,8 +18,8 @@ Never upload portal code, `.env` files, MySQL backups, customer files, encryptio
 On a trusted workstation or CI runner:
 
 ```bash
-git clone https://github.com/readypackets/ReadyPackets-Marketing-Website.git
-cd ReadyPackets-Marketing-Website
+git clone https://github.com/readypackets/ReadyPackets-Marketing-Site.git
+cd ReadyPackets-Marketing-Site
 git checkout REVIEWED_40_CHARACTER_COMMIT_SHA
 npm run package
 ```
