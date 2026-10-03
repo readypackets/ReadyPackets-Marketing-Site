@@ -92,3 +92,20 @@ This log records material prompts, design decisions, implementation results, val
 **Validation completed:** `npm run package` and the static validator passed with **9 public pages** and **27 required artifacts**. JavaScript syntax checks passed. Browser/CDP tests confirmed System defaults without a persisted override, follows dark operating-system preference, responds to a live OS preference change, persists explicit Light/Dark choices across the homepage and 404 page, and clears that value when returned to System. Desktop light/dark and mobile dark previews showed no header/control collision or horizontal overflow. Contrast measurements passed: light body `9.97:1`, light link `5.18:1`, dark body `11.12:1`, dark heading `14.28:1`, dark link `9.15:1`, and dark focus `9.73:1`.
 
 **Publication status:** Published to the private `readypackets/ReadyPackets-Marketing-Site` repository in `2f81c772934d0b77f367adab944655c0dc05264a` (`feat: add system-first light and dark themes`).
+
+
+---
+
+## 2026-10-03 — Verified Hostinger upload package delivery
+
+**User request:**
+
+> Give me the latest files so I can upload it to Hostinger.
+
+**Release package:** Built the static Hostinger-ready upload archive from synchronized source commit `6fa28991da62a481e23eb2988be05c476e2e4cac`. The package contains **36 files**, including `index.html`, `.htaccess`, `robots.txt`, `sitemap.xml`, `llms.txt`, `ai.txt`, `.well-known/security.txt`, theme loader/assets, and static site assets. The generated archive is intentionally not committed to Git; its source, build process, and deployment runbook are version-controlled.
+
+**Validation:** `npm run package` succeeded; static validation passed for **9 public pages** and **27 required artifacts**. Required Hostinger upload paths were enumerated directly from the archive. The delivery archive SHA-256 is `0f6a66859c3ad7c54b1c652e07d7bb62bc9af083b37937fee2572082cf4c7454`.
+
+**Delivery:** Provided the ZIP release artifact and the Hostinger production deployment runbook as sandbox downloads. The user must extract the ZIP directly into the intended Hostinger marketing site document root (normally `public_html`), preserve hidden `.htaccess` and `.well-known` paths, and not upload the archive, source repository, portal data, or portal configuration into the public web root.
+
+**Publication status:** Pending GitHub session-log synchronization.
