@@ -8,7 +8,7 @@ This marketing site has no analytics dependency at build time and **does not loa
 2. The site has been rebuilt and deployed.
 3. The visitor has affirmatively selected **Analytics** in the cookie preference banner or preference dialog.
 
-The user can select Essential only or withdraw Analytics later. Essential local storage remembers that choice.
+The user can select Essential only or withdraw Analytics later. Essential local storage remembers that choice. The separate color-theme control defaults to **System** and follows the operating-system preference; only an explicit Light or Dark choice is stored locally, without being sent to an analytics provider or the portal.
 
 ## Data minimization controls in the source
 
@@ -21,6 +21,7 @@ The user can select Essential only or withdraw Analytics later. Essential local 
 | Clarity | Loaded after consent only; ConsentV2 is sent with analytics storage granted and ad storage denied |
 | Form data | No marketing contact form exists; the site avoids collecting form values |
 | Portal linkage | No cross-site analytics handoff, shared session cookie, customer ID, e-mail, order ID, or portal identity is implemented |
+| Color theme | System is the default; explicit light/dark choices are local-only and do not affect consent or analytics behavior |
 | Withdrawal | New capture is stopped and configured providers receive an opt-out instruction |
 
 ## Operator steps before enabling a provider

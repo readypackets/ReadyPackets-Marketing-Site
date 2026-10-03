@@ -12,6 +12,7 @@ The static marketing site is engineered against **WCAG 2.2 AA**. It is an implem
 - Button-based mobile navigation with synchronized `aria-expanded`
 - Native `details`/`summary` FAQ disclosures
 - Native dialog for privacy preferences with labeled controls
+- System-first Light/Dark/System theme selector with a visible label for assistive technology
 - Responsive layout, browser zoom support, and reduced-motion CSS
 - Brand colors used according to the supplied contrast guidance
 - Informative logo alternative text; decorative content excluded from semantic meaning
@@ -28,6 +29,7 @@ The static marketing site is engineered against **WCAG 2.2 AA**. It is an implem
 | Focus | Focus has a visible high-contrast outline everywhere. |
 | Screen reader | Page title, landmark, heading order, links, controls, and status of consent controls are understandable. |
 | Motion | Operating-system reduced-motion preference removes smooth scroll/transition effects. |
+| Color theme | System follows the operating-system color preference by default; Light, Dark, and System are keyboard-operable, readable, and retain visible focus. |
 | Contrast | Validate final color combinations, including any host-injected banners or modified content. |
 | Automated scan | Run current axe, WAVE, and/or Lighthouse accessibility checks on each deployed page; investigate every finding. |
 | Real-world test | Include keyboard and assistive-technology users in acceptance testing where possible. |

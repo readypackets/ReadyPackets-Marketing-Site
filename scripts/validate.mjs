@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
 const required = [
   ".htaccess", "404.html", "robots.txt", "sitemap.xml", "llms.txt", "ai.txt", "humans.txt", "site.webmanifest", ".well-known/security.txt",
-  "assets/css/site.css", "assets/js/site.js", "assets/js/site-config.js", "assets/brand/readypackets-document-flow-light-tm.svg", "assets/brand/readypackets-document-flow-dark-tm.svg",
+  "assets/css/site.css", "assets/js/site.js", "assets/js/theme.js", "assets/js/site-config.js", "assets/brand/readypackets-document-flow-light-tm.svg", "assets/brand/readypackets-document-flow-dark-tm.svg",
   "assets/brand/readypackets-document-flow-light-wordmark-tm.svg", "assets/brand/readypackets-document-flow-dark-wordmark-tm.svg", "favicon.ico",
   ...Object.keys(pages),
 ];
@@ -17,20 +17,31 @@ for (const item of required) await access(path.join(dist, item));
 const publicFiles = await readdir(dist);
 assert.ok(publicFiles.length > 8, "Expected built static-site artifacts");
 const sourceJs = await readFile(path.join(dist, "assets/js/site.js"), "utf8");
+const themeJs = await readFile(path.join(dist, "assets/js/theme.js"), "utf8");
 assert.match(sourceJs, /consentv2/);
 assert.match(sourceJs, /autocapture: false/);
 assert.match(sourceJs, /disable_session_recording: true/);
 assert.ok(!sourceJs.includes("unsafe-inline"));
+assert.match(themeJs, /rp_marketing_theme_v1/);
+assert.match(themeJs, /\["system", "light", "dark"\]/);
+assert.match(themeJs, /prefers-color-scheme: dark/);
+assert.match(themeJs, /configureThemeControl/);
+assert.match(themeJs, /data-theme-select/);
+assert.ok(!/https?:\/\//i.test(themeJs), "Theme preference loader must not contact an external origin");
 
 for (const [file, page] of Object.entries(pages)) {
   const html = await readFile(path.join(dist, file), "utf8");
   assert.match(html, /<main id="main-content">/);
   assert.match(html, /<a class="skip-link" href="#main-content">/);
   assert.match(html, /<meta name="description" content="[^"]+">/);
+  assert.match(html, /<meta name="color-scheme" content="light dark">/);
   assert.match(html, /<link rel="canonical" href="https:\/\/www\.readypackets\.com\//);
   assert.match(html, /<meta name="robots" content="index,follow/);
   assert.match(html, /<script type="application\/ld\+json">/);
   assert.match(html, /data-consent-open/);
+  assert.match(html, /data-theme-select/);
+  assert.match(html, /<option value="system">System<\/option>/);
+  assert.match(html, /<script src="assets\/js\/theme\.js"><\/script>[\s\S]*<link rel="stylesheet" href="assets\/css\/site\.css">/);
   assert.match(html, /data-portal-link/);
   assert.ok(!/\sstyle\s*=/i.test(html), `${file} contains an inline style that strict CSP would block`);
   assert.ok(!html.includes("__PORTAL_ORIGIN__"), `${file} contains an unresolved portal placeholder`);
@@ -75,6 +86,13 @@ assert.ok(!/^\s*(?:[A-Za-z0-9_]*secret|password|privateKey|apiSecret)\s*:/im.tes
 const headers = await readFile(path.join(dist, ".htaccess"), "utf8");
 assert.ok(!headers.includes("unsafe-inline"));
 assert.match(headers, /Content-Security-Policy/);
+const stylesheet = await readFile(path.join(dist, "assets/css/site.css"), "utf8");
+assert.match(stylesheet, /:root\[data-theme="dark"\]/);
+assert.match(stylesheet, /@media \(prefers-color-scheme: dark\)/);
+assert.match(stylesheet, /\.theme-picker select/);
+const notFound = await readFile(path.join(dist, "404.html"), "utf8");
+assert.match(notFound, /<meta name="color-scheme" content="light dark">/);
+assert.match(notFound, /<script src="assets\/js\/theme\.js"><\/script>/);
 
 for (const file of required) {
   const info = await stat(path.join(dist, file));

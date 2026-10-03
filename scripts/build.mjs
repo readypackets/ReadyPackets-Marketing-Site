@@ -15,6 +15,10 @@ function navHtml(current) {
   return nav.map(([href, label]) => `<a href="${href}"${href === current ? ' aria-current="page"' : ""}>${label}</a>`).join("\n");
 }
 
+function themeControlHtml() {
+  return `<label class="theme-picker"><span class="sr-only">Color theme</span><select data-theme-select aria-label="Color theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>`;
+}
+
 function footerHtml() {
   return `<footer class="footer"><div class="wrap footer-grid"><div><a class="brand" href="index.html" aria-label="ReadyPackets home"><img src="assets/brand/readypackets-document-flow-dark-wordmark-tm.svg" width="2800" height="924" alt="ReadyPackets™"></a><p class="footer-tagline">Your Business, Professionally Packeted™</p><p>Structured business documentation and practical operating foundations for founders ready to move forward.</p></div><div><h2>Explore</h2><ul><li><a href="process.html">The process</a></li><li><a href="solutions.html">What we build</a></li><li><a href="faq.html">Frequently asked questions</a></li><li><a href="about.html">About ReadyPackets</a></li></ul></div><div><h2>Portal</h2><ul><li><a href="${site.portalUrl}/register" data-portal-link>Create an account</a></li><li><a href="${site.portalUrl}/login" data-portal-link>Sign in</a></li><li><a href="${site.alternatePortalUrl}/login" data-portal-link>Alternate portal address</a></li></ul></div><div><h2>Site information</h2><ul><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy &amp; cookies</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="terms.html">Website terms</a></li></ul></div></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} ReadyPackets. All rights reserved.</span><button class="text-button" type="button" data-consent-open>Cookie preferences</button></div></footer>`;
 }
@@ -39,8 +43,8 @@ function render(filename, page) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#0D1B2A">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#F7FAFB">
   <meta name="description" content="${page.description}">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="author" content="ReadyPackets">
@@ -58,6 +62,7 @@ function render(filename, page) {
   <meta name="twitter:title" content="${page.title}">
   <meta name="twitter:description" content="${page.description}">
   <title>${page.title}</title>
+  <script src="assets/js/theme.js"></script>
   <link rel="stylesheet" href="assets/css/site.css">
   <script defer src="assets/js/site-config.js"></script>
   <script defer src="assets/js/site.js"></script>
@@ -65,7 +70,7 @@ function render(filename, page) {
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <header class="header"><div class="wrap header-row"><a class="brand" href="index.html" aria-label="ReadyPackets home"><img src="assets/brand/readypackets-document-flow-light-wordmark-tm.svg" width="2800" height="924" alt="ReadyPackets™"></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle>Menu <span aria-hidden="true">☰</span></button><nav id="site-navigation" class="nav" aria-label="Primary navigation">${navHtml(filename)}<a class="button" href="${site.portalUrl}/register" data-portal-link>Start in portal <span aria-hidden="true">→</span></a></nav></div></header>
+  <header class="header"><div class="wrap header-row"><a class="brand" href="index.html" aria-label="ReadyPackets home"><img class="brand-mark brand-mark--light" src="assets/brand/readypackets-document-flow-light-wordmark-tm.svg" width="2800" height="924" alt=""><img class="brand-mark brand-mark--dark" src="assets/brand/readypackets-document-flow-dark-wordmark-tm.svg" width="2800" height="924" alt=""></a><div class="header-controls"><nav id="site-navigation" class="nav" aria-label="Primary navigation">${navHtml(filename)}<a class="button" href="${site.portalUrl}/register" data-portal-link>Start in portal <span aria-hidden="true">→</span></a></nav>${themeControlHtml()}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle>Menu <span aria-hidden="true">☰</span></button></div></div></header>
   <main id="main-content">${page.body}</main>
   ${footerHtml()}
   ${consentHtml()}

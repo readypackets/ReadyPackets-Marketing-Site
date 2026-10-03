@@ -73,3 +73,22 @@ This log records material prompts, design decisions, implementation results, val
 **Documentation update:** Hostinger and Bluehost build instructions now clone `ReadyPackets-Marketing-Site`, ensuring future operators deploy from the intended repository.
 
 **Validation/publication status:** `npm run package` rebuilt and validated the static release successfully: **9 public HTML pages** and **26 required artifacts** passed static, accessibility, privacy, SEO, machine-discovery, portal-link, and self-hosted asset-boundary validation. The first independent publication is commit `860b166f4d16e6cf2d6c1440d5079890bb24b8fc` (`chore: publish independent marketing site repository`) on the new repository’s default `main` branch.
+
+
+---
+
+## 2026-10-03 — Light, Dark, and System marketing-site theme
+
+**User request:**
+
+> Create a light, dark and system mode for the site with system mode being the default.
+
+**Implementation:** Added a system-first, CSP-safe theme preference loader at `src/assets/js/theme.js`. It runs before the stylesheet so the page is assigned `data-theme="system"`, `light`, or `dark` before first paint. **System** is the default and follows `prefers-color-scheme`; it updates if the operating-system preference changes. Explicit Light and Dark selections are stored only in local browser storage under `rp_marketing_theme_v1`; returning to System removes that override. No theme value is sent to the portal, Microsoft Clarity, PostHog, or any external service.
+
+**Interface and accessibility:** Added a native, keyboard-operable Light/Dark/System selector to every generated public-page header and the generated 404 page. It has an accessible name, remains usable with the responsive mobile menu, and uses a system-first `color-scheme` declaration. The 404 page also honors the stored preference and operating-system scheme. The header switches between the supplied light and dark ReadyPackets™ wordmarks to maintain brand readability.
+
+**Styling and privacy:** Reworked shared color tokens and component surfaces for a dark palette while preserving the existing public marketing content, portal boundaries, CSP, and consent behavior. Updated the public privacy notice, README, application context, analytics/privacy guidance, and accessibility review checklist to disclose the local-only visual preference and required theme test coverage.
+
+**Validation completed:** `npm run package` and the static validator passed with **9 public pages** and **27 required artifacts**. JavaScript syntax checks passed. Browser/CDP tests confirmed System defaults without a persisted override, follows dark operating-system preference, responds to a live OS preference change, persists explicit Light/Dark choices across the homepage and 404 page, and clears that value when returned to System. Desktop light/dark and mobile dark previews showed no header/control collision or horizontal overflow. Contrast measurements passed: light body `9.97:1`, light link `5.18:1`, dark body `11.12:1`, dark heading `14.28:1`, dark link `9.15:1`, and dark focus `9.73:1`.
+
+**Publication status:** Pending commit and push to the private `readypackets/ReadyPackets-Marketing-Site` repository.

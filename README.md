@@ -14,6 +14,7 @@ The public marketing site links visitors to the separately deployed ReadyPackets
 - Story-led landing page with an explanation of the ReadyPackets process
 - Public pages for process, solution areas, FAQ, about, contact, privacy/cookies, accessibility, and website terms
 - Semantic HTML, responsive CSS, keyboard-first navigation, reduced-motion support, and WCAG 2.2 AA design/test target
+- System-first Light/Dark/System color theme control with local-only explicit preference storage
 - Indexable server-rendered-in-build HTML—no JavaScript required for core content
 - Canonical tags, Open Graph/Twitter metadata, Organization/WebSite/FAQ schema, XML sitemap, `robots.txt`, `llms.txt`, and `ai.txt`
 - Consent-first Microsoft Clarity and PostHog capability, disabled by default
