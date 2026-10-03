@@ -206,3 +206,16 @@ This log records material prompts, design decisions, implementation results, val
 **Boundary:** This redirect repair does not repair the independent current Cloudflare 525 origin handshake. `go` still must be attached and certificated in Hostinger, and its Cloudflare DNS record must point at Hostinger exactly before the staging host can load. `www`, `my`, `portal`, portal TLS, portal hosting, data, and configuration remain untouched.
 
 **Validation:** `npm run package` completed successfully. Static validation passed all **9 pages** and **27 required artifacts**, including regression assertions for the `go` HTTPS allowlist and its noindex header. The generated `.htaccess` was inspected to verify that only secure `www` and secure `go` avoid the production redirect.
+
+
+---
+
+## 2026-10-03 — Hostinger staging deployment verified live
+
+**User confirmation:** The ReadyPackets marketing site loaded successfully at `https://go.readypackets.com/` after Hostinger deployment and staging DNS/TLS remediation.
+
+**Independent read-only verification:** The staging hostname resolved directly to the Hostinger origin and returned **HTTP 200** from Hostinger LiteSpeed. The response delivered the ReadyPackets page title and expected marketing content. TLS presented a valid Let’s Encrypt certificate with `go.readypackets.com` in its SAN. The staging response retained the intended static security headers, including CSP, HSTS, no-sniff, referrer policy, framing protection, permissions policy, and `X-Robots-Tag: noindex, nofollow, noarchive`. This confirms `go` is serving the site for controlled review without becoming an indexed production duplicate.
+
+**Release provenance:** The deployed `hostinger-static` branch and GitHub `main` were synchronized at `cb6caf6cda1458784aa5298952301ac883e804c5`. The deploy-only branch retained the dependency-free Hostinger preflight manifest and no portal runtime, secrets, customer data, or portal configuration.
+
+**Remaining deliberate boundary:** `go.readypackets.com` is staging only. No `www` production cutover, root-domain redirect change, portal DNS change, portal TLS change, portal server change, or portal-data operation was performed. A separate explicit decision and guarded DNS/certificate verification are required before moving the public marketing hostname to Hostinger.
