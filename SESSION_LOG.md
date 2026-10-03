@@ -108,4 +108,4 @@ This log records material prompts, design decisions, implementation results, val
 
 **Delivery:** Provided the ZIP release artifact and the Hostinger production deployment runbook as sandbox downloads. The user must extract the ZIP directly into the intended Hostinger marketing site document root (normally `public_html`), preserve hidden `.htaccess` and `.well-known` paths, and not upload the archive, source repository, portal data, or portal configuration into the public web root.
 
-**Publication status:** Pending GitHub session-log synchronization.
+**Publication status:** Recorded and published to the private repository in `1de87e3144009c58748b716d11d48685233f082a` (`docs: record Hostinger package delivery`).
