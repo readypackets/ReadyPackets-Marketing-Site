@@ -121,7 +121,7 @@ This log records material prompts, design decisions, implementation results, val
 
 **Deployment decision:** Kept the marketing website **static HTML/CSS/vanilla JavaScript**. Hostinger’s current Git integration supports custom HTML/static projects directly; a Node.js web-app runtime would add a managed build/runtime layer, operational surface, and a different deployment path without providing any capability this anonymous marketing site needs. The independent portal remains separately hosted on its hardened VPS.
 
-**Git deployment implementation:** Added `.github/workflows/publish-hostinger-static.yml`. On every source `main` push, it builds and validates the static site and force-updates a deploy-only `hostinger-static` branch. The branch includes only the exact static document-root output plus `.readypackets-source-commit`; it excludes source code, workflow files, package configuration, documentation, portal artifacts, credentials, and secrets. Hostinger must connect to **`hostinger-static`**, not `main`, with the Git-screen root directory left at `./` because `index.html` is already at the branch root. `public_html` applies only to manual File Manager/SFTP uploads. GitHub Actions retains a 30-day static artifact for audit/rollback; the manual ZIP process remains the fallback.
+**Git deployment implementation:** Added `.github/workflows/publish-hostinger-static.yml`. On every source `main` push, it builds and validates the static site and force-updates a deploy-only `hostinger-static` branch. The branch includes the exact static document-root output, `.readypackets-source-commit`, and a minimal dependency-free Hostinger `package.json` preflight manifest; it excludes source code, workflow files, source package configuration, documentation, portal artifacts, credentials, and secrets. Hostinger must connect to **`hostinger-static`**, not `main`, with the Git-screen root directory left at `./` because `index.html` is already at the branch root. `public_html` applies only to manual File Manager/SFTP uploads. GitHub Actions retains a 30-day static artifact for audit/rollback; the manual ZIP process remains the fallback.
 
 **Icon theme control:** Replaced the header and static 404 text selector with a compact native button. It shows a device icon for System, sun for Light, and moon for Dark. Activation cycles **System → Light → Dark → System**. The current state and next action are conveyed through the button’s accessible name and tooltip; icon state has visible focus and works with keyboard, pointer, and touch. System remains the default, follows operating-system color preference, and only explicit Light/Dark overrides are saved locally.
 
@@ -161,3 +161,18 @@ This log records material prompts, design decisions, implementation results, val
 
 
 **Current hPanel build-screen values:** Confirmed the generated static branch should use Framework preset `Other`, branch `hostinger-static`, Root directory `./`, an empty build command (or `true` if Hostinger requires a command), output directory `.`, and an empty start command. The displayed Node 22.x value is only a build-environment option and does not create a Node.js runtime. The screen’s displayed target hostname must be reviewed independently: `go.readypackets.com` is not `www.readypackets.com`.
+
+
+---
+
+## 2026-10-03 — Hostinger `package.json` build-preflight repair
+
+**User-observed deployment failure:** Hostinger cloned the deploy-only `hostinger-static` branch for `go.readypackets.com` successfully, then failed during **Preparing build** with `ERROR: package.json file not found`.
+
+**Cause:** The selected Hostinger **Other** framework flow is a build pipeline that requires a root `package.json` even when the selected branch is an already-built static website. The deploy-only branch correctly excluded the source repository’s package configuration, so Hostinger stopped before publishing the static files.
+
+**Repair:** The GitHub deploy-branch workflow now adds a dedicated `package.json` only to `hostinger-static`. The manifest is private, has **no dependencies or devDependencies**, and defines only `npm run build`, which prints a confirmation that the static release is already built. It cannot start a server and contains no portal code, secrets, customer data, external dependency, or Manus dependency. The branch still contains the static assets at `./` and the non-secret source-commit marker.
+
+**Required hPanel settings after the branch refresh:** Framework `Other`; branch `hostinger-static`; Root directory `./`; Build command `npm run build`; Output directory `.`; Start command blank. The Node 22.x selector is only the build environment. The user must confirm whether `go.readypackets.com` is intended for staging or change the Hostinger target website to `www.readypackets.com` before public launch.
+
+**Validation:** The source validator checks the Hostinger manifest’s exact build script, private status, and absence of dependencies. A local clean-room deployment-tree simulation executed `npm run build` successfully, verified the required static/security files and manifest, found **33 deployable files**, and confirmed no source-only material leaked into the branch.

@@ -60,7 +60,7 @@ Hostinger may display a Node version even for a static project. In this workflow
 | Branch | `hostinger-static` |
 | Node version | Leave the offered `22.x` value; no Node server is started |
 | Root directory | `./` |
-| Build command | Leave empty. If hPanel requires a value, use `true` as a no-op command. |
+| Build command | `npm run build` — the deploy branch includes a dependency-free manifest that verifies the prebuilt static release; it does not compile source or start a server. |
 | Output directory | `.` (the selected branch root); **not** `dist` |
 | Start command | Leave empty; this is a static deployment |
 

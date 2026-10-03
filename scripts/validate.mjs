@@ -16,6 +16,11 @@ for (const item of required) await access(path.join(dist, item));
 
 const publicFiles = await readdir(dist);
 assert.ok(publicFiles.length > 8, "Expected built static-site artifacts");
+const hostingerManifest = JSON.parse(await readFile(path.join(root, "deploy", "hostinger-static-package.json"), "utf8"));
+assert.equal(hostingerManifest.private, true, "Hostinger build manifest must not be publishable");
+assert.equal(hostingerManifest.scripts?.build, "node -e \"console.log('ReadyPackets prebuilt static site: no source build required.')\"");
+assert.ok(!("dependencies" in hostingerManifest), "Hostinger build manifest must not add runtime dependencies");
+assert.ok(!("devDependencies" in hostingerManifest), "Hostinger build manifest must not add build dependencies");
 const sourceJs = await readFile(path.join(dist, "assets/js/site.js"), "utf8");
 const themeJs = await readFile(path.join(dist, "assets/js/theme.js"), "utf8");
 assert.match(sourceJs, /consentv2/);

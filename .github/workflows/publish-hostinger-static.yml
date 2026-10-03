@@ -50,9 +50,11 @@ jobs:
           test -f dist/index.html
           test -f dist/.htaccess
           test -f dist/assets/js/theme.js
+          test -f deploy/hostinger-static-package.json
 
           static_dir="$(mktemp -d)"
           cp -a dist/. "$static_dir/"
+          cp deploy/hostinger-static-package.json "$static_dir/package.json"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan hostinger-static
