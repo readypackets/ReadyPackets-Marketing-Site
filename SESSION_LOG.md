@@ -129,4 +129,6 @@ This log records material prompts, design decisions, implementation results, val
 
 **Validation:** `npm run build` and `npm run validate` passed for **9 static pages** and **27 required artifacts**. JavaScript syntax checks passed. A local static branch simulation created a **32-file** deploy-only tree, verified required root files, and confirmed no source-only paths (`src/`, `scripts/`, `docs/`, `context/`, `.github/`, `package.json`, or `SESSION_LOG.md`) leaked into the deployment branch. Browser/CDP checks confirmed icon visibility/state, the complete cycle, accessible labels, local-only persistence, reset on System, and the same behavior on `404.html`. Desktop and 390 px mobile previews showed the compact icon alongside the navigation without overflow or control collision.
 
-**Publication status:** Pending source commit, GitHub Actions verification, deploy-branch publication, and final audit-log synchronization.
+**Workflow remediation:** The first GitHub Actions workflow run (`37138560387`) successfully reached the deployment job but failed at its later audit-artifact upload because the orphan-branch publication had intentionally cleaned `dist/` first. Corrected the workflow by uploading the generated artifact—including hidden `.htaccess` and `.well-known` paths—before creating the deploy-only branch. Rebuilt, revalidated, and repeated the local deploy-branch simulation after the correction.
+
+**Publication status:** Pending corrected workflow commit, GitHub Actions verification, deploy-branch publication, and final audit-log synchronization.

@@ -33,6 +33,15 @@ jobs:
           npm run build
           npm run validate
 
+      - name: Publish artifact for audit and rollback
+        uses: actions/upload-artifact@v4
+        with:
+          name: ReadyPackets-Hostinger-Static-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 30
+
       - name: Publish deploy-only branch
         env:
           SOURCE_COMMIT: ${{ github.sha }}
@@ -55,11 +64,3 @@ jobs:
           git add --all
           git commit -m "deploy: static artifact from ${SOURCE_COMMIT}"
           git push --force origin HEAD:hostinger-static
-
-      - name: Publish artifact for audit and rollback
-        uses: actions/upload-artifact@v4
-        with:
-          name: ReadyPackets-Hostinger-Static-${{ github.sha }}
-          path: dist/
-          if-no-files-found: error
-          retention-days: 30
