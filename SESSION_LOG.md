@@ -131,4 +131,8 @@ This log records material prompts, design decisions, implementation results, val
 
 **Workflow remediation:** The first GitHub Actions workflow run (`37138560387`) successfully reached the deployment job but failed at its later audit-artifact upload because the orphan-branch publication had intentionally cleaned `dist/` first. Corrected the workflow by uploading the generated artifact—including hidden `.htaccess` and `.well-known` paths—before creating the deploy-only branch. Rebuilt, revalidated, and repeated the local deploy-branch simulation after the correction.
 
-**Publication status:** Pending corrected workflow commit, GitHub Actions verification, deploy-branch publication, and final audit-log synchronization.
+**GitHub verification:** Source release `892f15507ca09436be0c7fd32704d18cc6165e5d` passed both the [static branch publication workflow](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/37138645534) and the [static marketing-site validation workflow](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/37138645704). The real `hostinger-static` branch was inspected after publication: it contains **32 deployable files**, embeds source commit `892f15507ca09436be0c7fd32704d18cc6165e5d` in `.readypackets-source-commit`, contains the required hidden deployment/security files, and contains no source-only material. The GitHub audit artifact was also downloaded and verified to retain `.htaccess` and `.well-known/security.txt`.
+
+**Manual fallback package:** Rebuilt and verified a **36-file** Hostinger ZIP from the reviewed source release. Its SHA-256 is `5706d7938bc0e19477714384d15e428f0915022d5257e5757246dce3e80be46f`. The generated ZIP remains excluded from Git; it is a delivery/rollback artifact, not source.
+
+**Publication status:** Functional release and generated deployment branch published; final audit-log synchronization pending.
