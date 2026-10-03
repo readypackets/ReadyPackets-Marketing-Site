@@ -20,6 +20,7 @@
 | --- | --- | --- | --- |
 | `www.readypackets.com` | Public, anonymous marketing site | Hostinger shared hosting | **Deploy here** |
 | `readypackets.com` | Permanent HTTPS redirect to `www` | Cloudflare Redirect Rule | **Configure redirect only** |
+| `go.readypackets.com` | Temporary Hostinger marketing-site staging host | Hostinger shared hosting | **Optional staging only; never a portal alias** |
 | `my.readypackets.com` | Primary customer and administrator portal | Existing hardened ReadyPackets VPS | **Do not change** |
 | `portal.readypackets.com` | Alternate portal hostname | Existing hardened ReadyPackets VPS | **Do not change** |
 
@@ -170,12 +171,28 @@ Before editing, export the Cloudflare zone DNS records or take a clear screensho
 
 - `my.readypackets.com`
 - `portal.readypackets.com`
+- `go.readypackets.com` if a staging record exists
 - MX records
 - SPF, DKIM, DMARC, verification TXT records
 - CAA records
 - Any existing apex (`readypackets.com`) record
 
-### 5.2 Point **only** `www` to Hostinger
+### 5.2 Configure `go` as an optional safe staging host
+
+Use this procedure only if `go.readypackets.com` is intentionally the Hostinger staging address. It must be associated with the Hostinger marketing website in hPanel before a DNS record is pointed at it.
+
+1. In Hostinger, open the marketing website’s **Domains** area and confirm that `go.readypackets.com` is attached to that website. Record the exact IP address or hostname offered by Hostinger’s **Check guide / Connect via DNS record** workflow. Do not guess or copy the Cloudflare edge IPs displayed by a public DNS lookup.
+2. In **Cloudflare → DNS → Records**, create or update only the `go` record to the exact Hostinger target:
+   - Use **A** only when Hostinger provides an IPv4 address.
+   - Use **CNAME** only when Hostinger provides a hostname target.
+   - Remove conflicting `go` A, AAAA, or CNAME records before creating the single intended record.
+3. Set the `go` record to **DNS only** (grey cloud) while Hostinger validates the hostname and issues a certificate. A proxied Cloudflare record can hide the Hostinger validation response and produce a Cloudflare **525** TLS handshake failure before Hostinger has a valid origin certificate.
+4. In Hostinger, wait until the website’s SSL/TLS status explicitly shows active and covers `go.readypackets.com`. Visit `https://go.readypackets.com/` while the Cloudflare record remains DNS only; expect the ReadyPackets marketing homepage and a valid browser certificate.
+5. Only after direct HTTPS succeeds, optionally change the `go` record to **Proxied** (orange cloud). Retest in an incognito window. Keep Cloudflare SSL/TLS mode at **Full (strict)**; never use Flexible to bypass an origin certificate failure.
+
+> A browser `DNS_PROBE_FINISHED_NXDOMAIN` after a new record is created can be a negative DNS cache from the earlier missing hostname. Public resolvers normally update quickly, but local resolvers and browsers may retain the prior negative result for up to the zone’s negative-cache period. Do not keep changing records while that cache ages out; check the record target once, then use an incognito window or a public resolver to verify propagation.
+
+### 5.3 Point **only** `www` to Hostinger
 
 In **Cloudflare → DNS → Records**:
 
@@ -188,7 +205,7 @@ In **Cloudflare → DNS → Records**:
 
 Do not create duplicate `www` records of conflicting types.
 
-### 5.3 Configure a permanent apex-to-`www` redirect in Cloudflare
+### 5.4 Configure a permanent apex-to-`www` redirect in Cloudflare
 
 In **Cloudflare → Rules → Redirect Rules** (or **Single Redirects**):
 
@@ -207,7 +224,7 @@ https://readypackets.com/anything?x=1
 https://www.readypackets.com/anything?x=1
 ```
 
-### 5.4 Enable strict encryption after Hostinger issues a certificate
+### 5.5 Enable strict encryption after Hostinger issues a certificate
 
 1. In hPanel, enable or wait for the included SSL certificate for the website. Confirm it covers `www.readypackets.com`.
 2. Test the Hostinger-origin site over HTTPS with the `www` record still **DNS only**.
@@ -216,6 +233,16 @@ https://www.readypackets.com/anything?x=1
 5. Wait for edge propagation and retest.
 
 > If Hostinger cannot validate or issue its origin certificate while the record is proxied, leave it DNS-only temporarily. Do not use Cloudflare **Flexible** encryption. Do not reduce portal TLS settings to solve a marketing-host certificate issue.
+
+### 5.6 Diagnose `525 SSL handshake failed` without affecting the portal
+
+If Cloudflare serves **Error 525**, Cloudflare has resolved the hostname but cannot complete TLS with the configured origin. This is an origin-certificate or origin-target issue—not a marketing-site build error and not a portal application error.
+
+1. Leave `my` and `portal` untouched.
+2. For the affected marketing hostname only, compare the Cloudflare record target to Hostinger’s exact **Connect via DNS record** value. Correct an incorrect or stale target; do not use Cloudflare’s public edge IPs as the origin target.
+3. Temporarily set only that marketing record to **DNS only** and wait for Hostinger to show an active certificate covering the exact hostname.
+4. Test the direct Hostinger hostname over HTTPS. If it fails while DNS only, use the Hostinger SSL/status panel or Hostinger support; Cloudflare cannot repair a missing Hostinger origin certificate.
+5. Once direct HTTPS succeeds, restore **Proxied** mode and retain **Full (strict)**. If `525` persists, collect the Cloudflare Ray ID and timestamp plus the Hostinger certificate/status details; do not weaken encryption.
 
 ---
 

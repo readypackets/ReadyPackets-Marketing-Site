@@ -176,3 +176,18 @@ This log records material prompts, design decisions, implementation results, val
 **Required hPanel settings after the branch refresh:** Framework `Other`; branch `hostinger-static`; Root directory `./`; Build command `npm run build`; Output directory `.`; Start command blank. The Node 22.x selector is only the build environment. The user must confirm whether `go.readypackets.com` is intended for staging or change the Hostinger target website to `www.readypackets.com` before public launch.
 
 **Validation:** The source validator checks the Hostinger manifest’s exact build script, private status, and absence of dependencies. A local clean-room deployment-tree simulation executed `npm run build` successfully, verified the required static/security files and manifest, found **33 deployable files**, and confirmed no source-only material leaked into the branch.
+
+
+---
+
+## 2026-10-03 — Hostinger staging DNS propagation and Cloudflare 525 diagnosis
+
+**User-observed browser result:** `go.readypackets.com` initially showed `DNS_PROBE_FINISHED_NXDOMAIN` after the Hostinger Git deployment was repaired.
+
+**Read-only diagnosis:** The independent marketing source and deploy-only branch were current at `5e4ede8405eb2e937137c24b6aba9e207bfdf514`, with **33 deployment files** and a dependency-free Hostinger preflight manifest. Cloudflare and Google DNS-over-HTTPS resolvers then returned Cloudflare edge addresses for `go.readypackets.com`, while the sandbox system resolver retained a prior negative result. This is consistent with normal negative DNS-cache propagation after a hostname/record change; it does not indicate a source-build failure.
+
+**Origin result:** A forced TLS request through both published Cloudflare edge addresses, using SNI `go.readypackets.com`, returned **Cloudflare HTTP 525 — SSL handshake failed**. The Cloudflare edge certificate itself was valid for `*.readypackets.com`; therefore the remaining blocker is the handshake from Cloudflare to the currently configured `go` origin. The marketing build is not involved in this failure.
+
+**Required safe remediation:** Treat `go.readypackets.com` as staging. In hPanel, attach it to the Hostinger marketing website and obtain Hostinger’s exact **Connect via DNS record** target. In Cloudflare, update only `go` to that target, set it DNS-only while Hostinger validates the host and issues a certificate covering `go`, test direct HTTPS, then optionally re-enable Cloudflare proxying with Full (strict). Never use Cloudflare edge IPs as origin values, never switch to Flexible encryption, and do not change `www`, `my`, `portal`, portal TLS, portal server, or portal data during this staging repair.
+
+**Documentation:** Extended the production runbook with a dedicated `go` staging cutover and 525 recovery procedure. Updated application context, Hostinger provider source notes, and README to distinguish DNS propagation, the Hostinger origin certificate stage, and the portal boundary.
