@@ -26,7 +26,8 @@ assert.match(themeJs, /rp_marketing_theme_v1/);
 assert.match(themeJs, /\["system", "light", "dark"\]/);
 assert.match(themeJs, /prefers-color-scheme: dark/);
 assert.match(themeJs, /configureThemeControl/);
-assert.match(themeJs, /data-theme-select/);
+assert.match(themeJs, /data-theme-toggle/);
+assert.match(themeJs, /nextPreference/);
 assert.ok(!/https?:\/\//i.test(themeJs), "Theme preference loader must not contact an external origin");
 
 for (const [file, page] of Object.entries(pages)) {
@@ -39,8 +40,9 @@ for (const [file, page] of Object.entries(pages)) {
   assert.match(html, /<meta name="robots" content="index,follow/);
   assert.match(html, /<script type="application\/ld\+json">/);
   assert.match(html, /data-consent-open/);
-  assert.match(html, /data-theme-select/);
-  assert.match(html, /<option value="system">System<\/option>/);
+  assert.match(html, /data-theme-toggle/);
+  assert.match(html, /data-theme-state="system"/);
+  assert.match(html, /data-theme-icon="system"/);
   assert.match(html, /<script src="assets\/js\/theme\.js"><\/script>[\s\S]*<link rel="stylesheet" href="assets\/css\/site\.css">/);
   assert.match(html, /data-portal-link/);
   assert.ok(!/\sstyle\s*=/i.test(html), `${file} contains an inline style that strict CSP would block`);
@@ -89,10 +91,11 @@ assert.match(headers, /Content-Security-Policy/);
 const stylesheet = await readFile(path.join(dist, "assets/css/site.css"), "utf8");
 assert.match(stylesheet, /:root\[data-theme="dark"\]/);
 assert.match(stylesheet, /@media \(prefers-color-scheme: dark\)/);
-assert.match(stylesheet, /\.theme-picker select/);
+assert.match(stylesheet, /\.theme-toggle/);
 const notFound = await readFile(path.join(dist, "404.html"), "utf8");
 assert.match(notFound, /<meta name="color-scheme" content="light dark">/);
 assert.match(notFound, /<script src="assets\/js\/theme\.js"><\/script>/);
+assert.match(notFound, /data-theme-toggle/);
 
 for (const file of required) {
   const info = await stat(path.join(dist, file));

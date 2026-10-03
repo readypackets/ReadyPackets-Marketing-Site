@@ -3,8 +3,10 @@
   "use strict";
 
   const THEME_KEY = "rp_marketing_theme_v1";
-  const THEMES = new Set(["system", "light", "dark"]);
+  const THEME_SEQUENCE = ["system", "light", "dark"];
+  const THEMES = new Set(THEME_SEQUENCE);
   const THEME_COLORS = { light: "#F7FAFB", dark: "#0D1B2A" };
+  const THEME_LABELS = { system: "System", light: "Light", dark: "Dark" };
 
   function normalizeTheme(value) {
     return THEMES.has(value) ? value : "system";
@@ -41,12 +43,27 @@
     return applyPreference(preference);
   }
 
+  function nextPreference(value) {
+    return THEME_SEQUENCE[(THEME_SEQUENCE.indexOf(normalizeTheme(value)) + 1) % THEME_SEQUENCE.length];
+  }
+
+  function updateThemeControl(button, preference) {
+    const next = nextPreference(preference);
+    const message = `Color theme: ${THEME_LABELS[preference]}. Activate to switch to ${THEME_LABELS[next]}.`;
+    button.dataset.themeState = preference;
+    button.setAttribute("aria-label", message);
+    button.setAttribute("title", message);
+    const label = button.querySelector("[data-theme-label]");
+    if (label) label.textContent = `Color theme: ${THEME_LABELS[preference]}`;
+  }
+
   function configureThemeControl() {
-    const select = document.querySelector("[data-theme-select]");
-    if (!select) return;
-    select.value = readPreference();
-    select.addEventListener("change", () => {
-      select.value = setPreference(select.value);
+    const button = document.querySelector("[data-theme-toggle]");
+    if (!button) return;
+    updateThemeControl(button, readPreference());
+    button.addEventListener("click", () => {
+      const preference = setPreference(nextPreference(readPreference()));
+      updateThemeControl(button, preference);
     });
   }
 

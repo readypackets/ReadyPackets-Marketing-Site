@@ -104,8 +104,10 @@ p { margin: 0 0 1rem; }
   :root:not([data-theme]) .brand .brand-mark--dark, :root[data-theme="system"] .brand .brand-mark--dark { display: block; }
 }
 .header-controls { display: flex; align-items: center; gap: .65rem; }
-.theme-picker { display: inline-flex; }
-.theme-picker select { min-height: 2.75rem; padding: .5rem 1.9rem .5rem .7rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--surface-raised); color: var(--heading); font-size: .9rem; font-weight: 750; }
+.theme-toggle { display: inline-grid; width: 2.75rem; height: 2.75rem; flex: 0 0 auto; place-items: center; padding: .45rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--surface-raised); color: var(--heading); }
+.theme-toggle:hover { border-color: var(--teal-dark); color: var(--teal-dark); }
+.theme-toggle svg { display: none; width: 1.35rem; height: 1.35rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+.theme-toggle[data-theme-state="system"] [data-theme-icon="system"], .theme-toggle[data-theme-state="light"] [data-theme-icon="light"], .theme-toggle[data-theme-state="dark"] [data-theme-icon="dark"] { display: block; }
 .menu-toggle { display: none; min-height: 2.75rem; padding: .5rem .7rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--surface-raised); color: var(--heading); font-weight: 750; }
 .nav { display: flex; align-items: center; gap: .15rem; }
 .nav a { padding: .56rem .65rem; color: var(--body); font-weight: 650; text-decoration: none; }
@@ -208,4 +210,4 @@ dialog input { width: 1.2rem; height: 1.2rem; margin-top: .18rem; }
   .button-row .button { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
-@media print { .header, .footer, .cookie-banner, dialog, .skip-link { display: none !important; } .section { padding: 1.5rem 0; } a { color: inherit; } }
+@media print { .header, .footer, .cookie-banner, dialog, .skip-link, .theme-toggle { display: none !important; } .section { padding: 1.5rem 0; } a { color: inherit; } }

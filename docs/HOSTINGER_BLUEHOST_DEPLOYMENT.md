@@ -53,7 +53,11 @@ Keep Cloudflare authoritative for DNS if it already protects the ReadyPackets en
 4. Enable valid TLS at the marketing host. When Cloudflare is proxied, use the provider’s appropriate origin certificate mode and Cloudflare **Full (strict)** where available.
 5. Do not redirect `my.readypackets.com` or `portal.readypackets.com` through the marketing host.
 
-## 4. Hostinger upload
+## 4. Hostinger Git deployment (recommended)
+
+The repository’s GitHub Actions workflow builds and validates `main`, then publishes only the generated static output to the deploy-only `hostinger-static` branch. In Hostinger, choose **Push your code, we host it** / GitHub deployment for a custom HTML/static site, connect only the `readypackets/ReadyPackets-Marketing-Site` repository, select **`hostinger-static`** (not `main`), and set the target root to `public_html`. This is a static-site Git deployment—not a Node.js app. See the guarded [Hostinger production runbook](HOSTINGER_PRODUCTION_DEPLOYMENT_RUNBOOK.md) for the first deployment, validation, rollback, and auto-deployment controls.
+
+## 5. Hostinger manual upload fallback
 
 1. In hPanel, add `www.readypackets.com` as a website and complete the provider’s domain connection workflow.
 2. Open **Files → File Manager** or use SFTP.
@@ -63,7 +67,7 @@ Keep Cloudflare authoritative for DNS if it already protects the ReadyPackets en
 6. Confirm that `public_html/index.html`, `public_html/.htaccess`, `public_html/robots.txt`, `public_html/sitemap.xml`, and `public_html/.well-known/security.txt` exist.
 7. Do not leave the ZIP archive publicly downloadable after extracting it.
 
-## 5. Bluehost upload
+## 6. Bluehost upload
 
 1. Add or assign `www.readypackets.com` to the correct Bluehost website/document root.
 2. Open **Advanced → File Manager** or use SFTP with a dedicated least-privilege account.
@@ -71,7 +75,7 @@ Keep Cloudflare authoritative for DNS if it already protects the ReadyPackets en
 4. Ensure hidden files are shown; `.htaccess` must be present at that site’s root.
 5. Verify that only the ReadyPackets static artifact is placed in the marketing-site directory.
 
-## 6. Verify externally
+## 7. Verify externally
 
 Run these after DNS/TLS propagation completes:
 

@@ -8,7 +8,7 @@ This marketing site has no analytics dependency at build time and **does not loa
 2. The site has been rebuilt and deployed.
 3. The visitor has affirmatively selected **Analytics** in the cookie preference banner or preference dialog.
 
-The user can select Essential only or withdraw Analytics later. Essential local storage remembers that choice. The separate color-theme control defaults to **System** and follows the operating-system preference; only an explicit Light or Dark choice is stored locally, without being sent to an analytics provider or the portal.
+The user can select Essential only or withdraw Analytics later. Essential local storage remembers that choice. The compact color-theme icon defaults to **System** and follows the operating-system preference; activation cycles System → Light → Dark, and only an explicit Light or Dark choice is stored locally, without being sent to an analytics provider or the portal.
 
 ## Data minimization controls in the source
 

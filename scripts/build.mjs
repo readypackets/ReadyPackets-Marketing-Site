@@ -16,7 +16,7 @@ function navHtml(current) {
 }
 
 function themeControlHtml() {
-  return `<label class="theme-picker"><span class="sr-only">Color theme</span><select data-theme-select aria-label="Color theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>`;
+  return `<button class="theme-toggle" type="button" data-theme-toggle data-theme-state="system" aria-label="Color theme: System. Activate to switch to Light." title="Color theme: System. Activate to switch to Light."><svg data-theme-icon="system" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg><svg data-theme-icon="light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg><svg data-theme-icon="dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 15.6A8.5 8.5 0 0 1 8.4 3.4 8.5 8.5 0 1 0 20.6 15.6Z"></path></svg><span class="sr-only" data-theme-label>Color theme: System</span></button>`;
 }
 
 function footerHtml() {

@@ -29,7 +29,7 @@ The static site must never become a proxy for, replica of, or client-side access
 - System-first Light/Dark/System theme preference loader in `src/assets/js/theme.js`
 - No framework, dependency installation, SSR service, API client, database, server process, or host-specific runtime requirement
 - Node.js is used only to build, validate, package, and optionally preview the static output
-- Hosted artifact is `dist/`
+- Hosted artifact is `dist/`; GitHub Actions publishes that verified output alone to the deploy-only `hostinger-static` branch for Hostinger Git deployment
 
 ## Brand source
 
@@ -61,7 +61,7 @@ These controls improve crawlability and factual retrieval; they do not guarantee
 
 ## Hosting
 
-Hostinger, Bluehost, or another static/shared host can serve `dist/`. Keep the portal on the VPS. `.htaccess` provides an Apache/LiteSpeed security baseline; hosts that do not support it must configure equivalent security headers and canonical redirects in the host/CDN layer.
+Hostinger, Bluehost, or another static/shared host can serve `dist/`. For Hostinger, connect the Git integration to the generated `hostinger-static` branch, not source branch `main`; Hostinger receives only the static document-root contents. Keep the portal on the VPS. `.htaccess` provides an Apache/LiteSpeed security baseline; hosts that do not support it must configure equivalent security headers and canonical redirects in the host/CDN layer.
 
 See `docs/HOSTINGER_PRODUCTION_DEPLOYMENT_RUNBOOK.md` for the guarded Hostinger production deployment and rollback process; `docs/HOSTINGER_BLUEHOST_DEPLOYMENT.md` remains the shared-host reference.
 

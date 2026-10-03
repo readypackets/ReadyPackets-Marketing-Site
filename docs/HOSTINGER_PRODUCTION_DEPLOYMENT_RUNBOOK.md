@@ -2,9 +2,11 @@
 
 **Purpose:** Publish only the independent ReadyPackets static marketing website on Hostinger at `https://www.readypackets.com`.
 
-**Current reviewed source release:** [`7929f03e0c919aa0aedb71b9d2cfcca9394fe50d`](https://github.com/readypackets/ReadyPackets-Marketing-Site/commit/7929f03e0c919aa0aedb71b9d2cfcca9394fe50d)
+**Source repository:** [`readypackets/ReadyPackets-Marketing-Site`](https://github.com/readypackets/ReadyPackets-Marketing-Site)
 
-**Deployment artifact:** `ReadyPackets-Marketing-Static.zip`
+**Recommended deployment branch:** `hostinger-static` — generated only after the repository’s `main` branch builds and validates successfully.
+
+**Fallback deployment artifact:** `ReadyPackets-Marketing-Static.zip`
 
 > **Important boundary:** This runbook does **not** move, reinstall, edit, or expose the ReadyPackets portal. Do not change the VPS, MySQL, portal files, `/etc/readypackets/portal.env`, portal certificates, `my.readypackets.com`, or `portal.readypackets.com`.
 
@@ -19,7 +21,7 @@
 | `my.readypackets.com` | Primary customer and administrator portal | Existing hardened ReadyPackets VPS | **Do not change** |
 | `portal.readypackets.com` | Alternate portal hostname | Existing hardened ReadyPackets VPS | **Do not change** |
 
-The Hostinger **Unlimited** plan is sufficient. This marketing site is pre-rendered static HTML, CSS, JavaScript, images, and public metadata. It does **not** need a Node.js application, database, PHP runtime, cron job, or access to portal resources.
+The Hostinger **Unlimited** plan is sufficient. This marketing site is pre-rendered static HTML, CSS, JavaScript, images, and public metadata. It does **not** need a Node.js application, database, PHP runtime, cron job, or access to portal resources. Hostinger’s Git integration supports custom HTML/static projects directly; deploying this static project as a Node.js application would add an unnecessary build/runtime layer without adding marketing-site capability.
 
 ### Stop if any of these are not true
 
@@ -30,9 +32,23 @@ The Hostinger **Unlimited** plan is sufficient. This marketing site is pre-rende
 
 ---
 
-## 2. Obtain and verify the reviewed static release
+## 2. Choose and verify the reviewed static release
 
-### Option A — use the supplied release ZIP
+### Option A — deploy the generated static branch from GitHub (recommended)
+
+The source repository’s **Publish Hostinger static branch** GitHub Actions workflow runs on approved `main` pushes. It builds and validates the site first, then force-updates the deploy-only `hostinger-static` branch. That branch contains only the static contents that belong in Hostinger’s document root plus `.readypackets-source-commit`, which records the immutable source commit used for that deployment.
+
+1. In GitHub, open **Actions** for `readypackets/ReadyPackets-Marketing-Site`.
+2. Confirm the latest **Static marketing site validation** and **Publish Hostinger static branch** runs for the intended `main` commit are green.
+3. Open the `hostinger-static` branch and confirm it has `index.html`, `.htaccess`, `assets/`, `robots.txt`, `sitemap.xml`, `llms.txt`, `ai.txt`, and `.well-known/security.txt` at its root.
+4. In Hostinger, choose **Push your code, we host it** / **Deploy from GitHub** for a custom HTML/static site—not the Node.js web-app path.
+5. Authorize Hostinger only for the `readypackets/ReadyPackets-Marketing-Site` repository when GitHub presents its authorization screen.
+6. Select branch **`hostinger-static`** and set the Hostinger root directory to **`public_html`**. Do not select the source branch `main`.
+7. Turn on Hostinger auto-deployment only after the first production verification succeeds. Thereafter, a reviewed push to `main` builds the static branch through GitHub Actions, and Hostinger deploys that static branch.
+
+> Do not edit `hostinger-static` manually. It is regenerated from the validated `main` source and may be overwritten on the next approved release.
+
+### Option B — use the supplied release ZIP (fallback)
 
 Download the `ReadyPackets-Marketing-Static.zip` artifact supplied with the deployment package.
 
@@ -52,14 +68,14 @@ Get-FileHash .\ReadyPackets-Marketing-Static.zip -Algorithm SHA256
 
 The result must match the value above. If it does not, stop and build/download a trusted artifact again.
 
-### Option B — build from the private repository
+### Option C — build from the private repository
 
 Use this only on a trusted workstation with Node.js 22 or later:
 
 ```bash
 git clone https://github.com/readypackets/ReadyPackets-Marketing-Site.git
 cd ReadyPackets-Marketing-Site
-git checkout 7929f03e0c919aa0aedb71b9d2cfcca9394fe50d
+git checkout REVIEWED_40_CHARACTER_COMMIT_SHA
 npm run package
 ```
 
@@ -74,7 +90,7 @@ Expected result: `ReadyPackets-Marketing-Static.zip` is created at the repositor
 1. Sign in to [Hostinger hPanel](https://hpanel.hostinger.com/).
 2. Go to **Websites**.
 3. Select **Add website** / **Create website**.
-4. Choose a plain website or an **empty site**. Do **not** choose WordPress, AI Builder, ecommerce, or a Node application for this static deployment.
+4. Choose **Push your code, we host it** / **Deploy from GitHub** for a custom static/HTML site. If that option is unavailable, create an **empty site** and use the ZIP fallback in Section 4. Do **not** choose WordPress, AI Builder, ecommerce, or a Node application for this static deployment.
 5. Connect the existing ReadyPackets domain:
    - If hPanel accepts `www.readypackets.com` as the site hostname, use it.
    - If hPanel requires the base domain, use `readypackets.com` **only to associate the Hostinger website**. Keep the public apex routing at Cloudflare as described below; do not move nameservers to Hostinger.
@@ -90,7 +106,7 @@ Expected result: `ReadyPackets-Marketing-Static.zip` is created at the repositor
 
 ---
 
-## 4. Upload the static site to Hostinger
+## 4. Fallback: upload the static site to Hostinger manually
 
 1. In the new Hostinger website, open **Files → File Manager**.
 2. Confirm the document root belongs to the **new Hostinger marketing website**, not the ReadyPackets VPS. It will normally be the Hostinger site’s `public_html` directory.
@@ -217,6 +233,7 @@ Also verify manually in a private/incognito browser window:
 - Logo, navigation, story sections, cards, footer, and portal CTA render on desktop and mobile.
 - The **Skip to main content** control and keyboard focus indicator work.
 - The mobile **Menu** control opens and closes with keyboard and touch.
+- The compact color-theme icon has an accessible name and cycles **System → Light → Dark → System** with keyboard, touch, and pointer input.
 - The cookie choice panel appears on a first visit.
 - **Use essential only** does not load Clarity or PostHog.
 - The `Start your packet` CTA opens `https://my.readypackets.com/register`.
@@ -232,8 +249,8 @@ Only after the public privacy notice, provider settings, data-processing agreeme
 
 1. Update `src/assets/js/site-config.js` in the private repository with a public Microsoft Clarity project ID and/or public PostHog project key.
 2. Confirm the endpoint is correct before building.
-3. Run `npm run package` again.
-4. Upload the new static artifact using the same safe process above.
+3. Commit and push the reviewed change to `main`.
+4. Confirm the GitHub validation and `hostinger-static` publication workflows are green, then confirm Hostinger deployed the new static branch. If using the manual fallback, run `npm run package` and upload the new static artifact instead.
 5. Test in a clean browser profile that neither provider script loads until the visitor affirmatively selects **Accept analytics**.
 
 Do not place API secrets, personal API keys, portal IDs, customer identifiers, database credentials, or portal tracking identifiers in the marketing-site configuration.
@@ -260,6 +277,13 @@ These controls improve crawlability and answer-engine retrieval. They do not gua
 
 The portal is unaffected by any marketing rollback.
 
+### Roll back a Hostinger Git deployment
+
+1. Identify the last known-good immutable `main` commit in GitHub and confirm its previous `hostinger-static` workflow run completed successfully.
+2. In Hostinger’s Git deployment history, redeploy the known-good `hostinger-static` commit if the hPanel offers that action.
+3. If the hPanel cannot select a prior generated commit, create a reviewed source rollback commit/revert on `main`, wait for both GitHub workflows to pass, then redeploy the regenerated `hostinger-static` branch.
+4. Re-run the checks in Section 6. The portal remains unaffected.
+
 ### Roll back a Hostinger file release
 
 1. In Hostinger File Manager, move the current marketing files into a timestamped backup folder.
@@ -280,7 +304,8 @@ Record these after deployment in your deployment/change log:
 
 | Item | Value to record |
 | --- | --- |
-| Marketing source commit | `7929f03e0c919aa0aedb71b9d2cfcca9394fe50d` |
+| Marketing source commit | Immutable `main` commit recorded in `.readypackets-source-commit` on the deployed `hostinger-static` branch |
+| Hostinger deployment branch | `hostinger-static` |
 | Marketing ZIP SHA-256 | SHA-256 recorded with the exact archive uploaded to Hostinger |
 | Hostinger website/domain ID | Hostinger value — do not publish credentials |
 | Hostinger origin IP or target | Hosting value — not a secret, but restrict operational sharing |

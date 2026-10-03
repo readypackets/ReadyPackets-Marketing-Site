@@ -14,7 +14,7 @@ The public marketing site links visitors to the separately deployed ReadyPackets
 - Story-led landing page with an explanation of the ReadyPackets process
 - Public pages for process, solution areas, FAQ, about, contact, privacy/cookies, accessibility, and website terms
 - Semantic HTML, responsive CSS, keyboard-first navigation, reduced-motion support, and WCAG 2.2 AA design/test target
-- System-first Light/Dark/System color theme control with local-only explicit preference storage
+- System-first Light/Dark/System icon control with local-only explicit preference storage
 - Indexable server-rendered-in-build HTML—no JavaScript required for core content
 - Canonical tags, Open Graph/Twitter metadata, Organization/WebSite/FAQ schema, XML sitemap, `robots.txt`, `llms.txt`, and `ai.txt`
 - Consent-first Microsoft Clarity and PostHog capability, disabled by default
@@ -55,7 +55,7 @@ Analytics is still not loaded until a visitor affirmatively opts in through the 
 
 ## Deployment
 
-Read [Hostinger & Bluehost deployment](docs/HOSTINGER_BLUEHOST_DEPLOYMENT.md) and [Security headers](docs/SECURITY_HEADERS.md) before going live. The reusable privacy process and operational requirements are in [Analytics & privacy](docs/ANALYTICS_AND_PRIVACY.md). Discoverability controls are documented in [SEO, AEO & GEO](docs/SEO_AEO_GEO.md).
+For Hostinger, the recommended path is Git deployment of the generated **`hostinger-static`** branch—not the source branch `main` and not a Node.js app. GitHub Actions builds and validates `main`, then publishes only the static `dist/` contents to that deployment branch. The ZIP remains a rollback fallback. Read the [Hostinger production runbook](docs/HOSTINGER_PRODUCTION_DEPLOYMENT_RUNBOOK.md), [Hostinger & Bluehost deployment guide](docs/HOSTINGER_BLUEHOST_DEPLOYMENT.md), and [Security headers](docs/SECURITY_HEADERS.md) before going live. The reusable privacy process and operational requirements are in [Analytics & privacy](docs/ANALYTICS_AND_PRIVACY.md). Discoverability controls are documented in [SEO, AEO & GEO](docs/SEO_AEO_GEO.md).
 
 ## Compliance scope
 
