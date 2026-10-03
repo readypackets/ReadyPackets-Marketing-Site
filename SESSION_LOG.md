@@ -191,3 +191,18 @@ This log records material prompts, design decisions, implementation results, val
 **Required safe remediation:** Treat `go.readypackets.com` as staging. In hPanel, attach it to the Hostinger marketing website and obtain Hostinger’s exact **Connect via DNS record** target. In Cloudflare, update only `go` to that target, set it DNS-only while Hostinger validates the host and issues a certificate covering `go`, test direct HTTPS, then optionally re-enable Cloudflare proxying with Full (strict). Never use Cloudflare edge IPs as origin values, never switch to Flexible encryption, and do not change `www`, `my`, `portal`, portal TLS, portal server, or portal data during this staging repair.
 
 **Documentation:** Extended the production runbook with a dedicated `go` staging cutover and 525 recovery procedure. Updated application context, Hostinger provider source notes, and README to distinguish DNS propagation, the Hostinger origin certificate stage, and the portal boundary.
+
+
+---
+
+## 2026-10-03 — Secure `go` staging-host canonical redirect repair
+
+**User report:** The Hostinger temporary/staging website redirected to `readypackets.com` instead of serving the newly deployed marketing site.
+
+**Cause:** The static `.htaccess` canonicalization rule correctly forced every host other than `www.readypackets.com` to the production canonical hostname. That included the intended `go.readypackets.com` staging host, preventing a controlled review of the Hostinger deployment.
+
+**Repair:** The marketing artifact now serves **HTTPS `go.readypackets.com`** as a staging-only host. Plain HTTP and all unknown hosts still issue a permanent redirect to `https://www.readypackets.com`. The rendered pages retain production `www` canonical links, sitemap URLs, and structured-data URLs; when Apache/LiteSpeed `mod_headers` is available, the staging host returns `X-Robots-Tag: noindex, nofollow, noarchive`. This keeps `go` reviewable without creating a competing indexed public hostname or changing portal behavior.
+
+**Boundary:** This redirect repair does not repair the independent current Cloudflare 525 origin handshake. `go` still must be attached and certificated in Hostinger, and its Cloudflare DNS record must point at Hostinger exactly before the staging host can load. `www`, `my`, `portal`, portal TLS, portal hosting, data, and configuration remain untouched.
+
+**Validation:** `npm run package` completed successfully. Static validation passed all **9 pages** and **27 required artifacts**, including regression assertions for the `go` HTTPS allowlist and its noindex header. The generated `.htaccess` was inspected to verify that only secure `www` and secure `go` avoid the production redirect.

@@ -93,6 +93,9 @@ assert.ok(!/^\s*(?:[A-Za-z0-9_]*secret|password|privateKey|apiSecret)\s*:/im.tes
 const headers = await readFile(path.join(dist, ".htaccess"), "utf8");
 assert.ok(!headers.includes("unsafe-inline"));
 assert.match(headers, /Content-Security-Policy/);
+assert.match(headers, /!\^\(\?:www\|go\)\\\.readypackets\\\.com\$/);
+assert.match(headers, /SetEnvIfNoCase Host "\^go\\\.readypackets\\\.com/);
+assert.match(headers, /X-Robots-Tag "noindex, nofollow, noarchive" env=rp_staging_host/);
 const stylesheet = await readFile(path.join(dist, "assets/css/site.css"), "utf8");
 assert.match(stylesheet, /:root\[data-theme="dark"\]/);
 assert.match(stylesheet, /@media \(prefers-color-scheme: dark\)/);
