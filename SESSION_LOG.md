@@ -91,4 +91,4 @@ This log records material prompts, design decisions, implementation results, val
 
 **Validation completed:** `npm run package` and the static validator passed with **9 public pages** and **27 required artifacts**. JavaScript syntax checks passed. Browser/CDP tests confirmed System defaults without a persisted override, follows dark operating-system preference, responds to a live OS preference change, persists explicit Light/Dark choices across the homepage and 404 page, and clears that value when returned to System. Desktop light/dark and mobile dark previews showed no header/control collision or horizontal overflow. Contrast measurements passed: light body `9.97:1`, light link `5.18:1`, dark body `11.12:1`, dark heading `14.28:1`, dark link `9.15:1`, and dark focus `9.73:1`.
 
-**Publication status:** Pending commit and push to the private `readypackets/ReadyPackets-Marketing-Site` repository.
+**Publication status:** Published to the private `readypackets/ReadyPackets-Marketing-Site` repository in `2f81c772934d0b77f367adab944655c0dc05264a` (`feat: add system-first light and dark themes`).
