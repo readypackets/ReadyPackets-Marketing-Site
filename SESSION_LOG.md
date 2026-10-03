@@ -135,4 +135,4 @@ This log records material prompts, design decisions, implementation results, val
 
 **Manual fallback package:** Rebuilt and verified a **36-file** Hostinger ZIP from the reviewed source release. Its SHA-256 is `5706d7938bc0e19477714384d15e428f0915022d5257e5757246dce3e80be46f`. The generated ZIP remains excluded from Git; it is a delivery/rollback artifact, not source.
 
-**Publication status:** Functional release and generated deployment branch published; final audit-log synchronization pending.
+**Publication status:** Functional release, generated deployment branch, and audit record are synchronized through the source repository. Subsequent audit-only commits automatically regenerate the same static content with an updated non-secret provenance marker.
