@@ -136,3 +136,14 @@ This log records material prompts, design decisions, implementation results, val
 **Manual fallback package:** Rebuilt and verified a **36-file** Hostinger ZIP from the reviewed source release. Its SHA-256 is `5706d7938bc0e19477714384d15e428f0915022d5257e5757246dce3e80be46f`. The generated ZIP remains excluded from Git; it is a delivery/rollback artifact, not source.
 
 **Publication status:** Functional release, generated deployment branch, and audit record are synchronized through the source repository. Subsequent audit-only commits automatically regenerate the same static content with an updated non-secret provenance marker.
+
+
+---
+
+## 2026-10-03 — Hostinger provider-source record
+
+**Purpose:** Added `docs/HOSTINGER_GIT_DEPLOYMENT_SOURCE_NOTES.md` to preserve the official Hostinger Git-deployment and Node.js hosting sources used for the static-site decision. The deployment runbook and application context now link to this record.
+
+**Decision reaffirmed:** The independent public marketing site remains a static HTML/CSS/vanilla JavaScript deployment on the generated `hostinger-static` branch. Hostinger’s custom Git/static deployment path is suitable; a Node.js web-app runtime is unnecessary for this site and would increase operational surface without adding required capability.
+
+**Safety boundary:** The source notes reiterate that Hostinger receives only deployable public-site files. The portal, customer data, MySQL database, customer uploads, credentials, backups, and all portal configuration remain outside the marketing-host deployment.

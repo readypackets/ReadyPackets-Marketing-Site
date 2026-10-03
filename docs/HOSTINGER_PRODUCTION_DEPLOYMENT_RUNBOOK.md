@@ -8,6 +8,8 @@
 
 **Fallback deployment artifact:** `ReadyPackets-Marketing-Static.zip`
 
+**Provider capability sources:** [Hostinger Git deployment source notes](HOSTINGER_GIT_DEPLOYMENT_SOURCE_NOTES.md)
+
 > **Important boundary:** This runbook does **not** move, reinstall, edit, or expose the ReadyPackets portal. Do not change the VPS, MySQL, portal files, `/etc/readypackets/portal.env`, portal certificates, `my.readypackets.com`, or `portal.readypackets.com`.
 
 ---

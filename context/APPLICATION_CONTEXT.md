@@ -63,7 +63,7 @@ These controls improve crawlability and factual retrieval; they do not guarantee
 
 Hostinger, Bluehost, or another static/shared host can serve `dist/`. For Hostinger, connect the Git integration to the generated `hostinger-static` branch, not source branch `main`; Hostinger receives only the static document-root contents. Keep the portal on the VPS. `.htaccess` provides an Apache/LiteSpeed security baseline; hosts that do not support it must configure equivalent security headers and canonical redirects in the host/CDN layer.
 
-See `docs/HOSTINGER_PRODUCTION_DEPLOYMENT_RUNBOOK.md` for the guarded Hostinger production deployment and rollback process; `docs/HOSTINGER_BLUEHOST_DEPLOYMENT.md` remains the shared-host reference.
+See `docs/HOSTINGER_PRODUCTION_DEPLOYMENT_RUNBOOK.md` for the guarded Hostinger production deployment and rollback process, `docs/HOSTINGER_GIT_DEPLOYMENT_SOURCE_NOTES.md` for the official provider capabilities underpinning the Git decision, and `docs/HOSTINGER_BLUEHOST_DEPLOYMENT.md` for the shared-host reference.
 
 ## Operating requirements
 
