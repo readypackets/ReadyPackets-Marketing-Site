@@ -8,8 +8,10 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
 const required = [
   ".htaccess", "404.html", "robots.txt", "sitemap.xml", "llms.txt", "ai.txt", "humans.txt", "site.webmanifest", ".well-known/security.txt",
-  "assets/css/site.css", "assets/js/site.js", "assets/js/theme.js", "assets/js/site-config.js", "assets/brand/readypackets-document-flow-light-tm.svg", "assets/brand/readypackets-document-flow-dark-tm.svg",
-  "assets/brand/readypackets-document-flow-light-wordmark-tm.svg", "assets/brand/readypackets-document-flow-dark-wordmark-tm.svg", "favicon.ico",
+  "assets/css/site.css", "assets/js/site.js", "assets/js/theme.js", "assets/js/site-config.js",
+  "assets/brand/readypackets-full-lockup-square-light.webp", "assets/brand/readypackets-full-lockup-square-dark.webp",
+  "assets/brand/readypackets-full-lockup-square-light-compact-mark.png", "assets/brand/readypackets-full-lockup-square-dark-compact-mark.png",
+  "assets/brand/readypackets-full-lockup-square-light-1200.png", "assets/brand/readypackets-full-lockup-square-dark-1200.png", "favicon.ico",
   ...Object.keys(pages),
 ];
 for (const item of required) await access(path.join(dist, item));
@@ -76,12 +78,16 @@ assert.match(sitemap, /https:\/\/www\.readypackets\.com\/solutions\.html/);
 assert.match(llms, /Primary portal: https:\/\/my\.readypackets\.com/);
 assert.ok(!llms.includes("Manus"));
 
-for (const logo of ["readypackets-document-flow-light-tm.svg", "readypackets-document-flow-dark-tm.svg", "readypackets-document-flow-light-wordmark-tm.svg", "readypackets-document-flow-dark-wordmark-tm.svg"]) {
-  const svg = await readFile(path.join(dist, "assets/brand", logo), "utf8");
-  assert.ok(svg.includes("™"), `${logo} must include the trademark glyph`);
-  assert.ok(!/<script\b|\son[a-z]+\s*=/i.test(svg), `${logo} contains executable SVG content`);
-  assert.ok(!/(?:href|src)\s*=\s*["'](?:https?:|\/\/|data:|javascript:)/i.test(svg), `${logo} contains external SVG content`);
+for (const logo of ["readypackets-full-lockup-square-light.webp", "readypackets-full-lockup-square-dark.webp", "readypackets-full-lockup-square-light-1200.png", "readypackets-full-lockup-square-dark-1200.png"]) {
+  const info = await stat(path.join(dist, "assets/brand", logo));
+  assert.ok(info.size > 20_000, `${logo} must be a substantial supplied brand asset`);
 }
+for (const logo of ["readypackets-full-lockup-square-light-compact-mark.png", "readypackets-full-lockup-square-dark-compact-mark.png"]) {
+  const info = await stat(path.join(dist, "assets/brand", logo));
+  assert.ok(info.size > 5_000, `${logo} must be a non-empty derived navigation mark`);
+}
+assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-light\.webp/);
+assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-dark\.webp/);
 
 const config = await readFile(path.join(dist, "assets/js/site-config.js"), "utf8");
 assert.match(config, /clarityProjectId: ""/);

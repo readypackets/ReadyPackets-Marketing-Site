@@ -20,7 +20,7 @@ function themeControlHtml() {
 }
 
 function footerHtml() {
-  return `<footer class="footer"><div class="wrap footer-grid"><div><a class="brand" href="index.html" aria-label="ReadyPackets home"><img src="assets/brand/readypackets-document-flow-dark-wordmark-tm.svg" width="2800" height="924" alt="ReadyPackets™"></a><p class="footer-tagline">Your Business, Professionally Packeted™</p><p>Structured business documentation and practical operating foundations for founders ready to move forward.</p></div><div><h2>Explore</h2><ul><li><a href="process.html">The process</a></li><li><a href="solutions.html">What we build</a></li><li><a href="faq.html">Frequently asked questions</a></li><li><a href="about.html">About ReadyPackets</a></li></ul></div><div><h2>Portal</h2><ul><li><a href="${site.portalUrl}/register" data-portal-link>Create an account</a></li><li><a href="${site.portalUrl}/login" data-portal-link>Sign in</a></li><li><a href="${site.alternatePortalUrl}/login" data-portal-link>Alternate portal address</a></li></ul></div><div><h2>Site information</h2><ul><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy &amp; cookies</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="terms.html">Website terms</a></li></ul></div></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} ReadyPackets. All rights reserved.</span><button class="text-button" type="button" data-consent-open>Cookie preferences</button></div></footer>`;
+  return `<footer class="footer"><div class="wrap footer-grid"><div><a class="brand brand--footer-square" href="index.html" aria-label="ReadyPackets home"><img src="assets/brand/readypackets-full-lockup-square-dark.webp" width="2048" height="2048" alt="ReadyPackets™ — Your Business, Professionally Packeted™"></a><p class="footer-tagline">Your Business, Professionally Packeted™</p><p>Structured business documentation and practical operating foundations for founders ready to move forward.</p></div><div><h2>Explore</h2><ul><li><a href="process.html">The process</a></li><li><a href="solutions.html">What we build</a></li><li><a href="faq.html">Frequently asked questions</a></li><li><a href="about.html">About ReadyPackets</a></li></ul></div><div><h2>Portal</h2><ul><li><a href="${site.portalUrl}/register" data-portal-link>Create an account</a></li><li><a href="${site.portalUrl}/login" data-portal-link>Sign in</a></li><li><a href="${site.alternatePortalUrl}/login" data-portal-link>Alternate portal address</a></li></ul></div><div><h2>Site information</h2><ul><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy &amp; cookies</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="terms.html">Website terms</a></li></ul></div></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} ReadyPackets. All rights reserved.</span><button class="text-button" type="button" data-consent-open>Cookie preferences</button></div></footer>`;
 }
 
 function consentHtml() {
@@ -29,7 +29,7 @@ function consentHtml() {
 
 function pageSchema(page) {
   const graph = [
-    { "@context": "https://schema.org", "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: site.url, logo: `${site.url}/assets/brand/readypackets-document-flow-light-tm.svg`, description: site.description, address: { "@type": "PostalAddress", streetAddress: site.address[0], addressLocality: "Lanham", addressRegion: "MD", postalCode: "20706", addressCountry: "US" } },
+    { "@context": "https://schema.org", "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: site.url, logo: `${site.url}/assets/brand/readypackets-full-lockup-square-light-1200.png`, description: site.description, address: { "@type": "PostalAddress", streetAddress: site.address[0], addressLocality: "Lanham", addressRegion: "MD", postalCode: "20706", addressCountry: "US" } },
     { "@context": "https://schema.org", "@type": "WebSite", "@id": `${site.url}/#website`, name: site.name, url: site.url, publisher: { "@id": `${site.url}/#organization` }, inLanguage: "en-US" },
   ];
   if (page.faq) graph.push({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqsForSchema.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) });
@@ -50,14 +50,14 @@ function render(filename, page) {
   <meta name="author" content="ReadyPackets">
   <link rel="canonical" href="${canonical}">
   <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="assets/brand/readypackets-mark-light.svg">
+  <link rel="icon" type="image/webp" href="assets/brand/readypackets-full-lockup-square-light.webp">
   <link rel="manifest" href="site.webmanifest">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ReadyPackets">
   <meta property="og:title" content="${page.title}">
   <meta property="og:description" content="${page.description}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${site.url}/assets/brand/readypackets-document-flow-light-tm.svg">
+  <meta property="og:image" content="${site.url}/assets/brand/readypackets-full-lockup-square-light-1200.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${page.title}">
   <meta name="twitter:description" content="${page.description}">
@@ -70,7 +70,7 @@ function render(filename, page) {
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <header class="header"><div class="wrap header-row"><a class="brand" href="index.html" aria-label="ReadyPackets home"><img class="brand-mark brand-mark--light" src="assets/brand/readypackets-document-flow-light-wordmark-tm.svg" width="2800" height="924" alt=""><img class="brand-mark brand-mark--dark" src="assets/brand/readypackets-document-flow-dark-wordmark-tm.svg" width="2800" height="924" alt=""></a><div class="header-controls"><nav id="site-navigation" class="nav" aria-label="Primary navigation">${navHtml(filename)}<a class="button" href="${site.portalUrl}/register" data-portal-link>Start in portal <span aria-hidden="true">→</span></a></nav>${themeControlHtml()}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle>Menu <span aria-hidden="true">☰</span></button></div></div></header>
+  <header class="header"><div class="wrap header-row"><a class="brand brand--square" href="index.html" aria-label="ReadyPackets home"><img class="brand-mark brand-mark--light" src="assets/brand/readypackets-full-lockup-square-light-compact-mark.png" width="491" height="508" alt=""><img class="brand-mark brand-mark--dark" src="assets/brand/readypackets-full-lockup-square-dark-compact-mark.png" width="491" height="508" alt=""></a><div class="header-controls"><nav id="site-navigation" class="nav" aria-label="Primary navigation">${navHtml(filename)}<a class="button" href="${site.portalUrl}/register" data-portal-link>Start in portal <span aria-hidden="true">→</span></a></nav>${themeControlHtml()}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle>Menu <span aria-hidden="true">☰</span></button></div></div></header>
   <main id="main-content">${page.body}</main>
   ${footerHtml()}
   ${consentHtml()}

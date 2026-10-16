@@ -219,3 +219,14 @@ This log records material prompts, design decisions, implementation results, val
 **Release provenance:** The deployed `hostinger-static` branch and GitHub `main` were synchronized at `cb6caf6cda1458784aa5298952301ac883e804c5`. The deploy-only branch retained the dependency-free Hostinger preflight manifest and no portal runtime, secrets, customer data, or portal configuration.
 
 **Remaining deliberate boundary:** `go.readypackets.com` is staging only. No `www` production cutover, root-domain redirect change, portal DNS change, portal TLS change, portal server change, or portal-data operation was performed. A separate explicit decision and guarded DNS/certificate verification are required before moving the public marketing hostname to Hostinger.
+
+---
+## 2026-10-16 — Supplied square-lockup rebrand release
+**User request:**
+> Rebrand both sites with the updated logo and push all changes to GitHub.
+
+**Implementation:** The independent ReadyPackets marketing site now uses the supplied self-hosted square light and dark lockups. Theme-appropriate full lockups are present in the hero, footer, Organization structured data, social-preview assets, and PWA surfaces. Compact transparent navigation marks were derived solely from the supplied lockups to preserve header readability across desktop, mobile, light, dark, and system-first modes. The accessible icon-only theme control and the existing GDPR/consent-gated analytics capabilities remain unchanged.
+
+**Boundary:** No portal application code, portal session, customer data, analytics identity, API credential, third-party asset, font, image CDN, or hosting-specific runtime dependency was added to the static marketing repository.
+
+**Validation:** `npm run package` rebuilt the nine public pages and required static artifacts; the validator passed self-hosted asset, accessibility/consent, canonical metadata, portal-link, SEO/AEO/GEO discovery, and security-header checks. JavaScript syntax checks and `git diff --check` passed.
