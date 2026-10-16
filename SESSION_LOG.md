@@ -230,3 +230,12 @@ This log records material prompts, design decisions, implementation results, val
 **Boundary:** No portal application code, portal session, customer data, analytics identity, API credential, third-party asset, font, image CDN, or hosting-specific runtime dependency was added to the static marketing repository.
 
 **Validation:** `npm run package` rebuilt the nine public pages and required static artifacts; the validator passed self-hosted asset, accessibility/consent, canonical metadata, portal-link, SEO/AEO/GEO discovery, and security-header checks. JavaScript syntax checks and `git diff --check` passed.
+
+---
+## 2026-10-16 — Microsoft Clarity and PostHog configuration guidance confirmed
+**User request:**
+> Confirm Clarity and PostHog capability on both sites and provide setup instructions.
+
+**Verified marketing behavior:** The independently hosted static marketing site remains disabled by default because its public Clarity Project ID and PostHog Project API key fields are blank. It loads either provider only after the operator configures the identifier, rebuilds/deploys, and a visitor affirmatively selects Analytics. The source uses consent-gated Clarity ConsentV2, PostHog opt-out-by-default, disabled PostHog autocapture/session replay/person profiles, a narrow marketing page-path event, and zero portal/customer identity linkage.
+
+**Documented boundary:** Cross-site analytics continuity is intentionally not implemented in this independent marketing repository. The portal's separate cross-site toggle must remain off unless a dedicated privacy-reviewed change updates both repositories. The portal repository now carries the version-controlled `docs/CLARITY_POSTHOG_OPERATOR_SETUP.md` operator guide for both sites.
