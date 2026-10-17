@@ -121,10 +121,10 @@ assert.ok(!indexHtml.includes("readypackets-document-flow-light-wordmark-tm.svg"
 
 for (const file of ["index.html", "solutions.html"]) {
   const html = await readFile(path.join(dist, file), "utf8");
-  assert.equal((html.match(/data-packet-card/g) || []).length, 8, `${file} must render all eight matrix-approved packet groups`);
-  assert.equal((html.match(/packet-tier-comparison/g) || []).length, 8, `${file} must render an accessible comparison region for every packet group`);
-  assert.equal((html.match(/Included offerings/g) || []).length, 20, `${file} must render every matrix-approved tier`);
-  assert.match(html, /Capital &amp; Valuation Services/);
+  assert.equal((html.match(/data-packet-card/g) || []).length, 7, `${file} must render all seven approved packet groups`);
+  assert.equal((html.match(/packet-tier-comparison/g) || []).length, 7, `${file} must render an accessible comparison region for every packet group`);
+  assert.equal((html.match(/Included offerings/g) || []).length, 19, `${file} must render every approved tier`);
+  assert.ok(!html.includes("Capital" + " &amp; Valuation Services"), `${file} must not render an excluded offering`);
   assert.match(html, /The All-In \(Master Bundle\)/);
   assert.match(html, /Everything in Basic, plus:/);
   assert.match(html, /Everything in Standard, plus:/);

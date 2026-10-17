@@ -521,27 +521,3 @@ Features:
     • This transforms a raw concept into a fully audited, legally defended, and
        operationally scalable enterprise vehicle. Includes priority intake and direct
        alignment of your IP strategy with your 5-year financial models.
-
-Packet 8: Capital & Valuation Services (Strategic Reserve)
-Tier: Institutional ($12,000)
-Outcome: A rigorous financial and narrative fortress designed to withstand the due
-diligence of Venture Capital and Institutional partners.
-Timeline: 14–21 business days
-Features:
- • Advanced 3-Scenario Financial Modeling (Best/Worst/Expected)
-      • 💡 Stress-testing financial models against severe market disruption. We build a
-        dynamic Excel model that allows investors to toggle variables (churn, growth,
-        COGS) to see how the business performs under pressure. This proves you
-        understand risk.
- • Full Investor Pitch Deck Design (10–15 Slides)
-      • 💡 High-status, visually compelling asset generation. We move beyond
-        "PowerPoint" to create a cinematic narrative. Each slide is engineered to answer the
-        specific questions VCs ask before they ask them.
- • Strategic Data Room Construction
-      • 💡 Preparing the required diligence materials for institutional or pharmaceutical
-        exit. We organize your IP, contracts, and financials into a secure, indexed vault that
-        signals "Deal Readiness" to potential acquirers.
- • Valuation Logic Defense
-      • 💡 A memo justifying your pre-money valuation based on comparable market exits
-        and intrinsic IP value. We arm you with the data needed to defend your equity stake
-        during negotiation.

@@ -326,26 +326,6 @@ export const packetGroups = [
       },
     ],
   },
-  {
-    number: "08",
-    slug: "capital-valuation-services",
-    category: "Strategic Reserve",
-    title: "Capital & Valuation Services",
-    description: "Prepare a financial and narrative foundation designed for venture-capital and institutional due diligence.",
-    tiers: [
-      {
-        name: "Institutional",
-        timeline: "14–21 business days",
-        outcome: "A rigorous financial and narrative fortress designed to withstand the due diligence of Venture Capital and Institutional partners.",
-        features: [
-          "Advanced 3-Scenario Financial Modeling (Best/Worst/Expected)",
-          "Full Investor Pitch Deck Design (10–15 Slides)",
-          "Strategic Data Room Construction",
-          "Valuation Logic Defense",
-        ],
-      },
-    ],
-  },
 ];
 
 export function packetExplorerHtml(prefix, portalUrl) {

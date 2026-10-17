@@ -369,3 +369,19 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 **Source release:** Committed as `dab02cdd078f3317839c2bad10b61e1b72505cae` (`feat: add responsive tier comparisons and consented ads`). The generated Hostinger branch must be refreshed from this reviewed source commit before the configured static host receives it.
 
 **GitHub workflow verification:** The pushed source/release-record revision `e38faaf1447a9ee6479f4dad76f5e502b5146832` completed both required workflows successfully: [Publish Hostinger static branch](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/39079855853) and [Static marketing site validation](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/39079855953). The deploy-only `hostinger-static` branch was refreshed from the reviewed release; it contains the generated static artifact rather than portal code, source-only files, customer data, or secrets.
+
+---
+
+## 2026-10-17 — Removed Packet 8 from the ReadyPackets website catalogue
+
+**User request:**
+
+> Remove packet 8 completely.
+
+**Implementation:** Removed the eighth packet and its sole tier from `scripts/packet-catalogue.mjs`. The website catalogue now contains only the seven approved public offerings and **19** retained tiers. Updated the public solution heading, validation contracts, README, application context, reconciliation record, and the website-scoped matrix source extract. The current public source, rendered pages, machine-discoverable page content, and deployment artifact contain no active reference to the removed offering. The prior session entry remains as immutable version-control audit history; it is not public website output.
+
+**Accessibility and responsiveness:** No CSS or interaction behavior changed. The native disclosure control, keyboard/touch operation, expanded full-width comparison behavior, and desktop/tablet/mobile reflow contract remain intact.
+
+**Validation completed:** `npm run package` passed, building 10 static pages and validating 38 required artifacts. The dedicated catalogue contract verified exactly seven packet groups, 19 tiers, no eighth packet model, and no removed offering in `index.html` or `solutions.html`. A current-scope source scan found no stale packet count or removed-offering references outside immutable session history. `git diff --check` passed.
+
+**Publication status:** Validation complete; GitHub publication pending final staged-release review.

@@ -33,7 +33,7 @@ The static site must never become a proxy for, replica of, or client-side access
 
 ## Packet-tier explorer
 
-The home page and `solutions.html` include a static, price-free packet-tier explorer for eight Matrix v3.0 offerings and 20 tiers. The approval and reconciliation record is `docs/PACKET_OFFERING_RECONCILIATION_2026-10-17.md`; its extracted source text is `docs/PACKET_MATRIX_V3_SOURCE_EXTRACT_2026-10-17.txt`.
+The home page and `solutions.html` include a static, price-free packet-tier explorer for seven approved offerings and 19 tiers. The approval and reconciliation record is `docs/PACKET_OFFERING_RECONCILIATION_2026-10-17.md`; its scoped source extract is `docs/PACKET_MATRIX_V3_SOURCE_EXTRACT_2026-10-17.txt`. The website catalogue includes only the approved published scope.
 
 Each group uses a native disclosure. Opening it expands that group across the explorer grid and shows every tier, timeline, outcome, inherited-from statement, and included offering in a horizontal comparison where width permits. At narrower widths, the exact same tier content reflows to two columns and then one column without requiring horizontal page scrolling. Pointer hover adds visual affordance only; it never reveals information that cannot be reached by touch, keyboard, or assistive technology. Tier content deliberately excludes prices, discounts, payment terms, and price-derived claims. Update the source record and revalidate the static output before changing packet scope or tiers.
 

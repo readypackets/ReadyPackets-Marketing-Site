@@ -13,7 +13,7 @@ The public ReadyPackets website links visitors to the separately deployed ReadyP
 
 - Story-led landing page with an explanation of the ReadyPackets process
 - Public pages for process, solution areas, FAQ, about, contact, privacy/cookies, accessibility, Terms of Use, and Refund Policy
-- An accessible, price-free packet explorer for eight Matrix v3.0 offerings and all 20 associated tiers; opening a packet expands the full-width responsive comparison with every tier, timeline, outcome, and included offering
+- An accessible, price-free packet explorer for seven approved offerings and all 19 associated tiers; opening a packet expands the full-width responsive comparison with every tier, timeline, outcome, and included offering
 - Semantic HTML, responsive CSS, keyboard-first navigation, reduced-motion support, and WCAG 2.2 AA design/test target
 - System-first Light/Dark/System icon control with local-only explicit preference storage
 - Indexable server-rendered-in-build HTML—no JavaScript required for core content
