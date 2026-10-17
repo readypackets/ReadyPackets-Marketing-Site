@@ -12,9 +12,9 @@ curl -fsSI https://www.readypackets.com/
 
 Confirm `Content-Security-Policy`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options`, and a single `Strict-Transport-Security` header. Confirm that the canonical public hostname resolves over HTTPS and that the marketing host does **not** set portal cookies.
 
-## Analytics allowlist
+## Optional provider allowlist
 
-The CSP lists Microsoft Clarity and PostHog only to make optional, consented analytics possible. An allowlisted CSP origin does not load a provider. `site.js` injects neither provider script nor sends analytics events until the visitor has actively selected Analytics in the preference centre and the matching provider configuration exists.
+The CSP lists Microsoft Clarity and PostHog only to make optional, consented analytics possible. It also lists the minimal reviewed Google advertising origins required by the disabled-by-default manual-placement capability. An allowlisted CSP origin does not load a provider. `site.js` injects neither an analytics provider nor an advertising script until the visitor has actively selected the matching optional preference and the matching public configuration exists. The advertising implementation guide is [Advertising, Sponsorship, and Consent Operations](ADVERTISING_AND_CONSENT_OPERATIONS.md).
 
 ## Host compatibility
 

@@ -333,3 +333,35 @@ The contact page explicitly states that ReadyPackets provides services remotely,
 **Validation completed:** `npm run package` passed, building 10 static pages and validating 38 required artifacts. Added a static regression contract that requires the address, remote-service/no-correspondence wording, stable anchor, and absence of the old “Visit or write” invitation. Node syntax checks passed for modified source/validation scripts. Diff whitespace and credential-pattern checks passed. The updated upload archive SHA-256 is `6a3c9a316847ee23bcb0ee6d43a52b956b45b7e10f69b855162512b8c17709e6`.
 
 **Publication status:** Published to `readypackets/ReadyPackets-Marketing-Site` `main` as `ec4f2199c885b679f7f349059c3509ff6576d296` (`fix: restore business address on contact page`). GitHub Actions will validate the revision and refresh the deploy-only `hostinger-static` branch.
+
+---
+
+## 2026-10-17 — Responsive horizontal packet comparisons and consent-gated advertising capability
+
+**User request:**
+
+> The tiers should expand horizontally instead of vertically. The site should remain ADA compliant and 100% responsive. The site should be able to leverage and support AdSense and other paid ads.
+
+**Packet comparison implementation:** Opening a packet now makes that packet card span the full width of the packet explorer rather than leaving its tiers in a narrow first-column stack. The opened packet renders every approved Matrix v3.0 tier in a responsive comparison grid: side by side when width permits, two columns at the tablet breakpoint, and one readable column on small screens. The native `details`/`summary` control remains the interaction mechanism, so the same disclosure works with keyboard, touch, pointer, and assistive technology; hover remains a nonessential visual enhancement. There is no price output and no horizontal page scrolling.
+
+**Advertising/sponsorship design:** Added a self-hosted, dependency-free capability for two intentionally separated, disabled-by-default models:
+
+1. Manual AdSense units in two predeclared, clearly labelled placement regions (`home-inline` and `solutions-inline`). Auto ads, overlays, anchors, and automatic insertion are not implemented.
+2. Direct sponsor placements using a public label, HTTPS destination, and factual description. The site uses `noopener noreferrer sponsored`, injects no sponsor tag, and tracks no sponsor clicks.
+
+The public configuration contains blank publisher/slot/sponsor values. Before a visitor selects **Advertising**, the browser creates no AdSense script, slot, iframe, sponsor content, or advertising request. Analytics and Advertising are separate affirmative choices in the preference dialog. Withdrawal clears rendered placement content and removes the optional AdSense tag from the current page. The capability does not introduce a portal connection, portal cookie, portal identity transfer, customer/order data processing, server dependency, or secret into the static website.
+
+**Privacy, security, and compliance boundary:** Added `docs/ADVERTISING_AND_CONSENT_OPERATIONS.md` with the required operator checklist, manual-placement policy, sponsor policy, provider references, and review tests. The website-level consent control is deliberately documented as a fail-closed browser loading gate, **not** as a replacement for a Google-certified CMP/TCF implementation where Google requires one for EEA, UK, or Swiss advertising traffic. The privacy notice now describes optional advertising, sponsor/data boundaries, withdrawal, and the independently hosted portal boundary. The strict Apache/LiteSpeed CSP receives only the reviewed provider origins needed for the optional capability; allowlisting does not load a provider. No `unsafe-inline`, wildcard script source, or weakened portal boundary was added.
+
+**Accessibility and responsive behavior:** Added visible `Advertisement` labels, avoids insertion in navigation, portal calls to action, packet controls, and download-looking controls, removes unconfigured placements from layout/focus order, and documents keyboard, screen-reader, zoom, reduced-motion, theme, and 320 px/400% testing requirements. The accessibility checklist and application context now preserve the desktop/tablet/mobile tier comparison contract.
+
+**Validation completed:**
+
+- `npm run package` and `npm run validate` passed: **10 static pages** and **38 required artifacts**.
+- Node syntax checks passed for static build/data/catalogue/advertising modules and public website scripts.
+- Static contracts confirm eight comparison regions and all 20 Matrix-approved tiers on both home and solution pages, blank public advertising configuration, labelled-but-hidden optional placements, no pre-rendered ad unit, consent controls, strict CSP provider entries, and full-width comparison styles.
+- Live Chrome protocol checks confirmed that an expanded packet card occupies its full explorer width with no horizontal page overflow: 1440 px (`1184 px` wide, three visible tier cards), 800 px (`753 px`, two-column reflow), and 390 px (`358 px`, one-column reflow). Pre-consent checks confirmed no advertising tag/frame/visible placement at all three widths.
+- An isolated browser test with a non-production direct-sponsor fixture confirmed: hidden before consent; visible only after affirmative Advertising consent; HTTPS destination and `noopener noreferrer sponsored` rel attributes present; removed again after selecting Essential only.
+- Public-copy scan found no obsolete visitor-facing “marketing site/website” label. `git diff --check` and a pending-diff credential/private-key scan passed.
+
+**Publication status:** Validation complete; source publication to `readypackets/ReadyPackets-Marketing-Site` `main` is pending the final staged-release review.

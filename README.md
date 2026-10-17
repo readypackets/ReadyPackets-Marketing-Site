@@ -13,12 +13,13 @@ The public ReadyPackets website links visitors to the separately deployed ReadyP
 
 - Story-led landing page with an explanation of the ReadyPackets process
 - Public pages for process, solution areas, FAQ, about, contact, privacy/cookies, accessibility, Terms of Use, and Refund Policy
-- An accessible, price-free packet explorer for eight Matrix v3.0 offerings and all 20 associated tiers; opening a packet shows every tier, timeline, outcome, and included offering
+- An accessible, price-free packet explorer for eight Matrix v3.0 offerings and all 20 associated tiers; opening a packet expands the full-width responsive comparison with every tier, timeline, outcome, and included offering
 - Semantic HTML, responsive CSS, keyboard-first navigation, reduced-motion support, and WCAG 2.2 AA design/test target
 - System-first Light/Dark/System icon control with local-only explicit preference storage
 - Indexable server-rendered-in-build HTML—no JavaScript required for core content
 - Canonical tags, Open Graph/Twitter metadata, Organization/WebSite/FAQ schema, XML sitemap, `robots.txt`, `llms.txt`, and `ai.txt`
 - Consent-first Microsoft Clarity and PostHog capability, disabled by default
+- Consent-gated manual AdSense and direct-sponsorship capability, disabled by default and documented for required CMP/privacy review
 - Hostinger/Bluehost Apache/LiteSpeed `.htaccess` security headers and canonical-host redirect baseline
 - Supplied ReadyPackets Document-Flow trademark brand assets
 
@@ -52,7 +53,7 @@ Edit `scripts/site-data.mjs` before a production build only to:
 
 Edit `src/assets/js/site-config.js` only to optionally add a Microsoft Clarity project ID and/or PostHog project key. Those provider identifiers are public browser configuration—not secrets.
 
-Analytics is still not loaded until a visitor affirmatively opts in through the privacy interface. Never place a password, private key, API secret, database credential, portal key, or any non-public value in `site-config.js`.
+Analytics and advertising are still not loaded until a visitor affirmatively opts in through the matching privacy preference. Never place a password, private key, API secret, database credential, portal key, or any non-public value in `site-config.js`. Before configuring an ad identifier, follow [Advertising, Sponsorship, and Consent Operations](docs/ADVERTISING_AND_CONSENT_OPERATIONS.md); a browser preference gate is not a substitute for a certified CMP/TCF implementation where that is required.
 
 ## Deployment
 

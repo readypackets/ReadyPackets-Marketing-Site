@@ -35,7 +35,7 @@ The static site must never become a proxy for, replica of, or client-side access
 
 The home page and `solutions.html` include a static, price-free packet-tier explorer for eight Matrix v3.0 offerings and 20 tiers. The approval and reconciliation record is `docs/PACKET_OFFERING_RECONCILIATION_2026-10-17.md`; its extracted source text is `docs/PACKET_MATRIX_V3_SOURCE_EXTRACT_2026-10-17.txt`.
 
-Each group uses a native disclosure. Opening it shows every tier, timeline, outcome, inherited-from statement, and included offering. Pointer hover adds visual affordance only; it never reveals information that cannot be reached by touch, keyboard, or assistive technology. Tier content deliberately excludes prices, discounts, payment terms, and price-derived claims. Update the source record and revalidate the static output before changing packet scope or tiers.
+Each group uses a native disclosure. Opening it expands that group across the explorer grid and shows every tier, timeline, outcome, inherited-from statement, and included offering in a horizontal comparison where width permits. At narrower widths, the exact same tier content reflows to two columns and then one column without requiring horizontal page scrolling. Pointer hover adds visual affordance only; it never reveals information that cannot be reached by touch, keyboard, or assistive technology. Tier content deliberately excludes prices, discounts, payment terms, and price-derived claims. Update the source record and revalidate the static output before changing packet scope or tiers.
 
 ## Brand source
 
@@ -44,6 +44,8 @@ The approved Document-Flow brand package supplied on 2026-09-30 is the source fo
 ## Privacy and analytics
 
 Microsoft Clarity and PostHog are optional capability only. Provider configuration is public browser configuration and lives in `src/assets/js/site-config.js`; it must contain only project identifiers—not secrets. Both remain disabled until the visitor gives affirmative Analytics consent. The code disables PostHog autocapture/session replay and sends only reviewed website path events.
+
+Manual AdSense units and direct sponsor placements are a separate optional capability. They are disabled by default, render only after affirmative Advertising consent, and may appear only in the labelled placement regions outside navigation, portal calls to action, and packet controls. The public preference mechanism is a fail-closed loading gate; it is not a substitute for a Google-certified CMP/TCF implementation where Google requires one. Read `docs/ADVERTISING_AND_CONSENT_OPERATIONS.md` before configuration.
 
 The visual theme defaults to **System**, follows the operating-system color preference, and does not require analytics consent. Only an explicit Light or Dark override is stored locally; it is not sent to the portal or analytics providers.
 

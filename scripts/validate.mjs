@@ -29,6 +29,7 @@ assert.ok(!("dependencies" in hostingerManifest), "Hostinger build manifest must
 assert.ok(!("devDependencies" in hostingerManifest), "Hostinger build manifest must not add build dependencies");
 const sourceJs = await readFile(path.join(dist, "assets/js/site.js"), "utf8");
 const themeJs = await readFile(path.join(dist, "assets/js/theme.js"), "utf8");
+assert.match(sourceJs, /rp_website_consent_v2/);
 assert.match(sourceJs, /consentv2/);
 assert.match(sourceJs, /autocapture: false/);
 assert.match(sourceJs, /disable_session_recording: true/);
@@ -40,8 +41,10 @@ assert.match(themeJs, /configureThemeControl/);
 assert.match(themeJs, /data-theme-toggle/);
 assert.match(themeJs, /nextPreference/);
 assert.match(sourceJs, /configurePacketExplorers/);
-assert.match(sourceJs, /ArrowLeft/);
-assert.match(sourceJs, /aria-selected/);
+assert.match(sourceJs, /applyAdvertising/);
+assert.match(sourceJs, /adsensePublisherId/);
+assert.match(sourceJs, /advertising-preference/);
+assert.match(sourceJs, /data-ad-placement/);
 assert.ok(!/https?:\/\//i.test(themeJs), "Theme preference loader must not contact an external origin");
 
 for (const [file, page] of Object.entries(pages)) {
@@ -54,6 +57,7 @@ for (const [file, page] of Object.entries(pages)) {
   assert.match(html, /<meta name="robots" content="index,follow/);
   assert.match(html, /<script type="application\/ld\+json">/);
   assert.match(html, /data-consent-open/);
+  assert.match(html, /advertising-preference/);
   assert.match(html, /data-theme-toggle/);
   assert.match(html, /data-theme-state="system"/);
   assert.match(html, /data-theme-icon="system"/);
@@ -118,12 +122,21 @@ assert.ok(!indexHtml.includes("readypackets-document-flow-light-wordmark-tm.svg"
 for (const file of ["index.html", "solutions.html"]) {
   const html = await readFile(path.join(dist, file), "utf8");
   assert.equal((html.match(/data-packet-card/g) || []).length, 8, `${file} must render all eight matrix-approved packet groups`);
+  assert.equal((html.match(/packet-tier-comparison/g) || []).length, 8, `${file} must render an accessible comparison region for every packet group`);
   assert.equal((html.match(/Included offerings/g) || []).length, 20, `${file} must render every matrix-approved tier`);
   assert.match(html, /Capital &amp; Valuation Services/);
   assert.match(html, /The All-In \(Master Bundle\)/);
   assert.match(html, /Everything in Basic, plus:/);
   assert.match(html, /Everything in Standard, plus:/);
   assert.ok(!/\$\s*\d/.test(html), `${file} must not display a packet price`);
+}
+
+for (const [file, placement] of [["index.html", "home-inline"], ["solutions.html", "solutions-inline"]]) {
+  const html = await readFile(path.join(dist, file), "utf8");
+  assert.match(html, new RegExp(`data-ad-placement="${placement}"`));
+  assert.match(html, /class="ad-placement__label">Advertisement<\/span>/);
+  assert.match(html, /data-ad-content/);
+  assert.ok(!html.includes("adsbygoogle"), `${file} must not embed an advertising unit before configuration and consent`);
 }
 
 for (const [file, heading] of [["terms/index.html", "Terms of Use"], ["refunds/index.html", "Refund Policy"]]) {
@@ -146,6 +159,9 @@ assert.match(config, /posthogProjectKey: ""/);
 assert.ok(config.includes(`siteUrl: "${site.url}"`), "Public config canonical site URL must match rendered metadata");
 assert.ok(config.includes(`portalUrl: "${site.portalUrl}"`), "Public config primary portal URL must match rendered portal links");
 assert.ok(config.includes(`alternatePortalUrl: "${site.alternatePortalUrl}"`), "Public config alternate portal URL must match rendered portal links");
+assert.match(config, /adsensePublisherId: ""/);
+assert.match(config, /"home-inline": ""/);
+assert.match(config, /"solutions-inline": ""/);
 assert.ok(!/^\s*(?:[A-Za-z0-9_]*secret|password|privateKey|apiSecret)\s*:/im.test(config), "Public config must not contain a secret setting");
 const headers = await readFile(path.join(dist, ".htaccess"), "utf8");
 assert.ok(!headers.includes("unsafe-inline"));
@@ -153,12 +169,17 @@ assert.match(headers, /Content-Security-Policy/);
 assert.match(headers, /!\^\(\?:www\|go\)\\\.readypackets\\\.com\$/);
 assert.match(headers, /SetEnvIfNoCase Host "\^go\\\.readypackets\\\.com/);
 assert.match(headers, /X-Robots-Tag "noindex, nofollow, noarchive" env=rp_staging_host/);
+assert.match(headers, /pagead2\.googlesyndication\.com/);
+assert.match(headers, /googleads\.g\.doubleclick\.net/);
 const stylesheet = await readFile(path.join(dist, "assets/css/site.css"), "utf8");
 assert.match(stylesheet, /:root\[data-theme="dark"\]/);
 assert.match(stylesheet, /@media \(prefers-color-scheme: dark\)/);
 assert.match(stylesheet, /\.theme-toggle/);
 assert.match(stylesheet, /\.logo-lockup--square[^}]*aspect-ratio: 1 \/ 1[^}]*object-fit: contain/);
 assert.match(stylesheet, /\.brand-header-lockup__tagline/);
+assert.match(stylesheet, /\.packet-card\.is-open[^}]*grid-column: 1 \/ -1/);
+assert.match(stylesheet, /\.packet-tier-comparison/);
+assert.match(stylesheet, /\.ad-placement\[hidden\]/);
 const notFound = await readFile(path.join(dist, "404.html"), "utf8");
 assert.match(notFound, /<meta name="color-scheme" content="light dark">/);
 assert.match(notFound, /<script src="assets\/js\/theme\.js\?v=[a-f0-9]{12}"><\/script>/);
