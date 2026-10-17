@@ -39,7 +39,7 @@ Each group uses a native disclosure for the packet overview and accessible butto
 
 ## Brand source
 
-The approved Document-Flow brand package supplied on 2026-09-30 is the source for lockups, compact marks, favicon, and color guidance. The website uses the trademark lockups by explicit owner request. Do not alter brand geometry, colors, proportions, or trademark notation without brand-owner/legal review.
+The approved Document-Flow brand package supplied on 2026-09-30 is the source for lockups, compact marks, favicon, and color guidance. The website uses the trademark lockups by explicit owner request. The primary header must use the horizontal ReadyPackets™ SVG wordmark (`readypackets-document-flow-*-wordmark-tm.svg`) so the company name remains visible at every viewport; use the compact mark only where space is intentionally constrained. Do not alter brand geometry, colors, proportions, or trademark notation without brand-owner/legal review.
 
 ## Privacy and analytics
 

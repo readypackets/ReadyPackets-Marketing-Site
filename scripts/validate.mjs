@@ -10,6 +10,7 @@ const required = [
   ".htaccess", "404.html", "robots.txt", "sitemap.xml", "llms.txt", "ai.txt", "humans.txt", "site.webmanifest", ".well-known/security.txt",
   "assets/css/site.css", "assets/js/site.js", "assets/js/theme.js", "assets/js/site-config.js",
   "assets/brand/readypackets-full-lockup-square-light.webp", "assets/brand/readypackets-full-lockup-square-dark.webp",
+  "assets/brand/readypackets-document-flow-light-wordmark-tm.svg", "assets/brand/readypackets-document-flow-dark-wordmark-tm.svg",
   "assets/brand/readypackets-full-lockup-square-light-compact-mark.png", "assets/brand/readypackets-full-lockup-square-dark-compact-mark.png",
   "assets/brand/readypackets-full-lockup-square-light-1200.png", "assets/brand/readypackets-full-lockup-square-dark-1200.png", "favicon.ico",
   ...Object.keys(pages),
@@ -91,6 +92,10 @@ for (const logo of ["readypackets-full-lockup-square-light-compact-mark.png", "r
 }
 assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-light\.webp/);
 assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-dark\.webp/);
+const indexHtml = await readFile(path.join(dist, "index.html"), "utf8");
+assert.match(indexHtml, /brand--header-wordmark/);
+assert.match(indexHtml, /readypackets-document-flow-light-wordmark-tm\.svg/);
+assert.match(indexHtml, /readypackets-document-flow-dark-wordmark-tm\.svg/);
 
 for (const file of ["index.html", "solutions.html"]) {
   const html = await readFile(path.join(dist, file), "utf8");

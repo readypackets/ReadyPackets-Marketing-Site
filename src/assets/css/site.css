@@ -97,6 +97,7 @@ p { margin: 0 0 1rem; }
 .brand { display: inline-flex; width: min(12.5rem, 43vw); align-items: center; }
 .brand img { width: 100%; height: auto; }
 .brand--square { width: clamp(3.25rem, 7vw, 4.4rem); aspect-ratio: 1; }
+.brand--header-wordmark { width: clamp(9.75rem, 17vw, 14.25rem); flex: 0 1 14.25rem; }
 .brand--footer-square { width: min(13rem, 100%); }
 .brand-mark--dark { display: none; }
 :root[data-theme="dark"] .brand .brand-mark--light { display: none; }
@@ -237,6 +238,7 @@ dialog input { width: 1.2rem; height: 1.2rem; margin-top: .18rem; }
 @media (max-width: 590px) {
   .grid-3, .grid-4, .packet-explorer { grid-template-columns: 1fr; }
   .header-row { min-height: 4.6rem; }
+  .brand--header-wordmark { width: min(10.5rem, 54vw); }
   .footer-bottom { align-items: flex-start; flex-direction: column; }
   .button-row .button { width: 100%; }
   .packet-card__details > summary { padding: 1.1rem; }
