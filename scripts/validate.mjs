@@ -133,6 +133,13 @@ for (const [file, heading] of [["terms/index.html", "Terms of Use"], ["refunds/i
   assert.ok(!new RegExp("mark" + "eting\\s+(?:site|website)", "i").test(html), `${file} must refer to the ReadyPackets website`);
 }
 
+const contactHtml = await readFile(path.join(dist, "contact.html"), "utf8");
+assert.match(contactHtml, /<section id="business-address" class="section section--soft">/);
+assert.match(contactHtml, /<h2>Business address<\/h2>/);
+assert.match(contactHtml, /7404 Executive Pl<br>Lanham, MD 20706<br>United States/);
+assert.match(contactHtml, /not a walk-in location and is not monitored for customer correspondence/);
+assert.ok(!contactHtml.includes("Visit or write"), "Contact page must not invite physical visits or mail correspondence");
+
 const config = await readFile(path.join(dist, "assets/js/site-config.js"), "utf8");
 assert.match(config, /clarityProjectId: ""/);
 assert.match(config, /posthogProjectKey: ""/);

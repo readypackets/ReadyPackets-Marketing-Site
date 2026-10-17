@@ -312,3 +312,24 @@ This log records material prompts, design decisions, implementation results, val
 **Publication status:** Published to `readypackets/ReadyPackets-Marketing-Site` `main` as `7c27bd7597e38c184f2f3b03d6a509c68f806e89` (`feat: align website packets and policy pages`). The GitHub Actions static-branch publisher must complete before Hostinger can receive the updated `hostinger-static` deployment branch.
 
 **Deployment-pipeline verification:** The follow-up audit-record publication is `51d8d7f8c823375f652cd819c7072f3fec4c2d14`. GitHub Actions completed both the static-branch publisher and the independent static website validator successfully. `hostinger-static` records `51d8d7f8c823375f652cd819c7072f3fec4c2d14` in `.readypackets-source-commit` and contains the updated `/terms/` and `/refunds/` routes.
+
+---
+
+## 2026-10-17 — Restored business address without visit or correspondence invitation
+
+**User request:**
+
+> Add the address back just don't invite someone to write or visit, then update GitHub.
+
+**Implementation:** Restored the ReadyPackets business address on `contact.html` as a semantic `<address>` block under the neutral heading **Business address**:
+
+> ReadyPackets<br>
+> 7404 Executive Pl<br>
+> Lanham, MD 20706<br>
+> United States
+
+The contact page explicitly states that ReadyPackets provides services remotely, that the address is for business identification only, that it is not a walk-in location, and that it is not monitored for customer correspondence. General non-sensitive questions now use “email” language rather than inviting visitors to write; account, order, document, payment, and support matters continue to route to the secure portal. Added the stable `contact.html#business-address` anchor and responsive address/notice styling.
+
+**Validation completed:** `npm run package` passed, building 10 static pages and validating 38 required artifacts. Added a static regression contract that requires the address, remote-service/no-correspondence wording, stable anchor, and absence of the old “Visit or write” invitation. Node syntax checks passed for modified source/validation scripts. Diff whitespace and credential-pattern checks passed. The updated upload archive SHA-256 is `6a3c9a316847ee23bcb0ee6d43a52b956b45b7e10f69b855162512b8c17709e6`.
+
+**Publication status:** Pending commit and GitHub push.
