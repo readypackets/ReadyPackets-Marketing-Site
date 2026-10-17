@@ -13,6 +13,7 @@ The static marketing site is engineered against **WCAG 2.2 AA**. It is an implem
 - Native `details`/`summary` FAQ disclosures
 - Native dialog for privacy preferences with labeled controls
 - System-first Light/Dark/System icon control with an accessible current-state and next-action label
+- Native packet disclosures with button tabs for price-free tier exploration; hover enhances the card but is never required to reveal content
 - Responsive layout, browser zoom support, and reduced-motion CSS
 - Brand colors used according to the supplied contrast guidance
 - Informative logo alternative text; decorative content excluded from semantic meaning
@@ -30,6 +31,7 @@ The static marketing site is engineered against **WCAG 2.2 AA**. It is an implem
 | Screen reader | Page title, landmark, heading order, links, controls, and status of consent controls are understandable. |
 | Motion | Operating-system reduced-motion preference removes smooth scroll/transition effects. |
 | Color theme | The icon control defaults to System, follows the operating-system preference, and cycles System → Light → Dark with keyboard/pointer input, an accessible name, a visible focus indicator, and no analytics dependency. |
+| Packet tiers | Each packet opens with Enter/Space or pointer input. Tier buttons work with Enter/Space and Left/Right/Home/End, selected content is exposed as a tab panel, and the same content never depends on hover. |
 | Contrast | Validate final color combinations, including any host-injected banners or modified content. |
 | Automated scan | Run current axe, WAVE, and/or Lighthouse accessibility checks on each deployed page; investigate every finding. |
 | Real-world test | Include keyboard and assistive-technology users in acceptance testing where possible. |

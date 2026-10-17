@@ -17,6 +17,94 @@ export const nav = [
   ["contact.html", "Contact"],
 ];
 
+// Source: docs/PACKET_TIER_INTERACTION_SOURCE_2026-10-17.md. Prices,
+// discounts, payment terms, and price-derived claims are intentionally absent
+// from this independently hosted marketing surface.
+const packetGroups = [
+  {
+    number: "01", slug: "idea-ip-protection", category: "Intellectual Property", title: "Idea & IP Protection",
+    description: "Document and structure an idea or invention before an attorney, partner, or next-stage conversation.",
+    tiers: [
+      ["Basic", "An invention summary with core architecture, features, alternatives, friction analysis, and next steps."],
+      ["Standard", "A fuller inventor packet with complex figures, alternative embodiments, risk mapping, and a standard prior-art scan."],
+      ["Premium", "A detailed patent dossier with high-fidelity diagrams, claim-theme mapping, strategic pivots, deeper analysis, and revisions."],
+    ],
+    scope: ["Core invention architecture", "Feature and alternative mapping", "Attorney-ready dossier"],
+  },
+  {
+    number: "02", slug: "business-foundation", category: "Business Formation", title: "Business Foundation",
+    description: "Build a strategic foundation for an early business moving from idea to practical operation.",
+    tiers: [
+      ["Basic", "A clean, executable 30-day roadmap to reduce launch-phase uncertainty."],
+      ["Standard", "A deeper plan structuring the business build, launch, and early operations."],
+      ["Premium", "A robust, long-range strategic dossier supporting execution and scaling."],
+    ],
+    scope: ["Business concept map", "Value proposition architecture", "Go-to-market direction"],
+  },
+  {
+    number: "03", slug: "business-plans", category: "Business Planning", title: "Business Plans",
+    description: "Prepare a professional business-plan narrative for lenders, investors, and institutional stakeholders.",
+    tiers: [
+      ["Basic", "A structured funding narrative with a tailored executive summary, financial summary, and marketing strategy."],
+      ["Standard", "A complete lender-ready plan with a three-year financial model, market opportunity, operations, management, and one revision."],
+      ["Premium", "A full-spectrum institutional package with capital materials, industry benchmarking, executive summary, and two revision rounds."],
+    ],
+    scope: ["Narrative architecture", "Executive summary", "Market and operations analysis"],
+  },
+  {
+    number: "04", slug: "operating-design", category: "Operations", title: "Operating Design",
+    description: "Define repeatable operations, responsibilities, and systems for more consistent execution.",
+    tiers: [
+      ["Basic", "A clean operational framework documenting how the business runs day-to-day."],
+      ["Standard", "A structured operational playbook enabling delegation, consistency, and scalable growth."],
+      ["Premium", "An enterprise-grade operations architecture built for rapid scaling and institutional review."],
+    ],
+    scope: ["Workflow mapping", "Role and responsibility matrix", "KPI dashboard architecture"],
+  },
+  {
+    number: "05", slug: "execution-partnerships", category: "Execution & Growth", title: "Execution & Partnerships",
+    description: "Prepare structured bid, scope, partnership, and execution materials for collaborative work.",
+    tiers: [
+      ["Basic", "A professional bid packet supporting clear project scope and documented project planning."],
+      ["Standard", "A structured packet with expanded execution, milestone, budget, vendor, and editable bid materials."],
+      ["Premium", "A comprehensive governance package for complex projects requiring institutional-level decision-making."],
+    ],
+    scope: ["Project scope definition", "Milestone and deliverable mapping", "Partnership governance framework"],
+  },
+  {
+    number: "06", slug: "launch-revenue-ready", category: "Launch & Marketing", title: "Launch & Revenue Ready",
+    description: "Align the business story, customer-facing presence, and launch materials around a revenue path.",
+    tiers: [
+      ["Basic", "A ready-to-launch digital presence designed to convert visitors into documented leads immediately."],
+      ["Standard", "A complete digital launch system with a multi-page website, email automation, and revenue infrastructure."],
+      ["Premium", "A full-stack revenue engine for businesses that need to launch fast and scale immediately."],
+    ],
+    scope: ["Custom website presence", "Lead-capture architecture", "CRM and sales-pipeline setup"],
+  },
+  {
+    number: "07", slug: "the-all-in-master-bundle", category: "Master Bundle", title: "The All-In",
+    description: "Bring the six packet groups together as one comprehensive enterprise-architecture engagement.",
+    tiers: [
+      ["Premium", "A comprehensive enterprise architecture package covering business foundation, operating design, launch systems, and go-to-market execution."],
+    ],
+    scope: ["Business foundation", "Operating and execution design", "Launch and go-to-market system"],
+  },
+];
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+}
+
+function packetExplorerHtml(prefix) {
+  return `<div class="packet-explorer">${packetGroups.map((group) => {
+    const cardId = `${prefix}-${group.slug}`;
+    const tierControls = group.tiers.map(([tier], index) => `<button class="packet-tier-button" type="button" role="tab" id="${cardId}-tab-${index}" aria-selected="${index === 0}" aria-controls="${cardId}-panel-${index}" tabindex="${index === 0 ? "0" : "-1"}" data-packet-tier>${escapeHtml(tier)}</button>`).join("");
+    const tierPanels = group.tiers.map(([tier, summary], index) => `<div class="packet-tier-panel" role="tabpanel" id="${cardId}-panel-${index}" aria-labelledby="${cardId}-tab-${index}"${index === 0 ? "" : " hidden"} data-packet-tier-panel><p class="packet-tier-panel__label">${escapeHtml(tier)} tier</p><p>${escapeHtml(summary)}</p></div>`).join("");
+    const scope = group.scope.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    return `<article class="packet-card" data-packet-card><details class="packet-card__details"><summary><span class="packet-card__summary"><span class="icon-badge" aria-hidden="true">${group.number}</span><span><span class="packet-card__category">${escapeHtml(group.category)}</span><h3>${escapeHtml(group.title)}</h3><p>${escapeHtml(group.description)}</p></span></span><span class="packet-card__prompt"><span>Explore tiers</span><span aria-hidden="true">↓</span></span></summary><div class="packet-card__body"><div class="packet-tier-tabs" role="tablist" aria-label="${escapeHtml(group.title)} tiers">${tierControls}</div>${tierPanels}<div class="packet-scope"><p>Representative scope</p><ul>${scope}</ul></div><a class="packet-explorer__cta" href="${site.portalUrl}/register" data-portal-link>Explore this packet in the portal <span aria-hidden="true">→</span></a></div></details></article>`;
+  }).join("")}</div>`;
+}
+
 export const pages = {
   "index.html": {
     title: "ReadyPackets | Turn a business idea into a prepared business packet",
@@ -102,16 +190,8 @@ export const pages = {
 
       <section class="section section--soft" aria-labelledby="services-title">
         <div class="wrap">
-          <div class="section-heading"><p class="eyebrow">Where we can help</p><h2 id="services-title">Business-building work, organized by the job it needs to do.</h2></div>
-          <div class="grid-3">
-            <article class="card"><h3>Idea &amp; IP preparation</h3><p>Organize and articulate an early concept before legal, partner, or next-stage discussions.</p></article>
-            <article class="card"><h3>Business foundation</h3><p>Set direction with a practical roadmap, strategic framing, and a stronger base for launching.</p></article>
-            <article class="card"><h3>Business plans</h3><p>Create a focused narrative for internal direction, lenders, partners, or investor conversations.</p></article>
-            <article class="card"><h3>Operating design</h3><p>Document how the business works so execution does not depend on memory or one person.</p></article>
-            <article class="card"><h3>Execution &amp; partnerships</h3><p>Prepare scopes, bid materials, partnership frameworks, and related working documents.</p></article>
-            <article class="card"><h3>Launch &amp; revenue readiness</h3><p>Connect the business story to an intentional, customer-facing launch and revenue path.</p></article>
-          </div>
-          <p class="mt-lg"><a href="solutions.html">Learn about ReadyPackets solution areas <span aria-hidden="true">→</span></a></p>
+          <div class="section-heading"><p class="eyebrow">Explore the packets</p><h2 id="services-title">Choose the kind of business-building work that makes the next step clearer.</h2><p class="lead">Open a packet to compare its tiers and representative scope, then start in the portal when you are ready to discuss the right fit.</p></div>
+          ${packetExplorerHtml("home-packet")}
         </div>
       </section>
 
@@ -140,7 +220,7 @@ export const pages = {
     description: "Explore ReadyPackets solution areas for idea preparation, business foundations, plans, operations, partnerships, and launch readiness.",
     body: `
       <section class="hero"><div class="wrap hero-grid"><div><p class="pill">What we build</p><h1>Prepare the part of the business that needs to hold up next.</h1><p class="lead">ReadyPackets organizes its work around real founder moments: explaining an idea, setting a business foundation, preparing a plan, creating operating clarity, formalizing a partnership, or getting ready to launch.</p><div class="button-row"><a class="button button--gold" href="${site.portalUrl}/register" data-portal-link>Explore in the portal <span aria-hidden="true">→</span></a></div></div><aside class="hero-card"><h2>Built for practical use</h2><ul class="check-list"><li>Clarity for the people who need to understand the work</li><li>Structure for the people who need to execute it</li><li>Materials that make the next review more efficient</li></ul></aside></div></section>
-      <section class="section"><div class="wrap"><div class="section-heading section-heading--center"><p class="eyebrow">Solution areas</p><h2>Six ways to give a business more structure.</h2><p class="lead">Packages and scope are selected in the portal. These categories describe the work they are designed to support, not legal, tax, accounting, investment, or other regulated professional advice.</p></div><div class="grid-3"><article class="card"><span class="icon-badge">01</span><h3>Idea &amp; IP preparation</h3><p>Document and structure a concept so it can be explained clearly and prepared for the appropriate professional or strategic next step.</p></article><article class="card"><span class="icon-badge">02</span><h3>Business foundation</h3><p>Build a practical foundation for early direction, planning, and the work of moving from an idea to an operating business.</p></article><article class="card"><span class="icon-badge">03</span><h3>Business plans</h3><p>Shape the narrative, operating assumptions, and planning material that makes a business easier to evaluate and discuss.</p></article><article class="card"><span class="icon-badge">04</span><h3>Operating design</h3><p>Define repeatable business operations, responsibilities, and working systems so execution becomes more consistent.</p></article><article class="card"><span class="icon-badge">05</span><h3>Execution &amp; partnerships</h3><p>Prepare structured bid, scope, partnership, and execution materials for project-based and collaborative work.</p></article><article class="card"><span class="icon-badge">06</span><h3>Launch &amp; revenue readiness</h3><p>Align the core story, customer-facing presence, and early launch materials around a more intentional revenue path.</p></article></div></div></section>
+      <section class="section"><div class="wrap"><div class="section-heading section-heading--center"><p class="eyebrow">Solution areas</p><h2>Six ways to give a business more structure.</h2><p class="lead">Open any packet to compare its tiers and representative scope. Packages and final scope are selected in the portal. These categories describe the work they are designed to support, not legal, tax, accounting, investment, or other regulated professional advice.</p></div>${packetExplorerHtml("solutions-packet")}</div></section>
       <section class="section section--soft"><div class="wrap split-grid"><div><p class="eyebrow">Start narrow. Build forward.</p><h2>A strong foundation does not have to begin as an all-at-once project.</h2><p class="lead">Choose the packet that makes the next decision easier. When future work is needed, completed materials create a more organized starting point.</p></div><div class="story-panel"><h3>Not sure where to begin?</h3><p>Start with the stage you are in and the conversation you are trying to prepare for. The portal can help you find an appropriate point of entry.</p><a class="button button--outline" href="${site.portalUrl}/register" data-portal-link>Start in the portal <span aria-hidden="true">→</span></a></div></div></section>
     `,
   },

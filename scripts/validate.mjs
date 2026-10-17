@@ -35,6 +35,9 @@ assert.match(themeJs, /prefers-color-scheme: dark/);
 assert.match(themeJs, /configureThemeControl/);
 assert.match(themeJs, /data-theme-toggle/);
 assert.match(themeJs, /nextPreference/);
+assert.match(sourceJs, /configurePacketExplorers/);
+assert.match(sourceJs, /ArrowLeft/);
+assert.match(sourceJs, /aria-selected/);
 assert.ok(!/https?:\/\//i.test(themeJs), "Theme preference loader must not contact an external origin");
 
 for (const [file, page] of Object.entries(pages)) {
@@ -88,6 +91,15 @@ for (const logo of ["readypackets-full-lockup-square-light-compact-mark.png", "r
 }
 assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-light\.webp/);
 assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-dark\.webp/);
+
+for (const file of ["index.html", "solutions.html"]) {
+  const html = await readFile(path.join(dist, file), "utf8");
+  assert.equal((html.match(/data-packet-card/g) || []).length, 7, `${file} must render all seven packet groups`);
+  assert.match(html, /role="tablist"/);
+  assert.match(html, /data-packet-tier/);
+  assert.match(html, /The All-In/);
+  assert.ok(!/\$\s*\d/.test(html), `${file} must not display a packet price`);
+}
 
 const config = await readFile(path.join(dist, "assets/js/site-config.js"), "utf8");
 assert.match(config, /clarityProjectId: ""/);

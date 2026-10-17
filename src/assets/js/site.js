@@ -144,7 +144,7 @@
 
   function markExternalPortalLinks() {
     const portalOrigins = [safeConfig(CONFIG.portalUrl), safeConfig(CONFIG.alternatePortalUrl)].filter(Boolean);
-    $$('a[data-portal-link]').forEach((link) => {
+    $$("a[data-portal-link]").forEach((link) => {
       try {
         const target = new URL(link.href, window.location.href);
         if (portalOrigins.includes(target.origin)) link.setAttribute("rel", "noopener noreferrer");
@@ -152,9 +152,48 @@
     });
   }
 
+  function configurePacketExplorers() {
+    $$('[data-packet-card]').forEach((card) => {
+      const disclosure = $('details', card);
+      const tabs = $$('[data-packet-tier]', card);
+      const panels = $$('[data-packet-tier-panel]', card);
+      if (!disclosure || !tabs.length || tabs.length !== panels.length) return;
+
+      const syncDisclosureState = () => card.classList.toggle('is-open', disclosure.open);
+      disclosure.addEventListener('toggle', syncDisclosureState);
+      syncDisclosureState();
+
+      const activateTier = (selected) => {
+        tabs.forEach((tab, index) => {
+          const active = tab === selected;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          panels[index].hidden = !active;
+        });
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activateTier(tab));
+        tab.addEventListener('keydown', (event) => {
+          const key = event.key;
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(key)) return;
+          event.preventDefault();
+          let nextIndex = index;
+          if (key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if (key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+          if (key === 'Home') nextIndex = 0;
+          if (key === 'End') nextIndex = tabs.length - 1;
+          activateTier(tabs[nextIndex]);
+          tabs[nextIndex].focus();
+        });
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     configureMobileNavigation();
     configureConsent();
     markExternalPortalLinks();
+    configurePacketExplorers();
   });
 })();

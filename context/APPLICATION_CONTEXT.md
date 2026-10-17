@@ -31,6 +31,12 @@ The static site must never become a proxy for, replica of, or client-side access
 - Node.js is used only to build, validate, package, and optionally preview the static output
 - Hosted artifact is `dist/`; GitHub Actions publishes that verified output alone to the deploy-only `hostinger-static` branch for Hostinger Git deployment
 
+## Packet-tier explorer
+
+The home page and `solutions.html` include a static, price-free packet-tier explorer for six packet groups and the All-In master bundle. The approved source record is `docs/PACKET_TIER_INTERACTION_SOURCE_2026-10-17.md`, compiled from the public ReadyPackets catalogue on October 17, 2026.
+
+Each group uses a native disclosure for the packet overview and accessible button tabs for tiers. Pointer hover adds visual affordance only; it never reveals information that cannot be reached by touch, keyboard, or assistive technology. Tier content deliberately excludes prices, discounts, payment terms, and price-derived claims. Update the source record and revalidate the static output before changing packet scope or tiers.
+
 ## Brand source
 
 The approved Document-Flow brand package supplied on 2026-09-30 is the source for lockups, compact marks, favicon, and color guidance. The website uses the trademark lockups by explicit owner request. Do not alter brand geometry, colors, proportions, or trademark notation without brand-owner/legal review.
