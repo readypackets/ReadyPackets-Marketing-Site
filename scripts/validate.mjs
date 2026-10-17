@@ -10,7 +10,10 @@ const required = [
   ".htaccess", "404.html", "robots.txt", "sitemap.xml", "llms.txt", "ai.txt", "humans.txt", "site.webmanifest", ".well-known/security.txt",
   "assets/css/site.css", "assets/js/site.js", "assets/js/theme.js", "assets/js/site-config.js",
   "assets/brand/readypackets-full-lockup-square-light.webp", "assets/brand/readypackets-full-lockup-square-dark.webp",
-  "assets/brand/readypackets-document-flow-light-wordmark-tm.svg", "assets/brand/readypackets-document-flow-dark-wordmark-tm.svg",
+  "assets/brand/readypackets-approved-header-icon-light.png", "assets/brand/readypackets-approved-header-icon-dark.png",
+  "assets/brand/readypackets-approved-header-wordmark-light.png", "assets/brand/readypackets-approved-header-wordmark-dark.png",
+  "assets/brand/readypackets-approved-header-rule-light.png", "assets/brand/readypackets-approved-header-rule-dark.png",
+  "assets/brand/readypackets-approved-header-tagline-light.png", "assets/brand/readypackets-approved-header-tagline-dark.png",
   "assets/brand/readypackets-full-lockup-square-light-compact-mark.png", "assets/brand/readypackets-full-lockup-square-dark-compact-mark.png",
   "assets/brand/readypackets-full-lockup-square-light-1200.png", "assets/brand/readypackets-full-lockup-square-dark-1200.png", "favicon.ico",
   ...Object.keys(pages),
@@ -54,7 +57,7 @@ for (const [file, page] of Object.entries(pages)) {
   assert.match(html, /data-theme-toggle/);
   assert.match(html, /data-theme-state="system"/);
   assert.match(html, /data-theme-icon="system"/);
-  assert.match(html, /<script src="assets\/js\/theme\.js"><\/script>[\s\S]*<link rel="stylesheet" href="assets\/css\/site\.css">/);
+  assert.match(html, /<script src="assets\/js\/theme\.js\?v=[a-f0-9]{12}"><\/script>[\s\S]*<link rel="stylesheet" href="assets\/css\/site\.css\?v=[a-f0-9]{12}">/);
   assert.match(html, /data-portal-link/);
   assert.ok(!/\sstyle\s*=/i.test(html), `${file} contains an inline style that strict CSP would block`);
   assert.ok(!html.includes("__PORTAL_ORIGIN__"), `${file} contains an unresolved portal placeholder`);
@@ -65,7 +68,8 @@ for (const [file, page] of Object.entries(pages)) {
   for (const match of html.matchAll(/<(?:a|link|img|script)\b[^>]*?\s(?:href|src)="([^"]+)"[^>]*>/g)) {
     const reference = match[1];
     if (/^(?:https?:|mailto:|#|data:)/i.test(reference)) continue;
-    const target = path.resolve(path.dirname(path.join(dist, file)), reference);
+    const localReference = reference.split(/[?#]/, 1)[0];
+    const target = path.resolve(path.dirname(path.join(dist, file)), localReference);
     assert.ok(target.startsWith(`${dist}${path.sep}`), `${file} points outside the static artifact: ${reference}`);
     await access(target);
   }
@@ -93,9 +97,19 @@ for (const logo of ["readypackets-full-lockup-square-light-compact-mark.png", "r
 assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-light\.webp/);
 assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-dark\.webp/);
 const indexHtml = await readFile(path.join(dist, "index.html"), "utf8");
-assert.match(indexHtml, /brand--header-wordmark/);
-assert.match(indexHtml, /readypackets-document-flow-light-wordmark-tm\.svg/);
-assert.match(indexHtml, /readypackets-document-flow-dark-wordmark-tm\.svg/);
+assert.match(indexHtml, /brand--header-approved-lockup/);
+assert.match(indexHtml, /readypackets-approved-header-icon-light\.png/);
+assert.match(indexHtml, /readypackets-approved-header-icon-dark\.png/);
+assert.match(indexHtml, /readypackets-approved-header-wordmark-light\.png/);
+assert.match(indexHtml, /readypackets-approved-header-wordmark-dark\.png/);
+assert.match(indexHtml, /readypackets-approved-header-rule-light\.png/);
+assert.match(indexHtml, /readypackets-approved-header-rule-dark\.png/);
+assert.match(indexHtml, /readypackets-approved-header-tagline-light\.png/);
+assert.match(indexHtml, /readypackets-approved-header-tagline-dark\.png/);
+assert.match(indexHtml, /assets\/css\/site\.css\?v=[a-f0-9]{12}/);
+assert.match(indexHtml, /assets\/brand\/readypackets-full-lockup-square-dark\.webp\?v=[a-f0-9]{12}/);
+assert.match(indexHtml, /assets\/brand\/readypackets-approved-header-tagline-light\.png\?v=[a-f0-9]{12}/);
+assert.ok(!indexHtml.includes("readypackets-document-flow-light-wordmark-tm.svg"), "Header must not use the superseded Document-Flow wordmark");
 
 for (const file of ["index.html", "solutions.html"]) {
   const html = await readFile(path.join(dist, file), "utf8");
@@ -123,10 +137,13 @@ const stylesheet = await readFile(path.join(dist, "assets/css/site.css"), "utf8"
 assert.match(stylesheet, /:root\[data-theme="dark"\]/);
 assert.match(stylesheet, /@media \(prefers-color-scheme: dark\)/);
 assert.match(stylesheet, /\.theme-toggle/);
+assert.match(stylesheet, /\.logo-lockup--square[^}]*aspect-ratio: 1 \/ 1[^}]*object-fit: contain/);
+assert.match(stylesheet, /\.brand-header-lockup__tagline/);
 const notFound = await readFile(path.join(dist, "404.html"), "utf8");
 assert.match(notFound, /<meta name="color-scheme" content="light dark">/);
-assert.match(notFound, /<script src="assets\/js\/theme\.js"><\/script>/);
+assert.match(notFound, /<script src="assets\/js\/theme\.js\?v=[a-f0-9]{12}"><\/script>/);
 assert.match(notFound, /data-theme-toggle/);
+assert.match(notFound, /readypackets-approved-header-tagline-light\.png/);
 
 for (const file of required) {
   const info = await stat(path.join(dist, file));

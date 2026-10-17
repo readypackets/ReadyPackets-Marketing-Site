@@ -1,4 +1,5 @@
-import { cp, mkdir, readdir, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { pages, nav, site, faqsForSchema } from "./site-data.mjs";
@@ -6,6 +7,11 @@ import { pages, nav, site, faqsForSchema } from "./site-data.mjs";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const source = path.join(root, "src");
 const output = path.join(root, "dist");
+let assetRevision = "unbuilt";
+
+function versionLocalAssetUrls(html) {
+  return html.replace(/(=(?:"|')assets\/(?:css|js|brand)\/[^"'?#\s>]+)(?=(?:"|'))/g, `$1?v=${assetRevision}`);
+}
 
 function escapeJson(value) {
   return JSON.stringify(value).replace(/</g, "\\u003c").replace(/>/g, "\\u003e").replace(/&/g, "\\u0026");
@@ -17,6 +23,11 @@ function navHtml(current) {
 
 function themeControlHtml() {
   return `<button class="theme-toggle" type="button" data-theme-toggle data-theme-state="system" aria-label="Color theme: System. Activate to switch to Light." title="Color theme: System. Activate to switch to Light."><svg data-theme-icon="system" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8M12 16v4"></path></svg><svg data-theme-icon="light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg><svg data-theme-icon="dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 15.6A8.5 8.5 0 0 1 8.4 3.4 8.5 8.5 0 1 0 20.6 15.6Z"></path></svg><span class="sr-only" data-theme-label>Color theme: System</span></button>`;
+}
+
+function approvedHeaderLogoHtml() {
+  const lockup = (variant, decorative = false) => `<span class="brand-mark brand-header-lockup brand-mark--${variant}"${decorative ? ' aria-hidden="true"' : ""}><img class="brand-header-lockup__icon" src="assets/brand/readypackets-approved-header-icon-${variant}.png" width="880" height="905" alt=""><span class="brand-header-lockup__details"><img class="brand-header-lockup__wordmark" src="assets/brand/readypackets-approved-header-wordmark-${variant}.png" width="1865" height="345" alt="${decorative ? "" : "ReadyPackets™ — Your Business, Professionally Packeted™"}"><img class="brand-header-lockup__rule" src="assets/brand/readypackets-approved-header-rule-${variant}.png" width="1854" height="74" alt=""><img class="brand-header-lockup__tagline" src="assets/brand/readypackets-approved-header-tagline-${variant}.png" width="1770" height="175" alt=""></span></span>`;
+  return `<a class="brand brand--header-approved-lockup" href="index.html" aria-label="ReadyPackets home">${lockup("light")}${lockup("dark", true)}</a>`;
 }
 
 function footerHtml() {
@@ -70,13 +81,25 @@ function render(filename, page) {
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <header class="header"><div class="wrap header-row"><a class="brand brand--header-wordmark" href="index.html" aria-label="ReadyPackets home"><img class="brand-mark brand-mark--light" src="assets/brand/readypackets-document-flow-light-wordmark-tm.svg" width="2300" height="760" alt="ReadyPackets™"><img class="brand-mark brand-mark--dark" src="assets/brand/readypackets-document-flow-dark-wordmark-tm.svg" width="2300" height="760" alt=""></a><div class="header-controls"><nav id="site-navigation" class="nav" aria-label="Primary navigation">${navHtml(filename)}<a class="button" href="${site.portalUrl}/register" data-portal-link>Start in portal <span aria-hidden="true">→</span></a></nav>${themeControlHtml()}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle>Menu <span aria-hidden="true">☰</span></button></div></div></header>
+  <header class="header"><div class="wrap header-row">${approvedHeaderLogoHtml()}<div class="header-controls"><nav id="site-navigation" class="nav" aria-label="Primary navigation">${navHtml(filename)}<a class="button" href="${site.portalUrl}/register" data-portal-link>Start in portal <span aria-hidden="true">→</span></a></nav>${themeControlHtml()}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle>Menu <span aria-hidden="true">☰</span></button></div></div></header>
   <main id="main-content">${page.body}</main>
   ${footerHtml()}
   ${consentHtml()}
 </body>
 </html>`;
 }
+
+const brandAssets = await readdir(path.join(source, "assets", "brand"));
+const versionedAssetSources = [
+  path.join(source, "assets", "css", "site.css"),
+  path.join(source, "assets", "js", "site.js"),
+  path.join(source, "assets", "js", "theme.js"),
+  path.join(source, "assets", "js", "site-config.js"),
+  ...brandAssets.sort().map((filename) => path.join(source, "assets", "brand", filename)),
+];
+const revisionHash = createHash("sha256");
+for (const file of versionedAssetSources) revisionHash.update(await readFile(file));
+assetRevision = revisionHash.digest("hex").slice(0, 12);
 
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
@@ -89,9 +112,9 @@ await cp(path.join(source, "llms.txt"), path.join(output, "llms.txt"));
 await cp(path.join(source, "ai.txt"), path.join(output, "ai.txt"));
 await cp(path.join(source, "sitemap.xml"), path.join(output, "sitemap.xml"));
 await cp(path.join(source, "humans.txt"), path.join(output, "humans.txt"));
-await cp(path.join(source, "404.html"), path.join(output, "404.html"));
+await writeFile(path.join(output, "404.html"), versionLocalAssetUrls(await readFile(path.join(source, "404.html"), "utf8")), "utf8");
 await cp(path.join(source, ".well-known"), path.join(output, ".well-known"), { recursive: true });
-for (const [filename, page] of Object.entries(pages)) await writeFile(path.join(output, filename), render(filename, page), "utf8");
+for (const [filename, page] of Object.entries(pages)) await writeFile(path.join(output, filename), versionLocalAssetUrls(render(filename, page)), "utf8");
 
 const files = await readdir(output);
 console.log(`Built ${Object.keys(pages).length} HTML pages and ${files.length} root artifacts in dist/.`);
