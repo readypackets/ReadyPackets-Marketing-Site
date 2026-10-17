@@ -1,9 +1,9 @@
-/* ReadyPackets static marketing site behavior. No framework or portal runtime. */
+/* ReadyPackets static website behavior. No framework or portal runtime. */
 (() => {
   "use strict";
 
-  const CONFIG = window.READYPACKETS_MARKETING_CONFIG || {};
-  const CONSENT_KEY = "rp_marketing_consent_v1";
+  const CONFIG = window.READYPACKETS_WEBSITE_CONFIG || {};
+  const CONSENT_KEY = "rp_website_consent_v1";
   const CONSENT_VERSION = 1;
   const analyticsLoaded = { clarity: false, posthog: false };
   let posthogConfigured = false;
@@ -78,7 +78,7 @@
       });
       posthogConfigured = true;
       window.posthog.opt_in_capturing();
-      window.posthog.capture("readypackets_marketing_page_viewed", { path: cleanPath(), surface: "marketing" });
+      window.posthog.capture("readypackets_website_page_viewed", { path: cleanPath(), surface: "website" });
     };
     document.head.append(script);
   }
@@ -157,11 +157,13 @@
       const disclosure = $('details', card);
       const tabs = $$('[data-packet-tier]', card);
       const panels = $$('[data-packet-tier-panel]', card);
-      if (!disclosure || !tabs.length || tabs.length !== panels.length) return;
+      if (!disclosure) return;
 
       const syncDisclosureState = () => card.classList.toggle('is-open', disclosure.open);
       disclosure.addEventListener('toggle', syncDisclosureState);
       syncDisclosureState();
+
+      if (!tabs.length || tabs.length !== panels.length) return;
 
       const activateTier = (selected) => {
         tabs.forEach((tab, index) => {

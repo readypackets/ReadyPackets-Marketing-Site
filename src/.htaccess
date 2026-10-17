@@ -14,6 +14,8 @@ DirectoryIndex index.html
   RewriteRule ^ https://www.readypackets.com%{REQUEST_URI} [R=301,L]
   RewriteCond %{HTTP_HOST} !^(?:www|go)\.readypackets\.com$ [NC]
   RewriteRule ^ https://www.readypackets.com%{REQUEST_URI} [R=301,L]
+  RewriteRule ^terms\.html$ /terms/ [R=301,L]
+  RewriteRule ^refunds\.html$ /refunds/ [R=301,L]
 </IfModule>
 
 <IfModule mod_setenvif.c>

@@ -1,8 +1,8 @@
-/* ReadyPackets marketing-site color theme preference. Loaded before CSS to minimize theme flash. */
+/* ReadyPackets website color theme preference. Loaded before CSS to minimize theme flash. */
 (() => {
   "use strict";
 
-  const THEME_KEY = "rp_marketing_theme_v1";
+  const THEME_KEY = "rp_website_theme_v1";
   const THEME_SEQUENCE = ["system", "light", "dark"];
   const THEMES = new Set(THEME_SEQUENCE);
   const THEME_COLORS = { light: "#F7FAFB", dark: "#0D1B2A" };
@@ -74,7 +74,7 @@
     if (readPreference() === "system") applyPreference("system");
   });
 
-  window.READYPACKETS_MARKETING_THEME = Object.freeze({
+  window.READYPACKETS_WEBSITE_THEME = Object.freeze({
     getPreference: readPreference,
     setPreference,
     applyPreference,

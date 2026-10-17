@@ -1,5 +1,5 @@
 /*
- * Public configuration for the independent ReadyPackets marketing site.
+ * Public configuration for the independent ReadyPackets website.
  *
  * These values are embedded in browser-delivered files. Never place portal
  * credentials, API secrets, database information, encryption keys, or any
@@ -11,7 +11,7 @@
  * consent review are complete. Analytics code is loaded only after the visitor
  * gives affirmative Analytics consent.
  */
-window.READYPACKETS_MARKETING_CONFIG = Object.freeze({
+window.READYPACKETS_WEBSITE_CONFIG = Object.freeze({
   siteUrl: "https://www.readypackets.com",
   portalUrl: "https://my.readypackets.com",
   alternatePortalUrl: "https://portal.readypackets.com",

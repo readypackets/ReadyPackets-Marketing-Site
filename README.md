@@ -1,10 +1,10 @@
-# ReadyPackets Marketing Website
+# ReadyPackets Website
 
-A **fully independent, static** ReadyPackets marketing website for Hostinger, Bluehost, Cloudflare Pages, S3-compatible static hosting, or comparable shared hosting.
+A **fully independent, static** ReadyPackets website for Hostinger, Bluehost, Cloudflare Pages, S3-compatible static hosting, or comparable shared hosting.
 
 > It contains **no portal runtime, database connection, customer data, customer files, portal authentication, portal cookies, server-side API, Manus dependency, or portal secret**.
 
-The public marketing site links visitors to the separately deployed ReadyPackets portal:
+The public ReadyPackets website links visitors to the separately deployed ReadyPackets portal:
 
 - Primary: `https://my.readypackets.com`
 - Alternate: `https://portal.readypackets.com`
@@ -12,7 +12,8 @@ The public marketing site links visitors to the separately deployed ReadyPackets
 ## What ships
 
 - Story-led landing page with an explanation of the ReadyPackets process
-- Public pages for process, solution areas, FAQ, about, contact, privacy/cookies, accessibility, and website terms
+- Public pages for process, solution areas, FAQ, about, contact, privacy/cookies, accessibility, Terms of Use, and Refund Policy
+- An accessible, price-free packet explorer for eight Matrix v3.0 offerings and all 20 associated tiers; opening a packet shows every tier, timeline, outcome, and included offering
 - Semantic HTML, responsive CSS, keyboard-first navigation, reduced-motion support, and WCAG 2.2 AA design/test target
 - System-first Light/Dark/System icon control with local-only explicit preference storage
 - Indexable server-rendered-in-build HTML—no JavaScript required for core content

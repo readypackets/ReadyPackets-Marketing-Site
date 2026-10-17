@@ -1,21 +1,21 @@
-# ReadyPackets Independent Marketing Website — Application Context
+# ReadyPackets Website — Application Context
 
 ## Purpose
 
-This repository is the independent public marketing website for ReadyPackets. It provides anonymous, indexable, accessible information about the ReadyPackets story, process, solution areas, frequently asked questions, contact route, accessibility, privacy/cookie notice, and website terms.
+This repository is the independent public ReadyPackets website. It provides anonymous, indexable, accessible information about the ReadyPackets story, process, packet offerings, frequently asked questions, contact route, accessibility, privacy/cookie notice, Terms of Use, and Refund Policy.
 
 It is deliberately separate from the ReadyPackets portal. The portal holds authentication, customer data, orders, uploads, audio, documents, payments, configuration, and all sensitive application controls.
 
 ## Hard boundaries
 
-| Boundary | Marketing website | Portal |
+| Boundary | ReadyPackets website | Portal |
 | --- | --- | --- |
 | Primary host | `www.readypackets.com` | `my.readypackets.com` / `portal.readypackets.com` |
 | Deployment | Static artifact to shared hosting | Hardened self-hosted VPS |
 | Runtime | HTML, CSS, vanilla JavaScript only | Node/Express, MySQL, private storage, workers |
 | Customer data | None | Authorized portal only |
 | Authentication | None | Local auth/MFA and configured enterprise SSO |
-| Cookies | Marketing privacy preference only | Host-only secure portal session/CSRF cookies |
+| Cookies | Website privacy preference only | Host-only secure portal session/CSRF cookies |
 | Secrets | None | VPS protected configuration only |
 | Cross-origin access | No portal API calls | No marketing-host session sharing |
 
@@ -33,9 +33,9 @@ The static site must never become a proxy for, replica of, or client-side access
 
 ## Packet-tier explorer
 
-The home page and `solutions.html` include a static, price-free packet-tier explorer for six packet groups and the All-In master bundle. The approved source record is `docs/PACKET_TIER_INTERACTION_SOURCE_2026-10-17.md`, compiled from the public ReadyPackets catalogue on October 17, 2026.
+The home page and `solutions.html` include a static, price-free packet-tier explorer for eight Matrix v3.0 offerings and 20 tiers. The approval and reconciliation record is `docs/PACKET_OFFERING_RECONCILIATION_2026-10-17.md`; its extracted source text is `docs/PACKET_MATRIX_V3_SOURCE_EXTRACT_2026-10-17.txt`.
 
-Each group uses a native disclosure for the packet overview and accessible button tabs for tiers. Pointer hover adds visual affordance only; it never reveals information that cannot be reached by touch, keyboard, or assistive technology. Tier content deliberately excludes prices, discounts, payment terms, and price-derived claims. Update the source record and revalidate the static output before changing packet scope or tiers.
+Each group uses a native disclosure. Opening it shows every tier, timeline, outcome, inherited-from statement, and included offering. Pointer hover adds visual affordance only; it never reveals information that cannot be reached by touch, keyboard, or assistive technology. Tier content deliberately excludes prices, discounts, payment terms, and price-derived claims. Update the source record and revalidate the static output before changing packet scope or tiers.
 
 ## Brand source
 
@@ -43,7 +43,7 @@ The approved Document-Flow brand package supplied on 2026-09-30 is the source fo
 
 ## Privacy and analytics
 
-Microsoft Clarity and PostHog are optional capability only. Provider configuration is public browser configuration and lives in `src/assets/js/site-config.js`; it must contain only project identifiers—not secrets. Both remain disabled until the visitor gives affirmative Analytics consent. The code disables PostHog autocapture/session replay and sends only reviewed marketing path events.
+Microsoft Clarity and PostHog are optional capability only. Provider configuration is public browser configuration and lives in `src/assets/js/site-config.js`; it must contain only project identifiers—not secrets. Both remain disabled until the visitor gives affirmative Analytics consent. The code disables PostHog autocapture/session replay and sends only reviewed website path events.
 
 The visual theme defaults to **System**, follows the operating-system color preference, and does not require analytics consent. Only an explicit Light or Dark override is stored locally; it is not sent to the portal or analytics providers.
 

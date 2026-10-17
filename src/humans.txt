@@ -4,7 +4,7 @@ Website: https://www.readypackets.com/
 Primary portal: https://my.readypackets.com/
 
 /* SITE */
-Type: Independent static marketing website
+Type: Independent static ReadyPackets website
 Hosting targets: Hostinger, Bluehost, or comparable static/shared hosting
 Runtime dependencies: None
 Portal code, portal secrets, customer data, and customer-session cookies: Not included

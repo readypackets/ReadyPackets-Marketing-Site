@@ -276,3 +276,37 @@ This log records material prompts, design decisions, implementation results, val
 **Validation:** `npm run package` passed for all nine public pages and 37 required artifacts. JavaScript syntax checks, static link/asset validation, cache-version checks, visual preview capture, diff integrity, and a source-diff credential-pattern scan passed. The refreshed preview confirmed readable header branding with the approved wordmark/slogan and an undistorted contain-based hero lockup.
 
 **Deployment action:** The source release is being published to `main`; the GitHub Actions workflow will rebuild and verify the deploy-only `hostinger-static` branch. Hostinger must be configured to deploy that generated branch (not source branch `main`) from root `./`, with `npm run build` and output directory `.`.
+
+---
+
+## 2026-10-17 — ReadyPackets website packet, policy, and contact-surface alignment
+
+**User request:**
+
+> 1. Remove public wording that calls this a marketing site; call it the ReadyPackets website.
+> 2. Fix the address layout and do not invite people to visit or write.
+> 3. Reconcile all packet content with the supplied `ReadyPackets® Master Product Offerings Matrix (v3.0)` and `https://www.readypackets.com/packets` so every packet shows its included offerings.
+> 4. Expanding a packet must show all tiers and their offerings.
+> 5. Create a Terms of Use policy page.
+> 6. Create a refund policy page consistent with `https://www.readypackets.com/refunds`.
+
+**Source decision and reconciliation:** The supplied Matrix v3.0 was treated as the primary approval source. The current public catalogue was independently checked as a secondary source. The reconciliation found material source-version differences in Business Plans, Operating Design, Launch & Revenue Ready, and the All-In bundle; it also found that Matrix Packet 8, **Capital & Valuation Services**, is absent from the public catalogue. The new site therefore publishes the Matrix v3.0 contents rather than silently merging conflicting descriptions. `docs/PACKET_OFFERING_RECONCILIATION_2026-10-17.md` records the decision, all eight offerings, and the conflict boundary. The Matrix PDF SHA-256 recorded in that document is `ddc70b0ac2b8a8e81427372fb52f62024144d247cf5fbfc99f92fd7d2a158070`.
+
+**Website content and interaction:** Replaced the prior representative tier tabs with an accessible native disclosure per packet. Opening any packet now reveals every tier, timeline, outcome, inherited-tier statement, and incremental included offering at once. The price-free explorer now contains **8 offerings and 20 Matrix v3.0 tiers**: Idea & IP Protection; Business Foundation; Business Plans; Operating Design; Execution & Partnerships; Launch & Revenue Ready; The All-In (Master Bundle); and Capital & Valuation Services. The public rendering intentionally excludes prices, discounts, payment terms, and price-derived claims. The source implementation lives in `scripts/packet-catalogue.mjs`.
+
+**Public-surface and policies:** Replaced public-facing marketing-site wording in rendered content and browser configuration with ReadyPackets website terminology. The contact page’s visible address invitation was replaced with a concise remote-contact section that routes account, order, document, payment, and support matters to the portal; general questions remain email-only. Added clean, canonical `/terms/` and `/refunds/` pages, footer links, Apache/LiteSpeed legacy redirects, sitemap entries, `llms.txt` and `ai.txt` policy discovery links, and required validation checks. The Terms of Use and Refund Policy are operational drafts and retain explicit qualified-counsel review language. The Refund Policy derives from the supplied ReadyPackets refund-policy source and does not expose a physical-address invitation.
+
+**Privacy and cache behavior:** Renamed public browser identifiers from obsolete site terminology to neutral website terminology: theme preference key, consent key, public configuration global, and reviewed PostHog event/surface name. Because the privacy preference key changed, existing browser consent state is not migrated; a returning visitor receives the conservative essential-only default and must opt in again before any configured analytics can load. Existing content-derived asset versioning remains in place for cache-safe logo and asset updates.
+
+**Validation completed:**
+
+- `npm run package` — passed; built **10 static pages** and validated **38 required artifacts**.
+- Node syntax checks passed for the static builder, packet catalogue, validator, and website scripts.
+- Static validation confirmed eight packet disclosures and 20 rendered tiers on both home and solution pages, clean canonical policy routes, no price output in the packet explorer, static links/assets, accessibility/consent/SEO/machine-discovery markers, and no prohibited platform dependency.
+- Desktop (1440 px) and mobile (390 px) Chromium checks confirmed the header lockup remains proportional and the expanded packet disclosure is readable at responsive widths.
+- Source hygiene check found no public `marketing site`, `Visit or write`, duplicate ReadyPackets name, or obsolete runtime identifiers in the generated artifact.
+- Diff whitespace and credential-pattern checks passed. No passwords, tokens, private keys, customer data, or other secrets were added.
+
+**Release artifact:** `ReadyPackets-Marketing-Static.zip` SHA-256 after validation: `88b3eb4353765eb753de21cce5d18cfce66f53c4e5abbe2de17c106b43a02294`.
+
+**Publication status:** Pending commit and push of the reviewed release to `readypackets/ReadyPackets-Marketing-Site` `main`; the GitHub Actions static-branch publisher must complete before Hostinger can receive the updated `hostinger-static` deployment branch.

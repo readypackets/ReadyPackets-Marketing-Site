@@ -33,7 +33,7 @@ assert.match(sourceJs, /consentv2/);
 assert.match(sourceJs, /autocapture: false/);
 assert.match(sourceJs, /disable_session_recording: true/);
 assert.ok(!sourceJs.includes("unsafe-inline"));
-assert.match(themeJs, /rp_marketing_theme_v1/);
+assert.match(themeJs, /rp_website_theme_v1/);
 assert.match(themeJs, /\["system", "light", "dark"\]/);
 assert.match(themeJs, /prefers-color-scheme: dark/);
 assert.match(themeJs, /configureThemeControl/);
@@ -57,7 +57,7 @@ for (const [file, page] of Object.entries(pages)) {
   assert.match(html, /data-theme-toggle/);
   assert.match(html, /data-theme-state="system"/);
   assert.match(html, /data-theme-icon="system"/);
-  assert.match(html, /<script src="assets\/js\/theme\.js\?v=[a-f0-9]{12}"><\/script>[\s\S]*<link rel="stylesheet" href="assets\/css\/site\.css\?v=[a-f0-9]{12}">/);
+  assert.match(html, /<script src="\/assets\/js\/theme\.js\?v=[a-f0-9]{12}"><\/script>[\s\S]*<link rel="stylesheet" href="\/assets\/css\/site\.css\?v=[a-f0-9]{12}">/);
   assert.match(html, /data-portal-link/);
   assert.ok(!/\sstyle\s*=/i.test(html), `${file} contains an inline style that strict CSP would block`);
   assert.ok(!html.includes("__PORTAL_ORIGIN__"), `${file} contains an unresolved portal placeholder`);
@@ -69,8 +69,10 @@ for (const [file, page] of Object.entries(pages)) {
     const reference = match[1];
     if (/^(?:https?:|mailto:|#|data:)/i.test(reference)) continue;
     const localReference = reference.split(/[?#]/, 1)[0];
-    const target = path.resolve(path.dirname(path.join(dist, file)), localReference);
-    assert.ok(target.startsWith(`${dist}${path.sep}`), `${file} points outside the static artifact: ${reference}`);
+    const target = localReference.startsWith("/")
+      ? path.resolve(dist, `.${localReference}`)
+      : path.resolve(path.dirname(path.join(dist, file)), localReference);
+    assert.ok(target === dist || target.startsWith(`${dist}${path.sep}`), `${file} points outside the static artifact: ${reference}`);
     await access(target);
   }
   for (const image of html.matchAll(/<img\b([^>]*)>/g)) {
@@ -83,6 +85,8 @@ const sitemap = await readFile(path.join(dist, "sitemap.xml"), "utf8");
 const llms = await readFile(path.join(dist, "llms.txt"), "utf8");
 assert.match(robots, /Sitemap: https:\/\/www\.readypackets\.com\/sitemap\.xml/);
 assert.match(sitemap, /https:\/\/www\.readypackets\.com\/solutions\.html/);
+assert.match(sitemap, /https:\/\/www\.readypackets\.com\/terms\//);
+assert.match(sitemap, /https:\/\/www\.readypackets\.com\/refunds\//);
 assert.match(llms, /Primary portal: https:\/\/my\.readypackets\.com/);
 assert.ok(!llms.includes("Manus"));
 
@@ -106,18 +110,27 @@ assert.match(indexHtml, /readypackets-approved-header-rule-light\.png/);
 assert.match(indexHtml, /readypackets-approved-header-rule-dark\.png/);
 assert.match(indexHtml, /readypackets-approved-header-tagline-light\.png/);
 assert.match(indexHtml, /readypackets-approved-header-tagline-dark\.png/);
-assert.match(indexHtml, /assets\/css\/site\.css\?v=[a-f0-9]{12}/);
-assert.match(indexHtml, /assets\/brand\/readypackets-full-lockup-square-dark\.webp\?v=[a-f0-9]{12}/);
-assert.match(indexHtml, /assets\/brand\/readypackets-approved-header-tagline-light\.png\?v=[a-f0-9]{12}/);
+assert.match(indexHtml, /\/assets\/css\/site\.css\?v=[a-f0-9]{12}/);
+assert.match(indexHtml, /\/assets\/brand\/readypackets-full-lockup-square-dark\.webp\?v=[a-f0-9]{12}/);
+assert.match(indexHtml, /\/assets\/brand\/readypackets-approved-header-tagline-light\.png\?v=[a-f0-9]{12}/);
 assert.ok(!indexHtml.includes("readypackets-document-flow-light-wordmark-tm.svg"), "Header must not use the superseded Document-Flow wordmark");
 
 for (const file of ["index.html", "solutions.html"]) {
   const html = await readFile(path.join(dist, file), "utf8");
-  assert.equal((html.match(/data-packet-card/g) || []).length, 7, `${file} must render all seven packet groups`);
-  assert.match(html, /role="tablist"/);
-  assert.match(html, /data-packet-tier/);
-  assert.match(html, /The All-In/);
+  assert.equal((html.match(/data-packet-card/g) || []).length, 8, `${file} must render all eight matrix-approved packet groups`);
+  assert.equal((html.match(/Included offerings/g) || []).length, 20, `${file} must render every matrix-approved tier`);
+  assert.match(html, /Capital &amp; Valuation Services/);
+  assert.match(html, /The All-In \(Master Bundle\)/);
+  assert.match(html, /Everything in Basic, plus:/);
+  assert.match(html, /Everything in Standard, plus:/);
   assert.ok(!/\$\s*\d/.test(html), `${file} must not display a packet price`);
+}
+
+for (const [file, heading] of [["terms/index.html", "Terms of Use"], ["refunds/index.html", "Refund Policy"]]) {
+  const html = await readFile(path.join(dist, file), "utf8");
+  assert.match(html, new RegExp(`<p class="eyebrow">${heading}</p>`));
+  assert.match(html, new RegExp(`https://www\\.readypackets\\.com/${file.replace("index.html", "")}`));
+  assert.ok(!new RegExp("mark" + "eting\\s+(?:site|website)", "i").test(html), `${file} must refer to the ReadyPackets website`);
 }
 
 const config = await readFile(path.join(dist, "assets/js/site-config.js"), "utf8");

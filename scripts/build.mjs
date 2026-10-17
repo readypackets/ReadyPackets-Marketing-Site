@@ -10,7 +10,7 @@ const output = path.join(root, "dist");
 let assetRevision = "unbuilt";
 
 function versionLocalAssetUrls(html) {
-  return html.replace(/(=(?:"|')assets\/(?:css|js|brand)\/[^"'?#\s>]+)(?=(?:"|'))/g, `$1?v=${assetRevision}`);
+  return html.replace(/(=(?:"|')\/?assets\/(?:css|js|brand)\/[^"'?#\s>]+)(?=(?:"|'))/g, `$1?v=${assetRevision}`);
 }
 
 function escapeJson(value) {
@@ -18,7 +18,7 @@ function escapeJson(value) {
 }
 
 function navHtml(current) {
-  return nav.map(([href, label]) => `<a href="${href}"${href === current ? ' aria-current="page"' : ""}>${label}</a>`).join("\n");
+  return nav.map(([href, label]) => `<a href="/${href === "index.html" ? "" : href}"${href === current ? ' aria-current="page"' : ""}>${label}</a>`).join("\n");
 }
 
 function themeControlHtml() {
@@ -26,16 +26,16 @@ function themeControlHtml() {
 }
 
 function approvedHeaderLogoHtml() {
-  const lockup = (variant, decorative = false) => `<span class="brand-mark brand-header-lockup brand-mark--${variant}"${decorative ? ' aria-hidden="true"' : ""}><img class="brand-header-lockup__icon" src="assets/brand/readypackets-approved-header-icon-${variant}.png" width="880" height="905" alt=""><span class="brand-header-lockup__details"><img class="brand-header-lockup__wordmark" src="assets/brand/readypackets-approved-header-wordmark-${variant}.png" width="1865" height="345" alt="${decorative ? "" : "ReadyPackets™ — Your Business, Professionally Packeted™"}"><img class="brand-header-lockup__rule" src="assets/brand/readypackets-approved-header-rule-${variant}.png" width="1854" height="74" alt=""><img class="brand-header-lockup__tagline" src="assets/brand/readypackets-approved-header-tagline-${variant}.png" width="1770" height="175" alt=""></span></span>`;
-  return `<a class="brand brand--header-approved-lockup" href="index.html" aria-label="ReadyPackets home">${lockup("light")}${lockup("dark", true)}</a>`;
+  const lockup = (variant, decorative = false) => `<span class="brand-mark brand-header-lockup brand-mark--${variant}"${decorative ? ' aria-hidden="true"' : ""}><img class="brand-header-lockup__icon" src="/assets/brand/readypackets-approved-header-icon-${variant}.png" width="880" height="905" alt=""><span class="brand-header-lockup__details"><img class="brand-header-lockup__wordmark" src="/assets/brand/readypackets-approved-header-wordmark-${variant}.png" width="1865" height="345" alt="${decorative ? "" : "ReadyPackets™ — Your Business, Professionally Packeted™"}"><img class="brand-header-lockup__rule" src="/assets/brand/readypackets-approved-header-rule-${variant}.png" width="1854" height="74" alt=""><img class="brand-header-lockup__tagline" src="/assets/brand/readypackets-approved-header-tagline-${variant}.png" width="1770" height="175" alt=""></span></span>`;
+  return `<a class="brand brand--header-approved-lockup" href="/" aria-label="ReadyPackets home">${lockup("light")}${lockup("dark", true)}</a>`;
 }
 
 function footerHtml() {
-  return `<footer class="footer"><div class="wrap footer-grid"><div><a class="brand brand--footer-square" href="index.html" aria-label="ReadyPackets home"><img src="assets/brand/readypackets-full-lockup-square-dark.webp" width="2048" height="2048" alt="ReadyPackets™ — Your Business, Professionally Packeted™"></a><p class="footer-tagline">Your Business, Professionally Packeted™</p><p>Structured business documentation and practical operating foundations for founders ready to move forward.</p></div><div><h2>Explore</h2><ul><li><a href="process.html">The process</a></li><li><a href="solutions.html">What we build</a></li><li><a href="faq.html">Frequently asked questions</a></li><li><a href="about.html">About ReadyPackets</a></li></ul></div><div><h2>Portal</h2><ul><li><a href="${site.portalUrl}/register" data-portal-link>Create an account</a></li><li><a href="${site.portalUrl}/login" data-portal-link>Sign in</a></li><li><a href="${site.alternatePortalUrl}/login" data-portal-link>Alternate portal address</a></li></ul></div><div><h2>Site information</h2><ul><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy &amp; cookies</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="terms.html">Website terms</a></li></ul></div></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} ReadyPackets. All rights reserved.</span><button class="text-button" type="button" data-consent-open>Cookie preferences</button></div></footer>`;
+  return `<footer class="footer"><div class="wrap footer-grid"><div><a class="brand brand--footer-square" href="/" aria-label="ReadyPackets home"><img src="/assets/brand/readypackets-full-lockup-square-dark.webp" width="2048" height="2048" alt="ReadyPackets™ — Your Business, Professionally Packeted™"></a><p class="footer-tagline">Your Business, Professionally Packeted™</p><p>Structured business documentation and practical operating foundations for founders ready to move forward.</p></div><div><h2>Explore</h2><ul><li><a href="/process.html">The process</a></li><li><a href="/solutions.html">What we build</a></li><li><a href="/faq.html">Frequently asked questions</a></li><li><a href="/about.html">About ReadyPackets</a></li></ul></div><div><h2>Portal</h2><ul><li><a href="${site.portalUrl}/register" data-portal-link>Create an account</a></li><li><a href="${site.portalUrl}/login" data-portal-link>Sign in</a></li><li><a href="${site.alternatePortalUrl}/login" data-portal-link>Alternate portal address</a></li></ul></div><div><h2>Policies</h2><ul><li><a href="/contact.html">Contact</a></li><li><a href="/privacy.html">Privacy &amp; cookies</a></li><li><a href="/accessibility.html">Accessibility</a></li><li><a href="/terms/">Terms of Use</a></li><li><a href="/refunds/">Refund Policy</a></li></ul></div></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} ReadyPackets. All rights reserved.</span><button class="text-button" type="button" data-consent-open>Cookie preferences</button></div></footer>`;
 }
 
 function consentHtml() {
-  return `<aside id="cookie-banner" class="cookie-banner" aria-label="Cookie preferences" hidden><p><strong>Your privacy choices.</strong> ReadyPackets uses essential storage to remember this preference. Optional analytics are off until you choose Analytics. Read the <a href="privacy.html">Privacy &amp; cookie notice</a>.</p><div class="cookie-actions"><button class="button button--gold" type="button" data-consent-accept>Accept analytics</button><button class="button button--light" type="button" data-consent-essential>Use essential only</button><button class="text-button" type="button" data-consent-open>Customize</button></div></aside><dialog id="cookie-preferences" aria-labelledby="cookie-title"><form method="dialog"><h2 id="cookie-title">Privacy preferences</h2><p>Essential preference storage is required to remember this decision. Optional analytics are disabled unless you select them.</p><label><input type="checkbox" checked disabled><span><strong>Essential</strong><br>Remembers your privacy preference. Required for the site to honor your selection.</span></label><label><input id="analytics-preference" type="checkbox"><span><strong>Analytics (optional)</strong><br>Allows configured Microsoft Clarity and/or PostHog measurement after affirmative consent. The marketing site disables autocapture and session replay.</span></label><div class="dialog-actions"><button class="button button--outline" type="button" data-consent-close>Cancel</button><button class="button" value="save" type="submit">Save preferences</button></div></form></dialog>`;
+  return `<aside id="cookie-banner" class="cookie-banner" aria-label="Cookie preferences" hidden><p><strong>Your privacy choices.</strong> ReadyPackets uses essential storage to remember this preference. Optional analytics are off until you choose Analytics. Read the <a href="/privacy.html">Privacy &amp; cookie notice</a>.</p><div class="cookie-actions"><button class="button button--gold" type="button" data-consent-accept>Accept analytics</button><button class="button button--light" type="button" data-consent-essential>Use essential only</button><button class="text-button" type="button" data-consent-open>Customize</button></div></aside><dialog id="cookie-preferences" aria-labelledby="cookie-title"><form method="dialog"><h2 id="cookie-title">Privacy preferences</h2><p>Essential preference storage is required to remember this decision. Optional analytics are disabled unless you select them.</p><label><input type="checkbox" checked disabled><span><strong>Essential</strong><br>Remembers your privacy preference. Required for the site to honor your selection.</span></label><label><input id="analytics-preference" type="checkbox"><span><strong>Analytics (optional)</strong><br>Allows configured Microsoft Clarity and/or PostHog measurement after affirmative consent. The ReadyPackets website disables autocapture and session replay.</span></label><div class="dialog-actions"><button class="button button--outline" type="button" data-consent-close>Cancel</button><button class="button" value="save" type="submit">Save preferences</button></div></form></dialog>`;
 }
 
 function pageSchema(page) {
@@ -48,7 +48,7 @@ function pageSchema(page) {
 }
 
 function render(filename, page) {
-  const canonical = `${site.url}/${filename === "index.html" ? "" : filename}`;
+  const canonical = `${site.url}/${page.canonicalPath ?? (filename === "index.html" ? "" : filename)}`;
   return `<!doctype html>
 <html lang="en-US">
 <head>
@@ -60,9 +60,9 @@ function render(filename, page) {
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <meta name="author" content="ReadyPackets">
   <link rel="canonical" href="${canonical}">
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" type="image/webp" href="assets/brand/readypackets-full-lockup-square-light.webp">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/webp" href="/assets/brand/readypackets-full-lockup-square-light.webp">
+  <link rel="manifest" href="/site.webmanifest">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ReadyPackets">
   <meta property="og:title" content="${page.title}">
@@ -73,10 +73,10 @@ function render(filename, page) {
   <meta name="twitter:title" content="${page.title}">
   <meta name="twitter:description" content="${page.description}">
   <title>${page.title}</title>
-  <script src="assets/js/theme.js"></script>
-  <link rel="stylesheet" href="assets/css/site.css">
-  <script defer src="assets/js/site-config.js"></script>
-  <script defer src="assets/js/site.js"></script>
+  <script src="/assets/js/theme.js"></script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script defer src="/assets/js/site-config.js"></script>
+  <script defer src="/assets/js/site.js"></script>
   ${pageSchema(page)}
 </head>
 <body>
@@ -114,7 +114,11 @@ await cp(path.join(source, "sitemap.xml"), path.join(output, "sitemap.xml"));
 await cp(path.join(source, "humans.txt"), path.join(output, "humans.txt"));
 await writeFile(path.join(output, "404.html"), versionLocalAssetUrls(await readFile(path.join(source, "404.html"), "utf8")), "utf8");
 await cp(path.join(source, ".well-known"), path.join(output, ".well-known"), { recursive: true });
-for (const [filename, page] of Object.entries(pages)) await writeFile(path.join(output, filename), versionLocalAssetUrls(render(filename, page)), "utf8");
+for (const [filename, page] of Object.entries(pages)) {
+  const destination = path.join(output, filename);
+  await mkdir(path.dirname(destination), { recursive: true });
+  await writeFile(destination, versionLocalAssetUrls(render(filename, page)), "utf8");
+}
 
 const files = await readdir(output);
 console.log(`Built ${Object.keys(pages).length} HTML pages and ${files.length} root artifacts in dist/.`);
