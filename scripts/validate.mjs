@@ -41,6 +41,8 @@ assert.match(themeJs, /configureThemeControl/);
 assert.match(themeJs, /data-theme-toggle/);
 assert.match(themeJs, /nextPreference/);
 assert.match(sourceJs, /configurePacketExplorers/);
+assert.match(sourceJs, /closeOtherPackets/);
+assert.match(sourceJs, /otherDisclosure !== disclosure && otherDisclosure\.open/);
 assert.match(sourceJs, /applyAdvertising/);
 assert.match(sourceJs, /adsensePublisherId/);
 assert.match(sourceJs, /advertising-preference/);

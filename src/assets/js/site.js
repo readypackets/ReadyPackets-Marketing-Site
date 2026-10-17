@@ -310,12 +310,32 @@
   }
 
   function configurePacketExplorers() {
-    $$('[data-packet-card]').forEach((card) => {
-      const disclosure = $('details', card);
-      if (!disclosure) return;
-      const syncDisclosureState = () => card.classList.toggle("is-open", disclosure.open);
-      disclosure.addEventListener("toggle", syncDisclosureState);
-      syncDisclosureState();
+    $$(".packet-explorer").forEach((explorer) => {
+      const disclosures = $$('[data-packet-card] details', explorer);
+      let alreadyOpen = false;
+
+      disclosures.forEach((disclosure) => {
+        if (!disclosure.open) return;
+        if (alreadyOpen) disclosure.open = false;
+        else alreadyOpen = true;
+      });
+
+      disclosures.forEach((disclosure) => {
+        const card = disclosure.closest('[data-packet-card]');
+        if (!card) return;
+        const syncDisclosureState = () => card.classList.toggle("is-open", disclosure.open);
+        const closeOtherPackets = () => {
+          disclosures.forEach((otherDisclosure) => {
+            if (otherDisclosure !== disclosure && otherDisclosure.open) otherDisclosure.open = false;
+          });
+        };
+
+        disclosure.addEventListener("toggle", () => {
+          if (disclosure.open) closeOtherPackets();
+          syncDisclosureState();
+        });
+        syncDisclosureState();
+      });
     });
   }
 

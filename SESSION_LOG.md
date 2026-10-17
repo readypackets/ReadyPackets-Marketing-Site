@@ -385,3 +385,19 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 **Validation completed:** `npm run package` passed, building 10 static pages and validating 38 required artifacts. The dedicated catalogue contract verified exactly seven packet groups, 19 tiers, no eighth packet model, and no removed offering in `index.html` or `solutions.html`. A current-scope source scan found no stale packet count or removed-offering references outside immutable session history. `git diff --check` passed.
 
 **Publication status:** Validation complete; GitHub publication pending final staged-release review.
+
+---
+
+## 2026-10-17 — Single-open packet explorer behavior
+
+**User request:**
+
+> When clicking on another packet the other packet should close up.
+
+**Implementation:** Updated `configurePacketExplorers()` so each `.packet-explorer` is a single-open accordion. When a visitor opens a packet, all other open native `<details>` disclosures in that same explorer are closed. The change is scoped per explorer, preserves the native disclosure interaction, synchronizes the visual full-width card state, and leaves a visitor free to close the currently open packet. No portal data, analytics, advertising, cookie, or external request behavior changed.
+
+**Accessibility and responsive behavior:** Pointer, touch, Enter, and Space continue to operate the native summary controls. The focus remains on the newly activated packet summary after keyboard use. The existing full-width horizontal tier comparison, tablet reflow, mobile single-column reflow, and no-horizontal-overflow requirement remain unchanged. Updated the application context and accessibility review checklist to state the single-open interaction contract.
+
+**Validation completed:** `npm run package` passed, building 10 static pages and validating 38 required artifacts. Node syntax and static contracts passed. A live Chromium browser test passed at 1440 px and 390 px: opening the first packet by click, then opening the third with Space, left exactly one packet open, closed the prior packet, preserved keyboard focus, and introduced no horizontal page overflow. `git diff --check` passed.
+
+**Publication status:** Validation complete; GitHub publication pending final staged-release review.
