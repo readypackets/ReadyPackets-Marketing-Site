@@ -332,4 +332,4 @@ The contact page explicitly states that ReadyPackets provides services remotely,
 
 **Validation completed:** `npm run package` passed, building 10 static pages and validating 38 required artifacts. Added a static regression contract that requires the address, remote-service/no-correspondence wording, stable anchor, and absence of the old “Visit or write” invitation. Node syntax checks passed for modified source/validation scripts. Diff whitespace and credential-pattern checks passed. The updated upload archive SHA-256 is `6a3c9a316847ee23bcb0ee6d43a52b956b45b7e10f69b855162512b8c17709e6`.
 
-**Publication status:** Pending commit and GitHub push.
+**Publication status:** Published to `readypackets/ReadyPackets-Marketing-Site` `main` as `ec4f2199c885b679f7f349059c3509ff6576d296` (`fix: restore business address on contact page`). GitHub Actions will validate the revision and refresh the deploy-only `hostinger-static` branch.
