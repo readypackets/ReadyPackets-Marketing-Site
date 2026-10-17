@@ -365,3 +365,5 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 - Public-copy scan found no obsolete visitor-facing “marketing site/website” label. `git diff --check` and a pending-diff credential/private-key scan passed.
 
 **Publication status:** Validation complete; source publication to `readypackets/ReadyPackets-Marketing-Site` `main` is pending the final staged-release review.
+
+**Source release:** Committed as `dab02cdd078f3317839c2bad10b61e1b72505cae` (`feat: add responsive tier comparisons and consented ads`). The generated Hostinger branch must be refreshed from this reviewed source commit before the configured static host receives it.
