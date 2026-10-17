@@ -309,4 +309,4 @@ This log records material prompts, design decisions, implementation results, val
 
 **Release artifact:** `ReadyPackets-Marketing-Static.zip` SHA-256 after validation: `88b3eb4353765eb753de21cce5d18cfce66f53c4e5abbe2de17c106b43a02294`.
 
-**Publication status:** Pending commit and push of the reviewed release to `readypackets/ReadyPackets-Marketing-Site` `main`; the GitHub Actions static-branch publisher must complete before Hostinger can receive the updated `hostinger-static` deployment branch.
+**Publication status:** Published to `readypackets/ReadyPackets-Marketing-Site` `main` as `7c27bd7597e38c184f2f3b03d6a509c68f806e89` (`feat: align website packets and policy pages`). The GitHub Actions static-branch publisher must complete before Hostinger can receive the updated `hostinger-static` deployment branch.
