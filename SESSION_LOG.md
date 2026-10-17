@@ -401,3 +401,5 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 **Validation completed:** `npm run package` passed, building 10 static pages and validating 38 required artifacts. Node syntax and static contracts passed. A live Chromium browser test passed at 1440 px and 390 px: opening the first packet by click, then opening the third with Space, left exactly one packet open, closed the prior packet, preserved keyboard focus, and introduced no horizontal page overflow. `git diff --check` passed.
 
 **Publication status:** Validation complete; GitHub publication pending final staged-release review.
+
+**Source release:** Published to `readypackets/ReadyPackets-Marketing-Site` `main` as `a65957dfc638c29fd38858e676ba3d7ff7765702` (`fix: close prior packet when another opens`). [Static website validation](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/39080736853) and [Publish Hostinger static branch](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/39080736925) both completed successfully for this release.
