@@ -367,3 +367,5 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 **Publication status:** Validation complete; source publication to `readypackets/ReadyPackets-Marketing-Site` `main` is pending the final staged-release review.
 
 **Source release:** Committed as `dab02cdd078f3317839c2bad10b61e1b72505cae` (`feat: add responsive tier comparisons and consented ads`). The generated Hostinger branch must be refreshed from this reviewed source commit before the configured static host receives it.
+
+**GitHub workflow verification:** The pushed source/release-record revision `e38faaf1447a9ee6479f4dad76f5e502b5146832` completed both required workflows successfully: [Publish Hostinger static branch](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/39079855853) and [Static marketing site validation](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/39079855953). The deploy-only `hostinger-static` branch was refreshed from the reviewed release; it contains the generated static artifact rather than portal code, source-only files, customer data, or secrets.
