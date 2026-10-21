@@ -437,3 +437,7 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 **Validation completed:** `npm run package` passed, rebuilding 10 static pages and validating 38 required artifacts. JavaScript syntax validation passed for the changed build and validation modules. Generated `index.html` contains the exact `My Portal` header CTA to `https://my.readypackets.com/`; no generated header CTA retained `Open portal`. `git diff --check` passed.
 
 **Publication state:** Pending final staged review, commit, GitHub `main` push, and static publish workflow verification.
+
+**Immutable source commit:** `71e0014679d37f21023eac59e31e0d05f1bcf371` — `fix: label marketing CTA my portal`.
+
+**Final publication:** Pending GitHub `main` push and validation/static-branch publish workflow completion.
