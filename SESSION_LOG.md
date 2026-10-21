@@ -422,4 +422,4 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 
 **Immutable source commit:** `ab95da720afc27673bc322245ca1a95245b80685` — `fix: route marketing CTA to portal root`.
 
-**Final publication:** Pending push to GitHub `main`; the repository’s validated GitHub Actions workflow will build the static artifact and force-update the deploy-only `hostinger-static` branch from this reviewed source commit.
+**Final publication:** Published to GitHub `main` at `976009d7c9b0dbc041153ce45a9b94dfb3b6b78b`. Both workflows for that exact commit completed successfully: **Static marketing site validation** run `39654111303` and **Publish Hostinger static branch** run `39654111418`. The latter rebuilt the reviewed source and updated the deploy-only `hostinger-static` branch for Hostinger Git deployment.
