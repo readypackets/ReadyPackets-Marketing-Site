@@ -9,6 +9,8 @@ The public ReadyPackets website links visitors to the separately deployed ReadyP
 - Primary: `https://my.readypackets.com`
 - Alternate: `https://portal.readypackets.com`
 
+All public customer-entry calls to action use the primary portal root (`https://my.readypackets.com/`) rather than a hard-coded registration route. This keeps the public site aligned with the portal’s own login and onboarding flow.
+
 ## What ships
 
 - Story-led landing page with an explanation of the ReadyPackets process

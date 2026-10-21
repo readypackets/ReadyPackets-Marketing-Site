@@ -126,6 +126,17 @@ p { margin: 0 0 1rem; }
 .button { display: inline-flex; min-height: 2.85rem; align-items: center; justify-content: center; gap: .45rem; padding: .67rem 1rem; border: 1px solid transparent; border-radius: .65rem; background: var(--teal-dark); color: #fff; font-weight: 800; line-height: 1.2; text-align: center; text-decoration: none; transition: background-color .15s ease, color .15s ease, transform .15s ease; }
 .button:hover { background: var(--navy); color: #fff; text-decoration: none; }
 .button:active { transform: translateY(1px); }
+.nav .button--portal { border: 2px solid #0f5f55; background: #0f5f55; box-shadow: 0 2px 0 rgba(8,42,46,.18); color: #fff; font-weight: 850; }
+.nav .button--portal:hover { border-color: #083f39; background: #083f39; color: #fff; text-decoration: none; }
+.nav .button--portal:focus-visible { outline-color: #0f5f55; outline-offset: 4px; }
+:root[data-theme="dark"] .nav .button--portal { border-color: #8ef4e6; background: #8ef4e6; box-shadow: 0 2px 0 rgba(0,0,0,.34); color: #082a2e; }
+:root[data-theme="dark"] .nav .button--portal:hover { border-color: #c4fff7; background: #c4fff7; color: #082a2e; }
+:root[data-theme="dark"] .nav .button--portal:focus-visible { outline-color: #f1ca69; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .nav .button--portal, :root[data-theme="system"] .nav .button--portal { border-color: #8ef4e6; background: #8ef4e6; box-shadow: 0 2px 0 rgba(0,0,0,.34); color: #082a2e; }
+  :root:not([data-theme]) .nav .button--portal:hover, :root[data-theme="system"] .nav .button--portal:hover { border-color: #c4fff7; background: #c4fff7; color: #082a2e; }
+  :root:not([data-theme]) .nav .button--portal:focus-visible, :root[data-theme="system"] .nav .button--portal:focus-visible { outline-color: #f1ca69; }
+}
 .button--light { border-color: rgba(255,255,255,.42); background: transparent; color: #fff; }
 .button--light:hover { background: #fff; color: var(--navy); }
 .button--outline { border-color: var(--teal-dark); background: transparent; color: var(--teal-dark); }

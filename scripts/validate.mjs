@@ -6,6 +6,19 @@ import { pages, site } from "./site-data.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
+
+function relativeLuminance(hex) {
+  const channels = hex.match(/[a-f\d]{2}/gi)?.map((value) => Number.parseInt(value, 16) / 255);
+  assert.equal(channels?.length, 3, `Expected a six-digit hex color: ${hex}`);
+  const [red, green, blue] = channels.map((value) => value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+  return red * 0.2126 + green * 0.7152 + blue * 0.0722;
+}
+
+function contrastRatio(foreground, background) {
+  const [first, second] = [relativeLuminance(foreground), relativeLuminance(background)].sort((a, b) => b - a);
+  return (first + 0.05) / (second + 0.05);
+}
+
 const required = [
   ".htaccess", "404.html", "robots.txt", "sitemap.xml", "llms.txt", "ai.txt", "humans.txt", "site.webmanifest", ".well-known/security.txt",
   "assets/css/site.css", "assets/js/site.js", "assets/js/theme.js", "assets/js/site-config.js",
@@ -65,6 +78,7 @@ for (const [file, page] of Object.entries(pages)) {
   assert.match(html, /data-theme-icon="system"/);
   assert.match(html, /<script src="\/assets\/js\/theme\.js\?v=[a-f0-9]{12}"><\/script>[\s\S]*<link rel="stylesheet" href="\/assets\/css\/site\.css\?v=[a-f0-9]{12}">/);
   assert.match(html, /data-portal-link/);
+  assert.ok(!html.includes(`${site.portalUrl}/register`), `${file} must route public portal entry links to the portal root`);
   assert.ok(!/\sstyle\s*=/i.test(html), `${file} contains an inline style that strict CSP would block`);
   assert.ok(!html.includes("__PORTAL_ORIGIN__"), `${file} contains an unresolved portal placeholder`);
   assert.ok(!html.includes("localhost"), `${file} contains a localhost reference`);
@@ -119,6 +133,7 @@ assert.match(indexHtml, /readypackets-approved-header-tagline-dark\.png/);
 assert.match(indexHtml, /\/assets\/css\/site\.css\?v=[a-f0-9]{12}/);
 assert.match(indexHtml, /\/assets\/brand\/readypackets-full-lockup-square-dark\.webp\?v=[a-f0-9]{12}/);
 assert.match(indexHtml, /\/assets\/brand\/readypackets-approved-header-tagline-light\.png\?v=[a-f0-9]{12}/);
+assert.match(indexHtml, new RegExp(`<a class="button button--portal" href="${site.portalUrl}" data-portal-link>Open portal`));
 assert.ok(!indexHtml.includes("readypackets-document-flow-light-wordmark-tm.svg"), "Header must not use the superseded Document-Flow wordmark");
 
 for (const file of ["index.html", "solutions.html"]) {
@@ -177,6 +192,11 @@ const stylesheet = await readFile(path.join(dist, "assets/css/site.css"), "utf8"
 assert.match(stylesheet, /:root\[data-theme="dark"\]/);
 assert.match(stylesheet, /@media \(prefers-color-scheme: dark\)/);
 assert.match(stylesheet, /\.theme-toggle/);
+assert.match(stylesheet, /\.nav \.button--portal[^}]*border: 2px solid #0f5f55[^}]*background: #0f5f55[^}]*color: #fff/);
+assert.match(stylesheet, /:root\[data-theme="dark"\] \.nav \.button--portal[^}]*border-color: #8ef4e6[^}]*background: #8ef4e6[^}]*color: #082a2e/);
+assert.match(stylesheet, /:root:not\(\[data-theme\]\) \.nav \.button--portal[^}]*background: #8ef4e6[^}]*color: #082a2e/);
+assert.ok(contrastRatio("#ffffff", "#0f5f55") >= 4.5, "Light-theme portal CTA must meet WCAG AA text contrast");
+assert.ok(contrastRatio("#082a2e", "#8ef4e6") >= 4.5, "Dark-theme portal CTA must meet WCAG AA text contrast");
 assert.match(stylesheet, /\.logo-lockup--square[^}]*aspect-ratio: 1 \/ 1[^}]*object-fit: contain/);
 assert.match(stylesheet, /\.brand-header-lockup__tagline/);
 assert.match(stylesheet, /\.packet-card\.is-open[^}]*grid-column: 1 \/ -1/);

@@ -403,3 +403,19 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 **Publication status:** Validation complete; GitHub publication pending final staged-release review.
 
 **Source release:** Published to `readypackets/ReadyPackets-Marketing-Site` `main` as `a65957dfc638c29fd38858e676ba3d7ff7765702` (`fix: close prior packet when another opens`). [Static website validation](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/39080736853) and [Publish Hostinger static branch](https://github.com/readypackets/ReadyPackets-Marketing-Site/actions/runs/39080736925) both completed successfully for this release.
+
+---
+## 2026-10-21 — Primary portal-root navigation and high-contrast portal CTA
+
+**User request:**
+> the marketing site should go to https://my.readypackets.com/ when clicking on the portal and not https://my.readypackets.com/register . Also the portal button is hard to see on light and dark mode. Please fix this and then update the github so the site can be redeployed.
+
+**Navigation correction:** All ReadyPackets customer-entry portal calls to action now resolve to the primary portal root, `https://my.readypackets.com/`, rather than appending `/register`. This includes the persistent header CTA, footer portal entry, page-level start/open buttons, and every expanded packet-explorer CTA. Explicit existing-customer sign-in links intentionally remain `/login`, and the alternate portal remains a separate explicit `/login` destination. The public site continues to link to—not proxy, embed, or share cookies with—the separate portal origin.
+
+**Visibility and accessibility correction:** The header call to action now reads **Open portal** and has a dedicated `button--portal` visual treatment. It uses a dark teal background with white text in light mode and a light mint background with dark navy text in dark/system-dark mode, plus a visible mode-specific keyboard-focus outline and hover state. Measured WCAG contrast is **7.53:1** for the light-theme pair and **11.75:1** for the dark-theme pair, exceeding the 4.5:1 normal-text AA threshold. The generic dark-theme button no longer controls the portal header CTA’s foreground/background pairing.
+
+**Regression and deployment documentation:** Static validation now fails if any rendered portal entry link uses the obsolete primary `/register` path, if the header link no longer resolves to the primary root, or if the dedicated light/dark portal CTA styling or contrast assertions regress. The Hostinger production runbook and README now specify the primary-root navigation and light/dark visibility acceptance checks.
+
+**Validation completed:** `npm run package` passed, rebuilding **10 static pages** and validating **38 required artifacts**. Node syntax checks passed for the modified build, content, packet, and validation modules. The generated artifact contains no `https://my.readypackets.com/register` link and contains the header `Open portal` link to `https://my.readypackets.com`. `git diff --check` passed. The regenerated deployable archive SHA-256 is `39b6c2e39f4652aa01fff8d8106eed8af68087b6a8bbd7ea5527d1bc8d5b232c`.
+
+**Publication state:** Pending final staged source/credential review, commit, private GitHub `main` push, and deploy-branch workflow verification.
