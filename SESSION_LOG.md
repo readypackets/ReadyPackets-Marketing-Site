@@ -440,4 +440,4 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 
 **Immutable source commit:** `71e0014679d37f21023eac59e31e0d05f1bcf371` — `fix: label marketing CTA my portal`.
 
-**Final publication:** Pending GitHub `main` push and validation/static-branch publish workflow completion.
+**Final publication:** Published to GitHub `main` at `d495f91d4fa3dd39649d144b9889746e2e8a53c1`. Both workflows for that exact commit completed successfully: **Static marketing site validation** run `39662552756` and **Publish Hostinger static branch** run `39662552732`. The static validation built, validated, packaged, and uploaded the release candidate; the publish workflow rebuilt the validated static artifact and updated the deploy-only `hostinger-static` branch for Hostinger Git deployment.
