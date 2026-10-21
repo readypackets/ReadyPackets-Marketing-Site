@@ -133,7 +133,7 @@ assert.match(indexHtml, /readypackets-approved-header-tagline-dark\.png/);
 assert.match(indexHtml, /\/assets\/css\/site\.css\?v=[a-f0-9]{12}/);
 assert.match(indexHtml, /\/assets\/brand\/readypackets-full-lockup-square-dark\.webp\?v=[a-f0-9]{12}/);
 assert.match(indexHtml, /\/assets\/brand\/readypackets-approved-header-tagline-light\.png\?v=[a-f0-9]{12}/);
-assert.match(indexHtml, new RegExp(`<a class="button button--portal" href="${site.portalUrl}" data-portal-link>Open portal`));
+assert.match(indexHtml, new RegExp(`<a class="button button--portal" href="${site.portalUrl}" data-portal-link>My Portal`));
 assert.ok(!indexHtml.includes("readypackets-document-flow-light-wordmark-tm.svg"), "Header must not use the superseded Document-Flow wordmark");
 
 for (const file of ["index.html", "solutions.html"]) {

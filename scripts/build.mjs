@@ -81,7 +81,7 @@ function render(filename, page) {
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <header class="header"><div class="wrap header-row">${approvedHeaderLogoHtml()}<div class="header-controls"><nav id="site-navigation" class="nav" aria-label="Primary navigation">${navHtml(filename)}<a class="button button--portal" href="${site.portalUrl}" data-portal-link>Open portal <span aria-hidden="true">→</span></a></nav>${themeControlHtml()}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle>Menu <span aria-hidden="true">☰</span></button></div></div></header>
+  <header class="header"><div class="wrap header-row">${approvedHeaderLogoHtml()}<div class="header-controls"><nav id="site-navigation" class="nav" aria-label="Primary navigation">${navHtml(filename)}<a class="button button--portal" href="${site.portalUrl}" data-portal-link>My Portal <span aria-hidden="true">→</span></a></nav>${themeControlHtml()}<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-menu-toggle>Menu <span aria-hidden="true">☰</span></button></div></div></header>
   <main id="main-content">${page.body}</main>
   ${footerHtml()}
   ${consentHtml()}

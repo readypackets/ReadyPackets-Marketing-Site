@@ -281,8 +281,8 @@ Also verify manually in a private/incognito browser window:
 - The compact color-theme icon has an accessible name and cycles **System → Light → Dark → System** with keyboard, touch, and pointer input.
 - The cookie choice panel appears on a first visit.
 - **Use essential only** does not load Clarity or PostHog.
-- Every customer-entry portal CTA, including the header **Open portal** button, opens `https://my.readypackets.com/` (the primary portal root), not a hard-coded registration path.
-- The header **Open portal** button remains clearly readable with a visible keyboard focus indicator in both Light and Dark theme modes.
+- Every customer-entry portal CTA, including the header **My Portal** button, opens `https://my.readypackets.com/` (the primary portal root), not a hard-coded registration path.
+- The header **My Portal** button remains clearly readable with a visible keyboard focus indicator in both Light and Dark theme modes.
 - The portal links do not redirect users back to the Hostinger marketing host.
 
 ---

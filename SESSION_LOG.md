@@ -423,3 +423,17 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 **Immutable source commit:** `ab95da720afc27673bc322245ca1a95245b80685` — `fix: route marketing CTA to portal root`.
 
 **Final publication:** Published to GitHub `main` at `976009d7c9b0dbc041153ce45a9b94dfb3b6b78b`. Both workflows for that exact commit completed successfully: **Static marketing site validation** run `39654111303` and **Publish Hostinger static branch** run `39654111418`. The latter rebuilt the reviewed source and updated the deploy-only `hostinger-static` branch for Hostinger Git deployment.
+
+---
+## 2026-10-21 — Header portal CTA label: “My Portal”
+
+**User request:**
+> It should say My Portal not Open Portal please fix that
+
+**Change:** Updated only the persistent header portal call-to-action—the button identified in the submitted screenshot—from **Open portal** to **My Portal**. Its secure external destination remains the primary portal root, `https://my.readypackets.com/`; its light/dark high-contrast styling, focus indicator, consent behavior, and separate-host boundary are unchanged. Other explicit content and footer action labels were deliberately left unchanged.
+
+**Regression and documentation:** The static validator now requires the generated primary header CTA to read `My Portal` and to route to the primary portal root. The Hostinger acceptance checklist uses the same approved label.
+
+**Validation completed:** `npm run package` passed, rebuilding 10 static pages and validating 38 required artifacts. JavaScript syntax validation passed for the changed build and validation modules. Generated `index.html` contains the exact `My Portal` header CTA to `https://my.readypackets.com/`; no generated header CTA retained `Open portal`. `git diff --check` passed.
+
+**Publication state:** Pending final staged review, commit, GitHub `main` push, and static publish workflow verification.
