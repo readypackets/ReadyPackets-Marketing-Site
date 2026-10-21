@@ -419,3 +419,7 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 **Validation completed:** `npm run package` passed, rebuilding **10 static pages** and validating **38 required artifacts**. Node syntax checks passed for the modified build, content, packet, and validation modules. The generated artifact contains no `https://my.readypackets.com/register` link and contains the header `Open portal` link to `https://my.readypackets.com`. `git diff --check` passed. The regenerated deployable archive SHA-256 is `39b6c2e39f4652aa01fff8d8106eed8af68087b6a8bbd7ea5527d1bc8d5b232c`.
 
 **Publication state:** Pending final staged source/credential review, commit, private GitHub `main` push, and deploy-branch workflow verification.
+
+**Immutable source commit:** `ab95da720afc27673bc322245ca1a95245b80685` — `fix: route marketing CTA to portal root`.
+
+**Final publication:** Pending push to GitHub `main`; the repository’s validated GitHub Actions workflow will build the static artifact and force-update the deploy-only `hostinger-static` branch from this reviewed source commit.
