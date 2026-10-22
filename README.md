@@ -20,7 +20,7 @@ All public customer-entry calls to action use the primary portal root (`https://
 - System-first Light/Dark/System icon control with local-only explicit preference storage
 - Indexable server-rendered-in-build HTML—no JavaScript required for core content
 - Canonical tags, Open Graph/Twitter metadata, Organization/WebSite/FAQ schema, XML sitemap, `robots.txt`, `llms.txt`, and `ai.txt`
-- Consent-first Microsoft Clarity and PostHog capability, disabled by default
+- Consent-first Microsoft Clarity measurement configured for the public website; no provider request before affirmative Analytics consent, while PostHog remains unconfigured
 - Consent-gated manual AdSense and direct-sponsorship capability, disabled by default and documented for required CMP/privacy review
 - Hostinger/Bluehost Apache/LiteSpeed `.htaccess` security headers and canonical-host redirect baseline
 - Supplied ReadyPackets Document-Flow trademark brand assets
@@ -53,7 +53,7 @@ Edit `scripts/site-data.mjs` before a production build only to:
 2. Confirm the primary/alternate portal URLs.
 3. Review public copy, service boundaries, and legal/contact addresses.
 
-Edit `src/assets/js/site-config.js` only to optionally add a Microsoft Clarity project ID and/or PostHog project key. Those provider identifiers are public browser configuration—not secrets.
+`src/assets/js/site-config.js` contains the public Microsoft Clarity project identifier for the ReadyPackets website. Add a PostHog project key only after the equivalent privacy review. Provider identifiers are public browser configuration—not secrets.
 
 Analytics and advertising are still not loaded until a visitor affirmatively opts in through the matching privacy preference. Never place a password, private key, API secret, database credential, portal key, or any non-public value in `site-config.js`. Before configuring an ad identifier, follow [Advertising, Sponsorship, and Consent Operations](docs/ADVERTISING_AND_CONSENT_OPERATIONS.md); a browser preference gate is not a substitute for a certified CMP/TCF implementation where that is required.
 

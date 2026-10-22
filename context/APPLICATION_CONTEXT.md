@@ -43,7 +43,7 @@ The approved Document-Flow brand package supplied on 2026-09-30 is the source fo
 
 ## Privacy and analytics
 
-Microsoft Clarity and PostHog are optional capability only. Provider configuration is public browser configuration and lives in `src/assets/js/site-config.js`; it must contain only project identifiers—not secrets. Both remain disabled until the visitor gives affirmative Analytics consent. The code disables PostHog autocapture/session replay and sends only reviewed website path events.
+Microsoft Clarity is configured for the public ReadyPackets website; PostHog remains an optional unconfigured capability. Provider configuration is public browser configuration and lives in `src/assets/js/site-config.js`; it must contain only project identifiers—not secrets. Neither provider loads before the visitor gives affirmative Analytics consent. If PostHog is configured later, its code disables autocapture/session replay and sends only the reviewed website path event.
 
 Manual AdSense units and direct sponsor placements are a separate optional capability. They are disabled by default, render only after affirmative Advertising consent, and may appear only in the labelled placement regions outside navigation, portal calls to action, and packet controls. The public preference mechanism is a fail-closed loading gate; it is not a substitute for a Google-certified CMP/TCF implementation where Google requires one. Read `docs/ADVERTISING_AND_CONSENT_OPERATIONS.md` before configuration.
 

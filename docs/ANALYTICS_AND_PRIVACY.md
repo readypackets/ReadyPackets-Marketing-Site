@@ -2,7 +2,7 @@
 
 ## Default behavior
 
-The ReadyPackets website has no analytics or advertising dependency at build time and **does not load Microsoft Clarity, PostHog, AdSense, or a sponsor placement by default**. The public configuration contains empty provider values. A browser loads an optional provider only when all of these conditions are true:
+The ReadyPackets website has no analytics or advertising dependency at build time and **does not load Microsoft Clarity, PostHog, AdSense, or a sponsor placement by default**. Microsoft Clarity is configured with a public project identifier for the ReadyPackets website; PostHog and advertising configuration remain empty. A browser loads an optional provider only when all of these conditions are true:
 
 1. The site operator has entered the provider’s public project identifier in `src/assets/js/site-config.js`.
 2. The site has been rebuilt and deployed.
@@ -14,11 +14,11 @@ The user can select Essential only, choose either optional category, or withdraw
 
 | Control | ReadyPackets static site behavior |
 | --- | --- |
-| Default | Optional analytics disabled |
+| Default | No optional provider tag or network request before affirmative Analytics consent |
 | Consent | No provider tag or request before affirmative Analytics selection |
 | PostHog | `autocapture: false`, `capture_pageview: false`, `disable_session_recording: true`, `person_profiles: "never"`, and opt-out-by-default |
 | PostHog events | One reviewed page-view event with marketing-surface and path only |
-| Clarity | Loaded after consent only; ConsentV2 is sent with analytics storage granted and ad storage denied |
+| Clarity | The public ReadyPackets website project is loaded after consent only; ConsentV2 is sent with analytics storage granted and ad storage denied |
 | Advertising | Disabled unless separately configured and the visitor selects Advertising; manual placements only, clearly labelled, and never inserted in navigation or portal actions |
 | Direct sponsors | A factual HTTPS sponsor link can render after Advertising consent; no sponsor tag or click-tracking code is injected by the website |
 | Form data | No marketing contact form exists; the site avoids collecting form values |

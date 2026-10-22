@@ -57,6 +57,8 @@ const sourceJs = await readFile(path.join(dist, "assets/js/site.js"), "utf8");
 const themeJs = await readFile(path.join(dist, "assets/js/theme.js"), "utf8");
 assert.match(sourceJs, /rp_website_consent_v2/);
 assert.match(sourceJs, /consentv2/);
+assert.match(sourceJs, /function loadClarity\(projectId\)/);
+assert.match(sourceJs, /if \(!consent\?\.analytics\) \{[\s\S]*?return;[\s\S]*?\}[\s\S]*?loadClarity\(safeConfig\(analytics\.clarityProjectId\)\)/);
 assert.match(sourceJs, /autocapture: false/);
 assert.match(sourceJs, /disable_session_recording: true/);
 assert.ok(!sourceJs.includes("unsafe-inline"));
@@ -96,6 +98,7 @@ for (const [file, page] of Object.entries(pages)) {
   assert.ok(!html.includes("__PORTAL_ORIGIN__"), `${file} contains an unresolved portal placeholder`);
   assert.ok(!html.includes("localhost"), `${file} contains a localhost reference`);
   assert.ok(!html.includes("Manus"), `${file} contains a prohibited platform reference`);
+  assert.ok(!html.includes("https://www.clarity.ms/tag/"), `${file} must not embed Microsoft Clarity before visitor consent`);
   assert.ok(!/readypackets-(?:full-lockup-square|document-flow|mark-(?:light|dark))/i.test(html), `${file} contains retired ReadyPackets artwork`);
   assert.ok(html.includes(page.title), `${file} must contain its title`);
 
@@ -187,7 +190,7 @@ assert.match(contactHtml, /not a walk-in location and is not monitored for custo
 assert.ok(!contactHtml.includes("Visit or write"), "Contact page must not invite physical visits or mail correspondence");
 
 const config = await readFile(path.join(dist, "assets/js/site-config.js"), "utf8");
-assert.match(config, /clarityProjectId: ""/);
+assert.match(config, /clarityProjectId: "z1tfowyskv"/);
 assert.match(config, /posthogProjectKey: ""/);
 assert.ok(config.includes(`siteUrl: "${site.url}"`), "Public config canonical site URL must match rendered metadata");
 assert.ok(config.includes(`portalUrl: "${site.portalUrl}"`), "Public config primary portal URL must match rendered portal links");

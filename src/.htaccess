@@ -30,8 +30,9 @@ DirectoryIndex index.html
   Header always set Cross-Origin-Opener-Policy "same-origin"
   Header always set Cross-Origin-Resource-Policy "same-origin"
   Header always set X-Permitted-Cross-Domain-Policies "none"
-  # Advertising origins are allowlisted for the optional, consent-gated manual-placement
-  # integration. An allowlist does not load a provider; see site.js and the operator guide.
+  # Microsoft Clarity, future PostHog, and advertising origins are allowlisted only
+  # for their optional consent-gated integrations. An allowlist does not load a
+  # provider; see site.js and the analytics/advertising operator guides.
   Header always set Content-Security-Policy "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: https://*.googlesyndication.com https://*.doubleclick.net https://*.googleadservices.com; style-src 'self'; script-src 'self' https://www.clarity.ms https://*.posthog.com https://pagead2.googlesyndication.com; connect-src 'self' https://www.clarity.ms https://*.posthog.com https://pagead2.googlesyndication.com https://*.doubleclick.net https://*.googleadservices.com; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com; font-src 'self'; manifest-src 'self'; upgrade-insecure-requests; block-all-mixed-content"
   Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" env=HTTPS
   Header always set X-Robots-Tag "noindex, nofollow, noarchive" env=rp_staging_host

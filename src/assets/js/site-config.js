@@ -8,18 +8,19 @@
  * identifiers, not secrets.
  *
  * Before deployment, update siteUrl if the public canonical hostname changes.
- * Keep analytics and advertising disabled until the privacy notice, provider
- * settings, consent/CMP review, and placement review are complete. Optional
- * provider code is loaded only after the visitor gives the matching affirmative
- * preference. See docs/ADVERTISING_AND_CONSENT_OPERATIONS.md before changing
- * advertising settings.
+ * Optional provider code is loaded only after the visitor gives the matching
+ * affirmative preference. Microsoft Clarity is configured for the public
+ * ReadyPackets website; it must never be added as an unconditional page-head
+ * tag because that would bypass the visitor's Analytics choice. See
+ * docs/ANALYTICS_AND_PRIVACY.md and
+ * docs/ADVERTISING_AND_CONSENT_OPERATIONS.md before changing these settings.
  */
 window.READYPACKETS_WEBSITE_CONFIG = Object.freeze({
   siteUrl: "https://www.readypackets.com",
   portalUrl: "https://my.readypackets.com",
   alternatePortalUrl: "https://portal.readypackets.com",
   analytics: Object.freeze({
-    clarityProjectId: "",
+    clarityProjectId: "z1tfowyskv",
     posthogProjectKey: "",
     posthogHost: "https://us.i.posthog.com",
   }),
