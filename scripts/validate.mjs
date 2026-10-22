@@ -22,16 +22,29 @@ function contrastRatio(foreground, background) {
 const required = [
   ".htaccess", "404.html", "robots.txt", "sitemap.xml", "llms.txt", "ai.txt", "humans.txt", "site.webmanifest", ".well-known/security.txt",
   "assets/css/site.css", "assets/js/site.js", "assets/js/theme.js", "assets/js/site-config.js",
-  "assets/brand/readypackets-full-lockup-square-light.webp", "assets/brand/readypackets-full-lockup-square-dark.webp",
   "assets/brand/readypackets-approved-header-icon-light.png", "assets/brand/readypackets-approved-header-icon-dark.png",
   "assets/brand/readypackets-approved-header-wordmark-light.png", "assets/brand/readypackets-approved-header-wordmark-dark.png",
   "assets/brand/readypackets-approved-header-rule-light.png", "assets/brand/readypackets-approved-header-rule-dark.png",
   "assets/brand/readypackets-approved-header-tagline-light.png", "assets/brand/readypackets-approved-header-tagline-dark.png",
-  "assets/brand/readypackets-full-lockup-square-light-compact-mark.png", "assets/brand/readypackets-full-lockup-square-dark-compact-mark.png",
-  "assets/brand/readypackets-full-lockup-square-light-1200.png", "assets/brand/readypackets-full-lockup-square-dark-1200.png", "favicon.ico",
+  "assets/brand/readypackets-approved-icon-light-192.png", "assets/brand/readypackets-approved-icon-light-512.png", "favicon.ico",
   ...Object.keys(pages),
 ];
 for (const item of required) await access(path.join(dist, item));
+
+const approvedBrandFiles = new Set([
+  "readypackets-approved-header-icon-light.png",
+  "readypackets-approved-header-icon-dark.png",
+  "readypackets-approved-header-wordmark-light.png",
+  "readypackets-approved-header-wordmark-dark.png",
+  "readypackets-approved-header-rule-light.png",
+  "readypackets-approved-header-rule-dark.png",
+  "readypackets-approved-header-tagline-light.png",
+  "readypackets-approved-header-tagline-dark.png",
+  "readypackets-approved-icon-light-192.png",
+  "readypackets-approved-icon-light-512.png",
+]);
+const deployedBrandFiles = await readdir(path.join(dist, "assets", "brand"));
+assert.deepEqual(new Set(deployedBrandFiles), approvedBrandFiles, "Only explicitly approved ReadyPackets artwork may be deployed");
 
 const publicFiles = await readdir(dist);
 assert.ok(publicFiles.length > 8, "Expected built static-site artifacts");
@@ -83,6 +96,7 @@ for (const [file, page] of Object.entries(pages)) {
   assert.ok(!html.includes("__PORTAL_ORIGIN__"), `${file} contains an unresolved portal placeholder`);
   assert.ok(!html.includes("localhost"), `${file} contains a localhost reference`);
   assert.ok(!html.includes("Manus"), `${file} contains a prohibited platform reference`);
+  assert.ok(!/readypackets-(?:full-lockup-square|document-flow|mark-(?:light|dark))/i.test(html), `${file} contains retired ReadyPackets artwork`);
   assert.ok(html.includes(page.title), `${file} must contain its title`);
 
   for (const match of html.matchAll(/<(?:a|link|img|script)\b[^>]*?\s(?:href|src)="([^"]+)"[^>]*>/g)) {
@@ -110,16 +124,14 @@ assert.match(sitemap, /https:\/\/www\.readypackets\.com\/refunds\//);
 assert.match(llms, /Primary portal: https:\/\/my\.readypackets\.com/);
 assert.ok(!llms.includes("Manus"));
 
-for (const logo of ["readypackets-full-lockup-square-light.webp", "readypackets-full-lockup-square-dark.webp", "readypackets-full-lockup-square-light-1200.png", "readypackets-full-lockup-square-dark-1200.png"]) {
+for (const logo of ["readypackets-approved-header-icon-light.png", "readypackets-approved-header-icon-dark.png", "readypackets-approved-header-wordmark-light.png", "readypackets-approved-header-wordmark-dark.png"]) {
   const info = await stat(path.join(dist, "assets/brand", logo));
-  assert.ok(info.size > 20_000, `${logo} must be a substantial supplied brand asset`);
+  assert.ok(info.size > 20_000, `${logo} must be a substantial approved brand asset`);
 }
-for (const logo of ["readypackets-full-lockup-square-light-compact-mark.png", "readypackets-full-lockup-square-dark-compact-mark.png"]) {
+for (const logo of ["readypackets-approved-icon-light-192.png", "readypackets-approved-icon-light-512.png"]) {
   const info = await stat(path.join(dist, "assets/brand", logo));
-  assert.ok(info.size > 5_000, `${logo} must be a non-empty derived navigation mark`);
+  assert.ok(info.size > 1_000, `${logo} must be a non-empty approved app icon`);
 }
-assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-light\.webp/);
-assert.match(await readFile(path.join(dist, "index.html"), "utf8"), /readypackets-full-lockup-square-dark\.webp/);
 const indexHtml = await readFile(path.join(dist, "index.html"), "utf8");
 assert.match(indexHtml, /brand--header-approved-lockup/);
 assert.match(indexHtml, /readypackets-approved-header-icon-light\.png/);
@@ -131,10 +143,14 @@ assert.match(indexHtml, /readypackets-approved-header-rule-dark\.png/);
 assert.match(indexHtml, /readypackets-approved-header-tagline-light\.png/);
 assert.match(indexHtml, /readypackets-approved-header-tagline-dark\.png/);
 assert.match(indexHtml, /\/assets\/css\/site\.css\?v=[a-f0-9]{12}/);
-assert.match(indexHtml, /\/assets\/brand\/readypackets-full-lockup-square-dark\.webp\?v=[a-f0-9]{12}/);
+assert.match(indexHtml, /\/assets\/brand\/readypackets-approved-header-icon-dark\.png\?v=[a-f0-9]{12}/);
 assert.match(indexHtml, /\/assets\/brand\/readypackets-approved-header-tagline-light\.png\?v=[a-f0-9]{12}/);
 assert.match(indexHtml, new RegExp(`<a class="button button--portal" href="${site.portalUrl}" data-portal-link>My Portal`));
-assert.ok(!indexHtml.includes("readypackets-document-flow-light-wordmark-tm.svg"), "Header must not use the superseded Document-Flow wordmark");
+assert.match(indexHtml, /readypackets-approved-icon-light-192\.png/);
+assert.match(indexHtml, /readypackets-approved-header-icon-light\.png/);
+assert.match(indexHtml, /readypackets-approved-header-icon-dark\.png/);
+assert.match(indexHtml, /readypackets-approved-header-wordmark-dark\.png/);
+assert.ok(!/readypackets-(?:full-lockup-square|document-flow|mark-(?:light|dark))/i.test(indexHtml), "Homepage must not use retired artwork");
 
 for (const file of ["index.html", "solutions.html"]) {
   const html = await readFile(path.join(dist, file), "utf8");

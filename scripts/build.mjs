@@ -2,7 +2,7 @@ import { cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
-import { pages, nav, site, faqsForSchema } from "./site-data.mjs";
+import { approvedBrandLockupHtml, pages, nav, site, faqsForSchema } from "./site-data.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const source = path.join(root, "src");
@@ -26,12 +26,11 @@ function themeControlHtml() {
 }
 
 function approvedHeaderLogoHtml() {
-  const lockup = (variant, decorative = false) => `<span class="brand-mark brand-header-lockup brand-mark--${variant}"${decorative ? ' aria-hidden="true"' : ""}><img class="brand-header-lockup__icon" src="/assets/brand/readypackets-approved-header-icon-${variant}.png" width="880" height="905" alt=""><span class="brand-header-lockup__details"><img class="brand-header-lockup__wordmark" src="/assets/brand/readypackets-approved-header-wordmark-${variant}.png" width="1865" height="345" alt="${decorative ? "" : "ReadyPackets™ — Your Business, Professionally Packeted™"}"><img class="brand-header-lockup__rule" src="/assets/brand/readypackets-approved-header-rule-${variant}.png" width="1854" height="74" alt=""><img class="brand-header-lockup__tagline" src="/assets/brand/readypackets-approved-header-tagline-${variant}.png" width="1770" height="175" alt=""></span></span>`;
-  return `<a class="brand brand--header-approved-lockup" href="/" aria-label="ReadyPackets home">${lockup("light")}${lockup("dark", true)}</a>`;
+  return `<a class="brand brand--header-approved-lockup" href="/" aria-label="ReadyPackets home">${approvedBrandLockupHtml("light", { label: "" })}${approvedBrandLockupHtml("dark", { label: "" })}</a>`;
 }
 
 function footerHtml() {
-  return `<footer class="footer"><div class="wrap footer-grid"><div><a class="brand brand--footer-square" href="/" aria-label="ReadyPackets home"><img src="/assets/brand/readypackets-full-lockup-square-dark.webp" width="2048" height="2048" alt="ReadyPackets™ — Your Business, Professionally Packeted™"></a><p class="footer-tagline">Your Business, Professionally Packeted™</p><p>Structured business documentation and practical operating foundations for founders ready to move forward.</p></div><div><h2>Explore</h2><ul><li><a href="/process.html">The process</a></li><li><a href="/solutions.html">What we build</a></li><li><a href="/faq.html">Frequently asked questions</a></li><li><a href="/about.html">About ReadyPackets</a></li></ul></div><div><h2>Portal</h2><ul><li><a href="${site.portalUrl}" data-portal-link>Open portal</a></li><li><a href="${site.portalUrl}/login" data-portal-link>Sign in</a></li><li><a href="${site.alternatePortalUrl}/login" data-portal-link>Alternate portal address</a></li></ul></div><div><h2>Policies</h2><ul><li><a href="/contact.html">Contact</a></li><li><a href="/privacy.html">Privacy &amp; cookies</a></li><li><a href="/accessibility.html">Accessibility</a></li><li><a href="/terms/">Terms of Use</a></li><li><a href="/refunds/">Refund Policy</a></li></ul></div></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} ReadyPackets. All rights reserved.</span><button class="text-button" type="button" data-consent-open>Cookie preferences</button></div></footer>`;
+  return `<footer class="footer"><div class="wrap footer-grid"><div><a class="brand brand--footer-approved-lockup" href="/" aria-label="ReadyPackets home">${approvedBrandLockupHtml("dark", { label: "" })}</a><p class="footer-tagline">Your Business, Professionally Packeted™</p><p>Structured business documentation and practical operating foundations for founders ready to move forward.</p></div><div><h2>Explore</h2><ul><li><a href="/process.html">The process</a></li><li><a href="/solutions.html">What we build</a></li><li><a href="/faq.html">Frequently asked questions</a></li><li><a href="/about.html">About ReadyPackets</a></li></ul></div><div><h2>Portal</h2><ul><li><a href="${site.portalUrl}" data-portal-link>Open portal</a></li><li><a href="${site.portalUrl}/login" data-portal-link>Sign in</a></li><li><a href="${site.alternatePortalUrl}/login" data-portal-link>Alternate portal address</a></li></ul></div><div><h2>Policies</h2><ul><li><a href="/contact.html">Contact</a></li><li><a href="/privacy.html">Privacy &amp; cookies</a></li><li><a href="/accessibility.html">Accessibility</a></li><li><a href="/terms/">Terms of Use</a></li><li><a href="/refunds/">Refund Policy</a></li></ul></div></div><div class="wrap footer-bottom"><span>© ${new Date().getFullYear()} ReadyPackets. All rights reserved.</span><button class="text-button" type="button" data-consent-open>Cookie preferences</button></div></footer>`;
 }
 
 function consentHtml() {
@@ -40,7 +39,7 @@ function consentHtml() {
 
 function pageSchema(page) {
   const graph = [
-    { "@context": "https://schema.org", "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: site.url, logo: `${site.url}/assets/brand/readypackets-full-lockup-square-light-1200.png`, description: site.description, address: { "@type": "PostalAddress", streetAddress: site.address[0], addressLocality: "Lanham", addressRegion: "MD", postalCode: "20706", addressCountry: "US" } },
+    { "@context": "https://schema.org", "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: site.url, logo: `${site.url}/assets/brand/readypackets-approved-header-icon-light.png`, description: site.description, address: { "@type": "PostalAddress", streetAddress: site.address[0], addressLocality: "Lanham", addressRegion: "MD", postalCode: "20706", addressCountry: "US" } },
     { "@context": "https://schema.org", "@type": "WebSite", "@id": `${site.url}/#website`, name: site.name, url: site.url, publisher: { "@id": `${site.url}/#organization` }, inLanguage: "en-US" },
   ];
   if (page.faq) graph.push({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqsForSchema.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) });
@@ -61,14 +60,14 @@ function render(filename, page) {
   <meta name="author" content="ReadyPackets">
   <link rel="canonical" href="${canonical}">
   <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/webp" href="/assets/brand/readypackets-full-lockup-square-light.webp">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/readypackets-approved-icon-light-192.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ReadyPackets">
   <meta property="og:title" content="${page.title}">
   <meta property="og:description" content="${page.description}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${site.url}/assets/brand/readypackets-full-lockup-square-light-1200.png">
+  <meta property="og:image" content="${site.url}/assets/brand/readypackets-approved-header-icon-light.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${page.title}">
   <meta name="twitter:description" content="${page.description}">

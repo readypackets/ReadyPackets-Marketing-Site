@@ -441,3 +441,17 @@ The public configuration contains blank publisher/slot/sponsor values. Before a 
 **Immutable source commit:** `71e0014679d37f21023eac59e31e0d05f1bcf371` — `fix: label marketing CTA my portal`.
 
 **Final publication:** Published to GitHub `main` at `d495f91d4fa3dd39649d144b9889746e2e8a53c1`. Both workflows for that exact commit completed successfully: **Static marketing site validation** run `39662552756` and **Publish Hostinger static branch** run `39662552732`. The static validation built, validated, packaged, and uploaded the release candidate; the publish workflow rebuilt the validated static artifact and updated the deploy-only `hostinger-static` branch for Hostinger Git deployment.
+
+
+---
+## 2026-10-22 — Approved ReadyPackets logo-only website release
+
+**User request:** “do not use this old logo anywhere on the site only use the new updated logo.”
+
+**Delivered:** Established `docs/BRAND_GUIDE.md` as the active source of truth for the supplied approved updated ReadyPackets asset family: light/dark icon, wordmark, divider, and tagline PNGs. The static-site header, footer, home/process/about brand presentations, browser icon declaration, PWA manifest, Organization structured data, and Open Graph image now use only that supplied family. Responsive lockup CSS keeps each component proportionate and switches the complete set together for light/dark presentation; no logo is stretched, recreated, or fetched from another origin.
+
+**Retired asset removal:** Removed every pre-approval document-flow, square-lockup, compact-mark, and prior favicon asset from `src/assets/brand`, then rebuilt the website. Because the static build copies that directory wholesale, this prevents a direct URL from exposing a retired logo. The 192px/512px application icon derivatives and multi-size favicon were generated only from the supplied approved light icon. Static validation now enforces an exact approved-brand-file allowlist, rejects retired filenames in rendered pages, and asserts the released home page, metadata, and PWA all use the approved family.
+
+**Validation before publication:** `npm run build`, `npm run validate`, and `npm run package` passed, generating and validating 10 static pages and 34 required artifacts. A release-ZIP membership audit and a source/deployable-output scan found no retired logo family in the website source, generated `dist`, or `ReadyPackets-Marketing-Static.zip`. `git diff --check` and a changed-source credential scan passed. No Hostinger account, Cloudflare configuration, live marketing site, analytics provider, secret, or customer data was accessed or changed.
+
+**Publication state:** Pending reviewed source commit/push and the static-site validation/publish workflows.

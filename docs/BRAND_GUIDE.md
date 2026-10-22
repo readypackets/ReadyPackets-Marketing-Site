@@ -1,123 +1,45 @@
-# ReadyPackets Document-Flow Brand Guide
+# ReadyPackets Approved Brand Asset Guide
 
-**Version:** 2026.09.30
-**Applies to:** ReadyPackets web, email, print, proposals, social, mobile, favicon, and app-icon use
-**Status:** Production asset guide pending formal activation
+**Version:** 2026.10.22
+**Applies to:** ReadyPackets website, Portal, transactional email, PDFs, favicon, PWA assets, social metadata, and native mobile implementation
+**Status:** Active source of truth
 
----
+## Approved web asset family
 
-## 1. Brand idea
+Only the following supplied assets may appear in a ReadyPackets web release. They are a coordinated icon, wordmark, divider, and tagline composition; do not recreate, crop, recolor, or substitute portions of another logo.
 
-The ReadyPackets Document-Flow mark represents a practical promise:
-
-> **Your business information becomes a clear, prepared, ready-to-use packet.**
-
-The symbol contains three input documents, one disciplined process line, and a visibly layered final packet. It is intentionally a left-to-right, asymmetric composition. It does **not** use four-arm, radial, pinwheel, cross-like, religious, national, tribal, heraldic, or rotational geometry.
-
-## 2. Logo anatomy
-
-| Element | Description | Meaning |
+| Surface | Approved light asset | Approved dark asset |
 | --- | --- | --- |
-| Input documents | Three translucent, separately outlined teal pages with small abstract content rules/dots | Distinct source materials, expertise, and business information |
-| Process line | One uninterrupted teal horizontal line | A controlled, clear ReadyPackets workflow |
-| Final packet | A navy (light mode) or white (dark mode) front document with two visible backing sheets | A prepared stack of finished deliverables |
-| Gold quality point | Small gold dot on the front document | Care, review, and completion |
-| Two-tone name | `Ready` in Navy/White and `Packets` in Deep Teal/Teal Light | Stable readiness plus active delivery |
-| Gold rule and slogan | Secondary hierarchy beneath the name | Premium finish and the legacy business promise |
+| Compact icon | `readypackets-approved-header-icon-light.png` | `readypackets-approved-header-icon-dark.png` |
+| Wordmark | `readypackets-approved-header-wordmark-light.png` | `readypackets-approved-header-wordmark-dark.png` |
+| Divider | `readypackets-approved-header-rule-light.png` | `readypackets-approved-header-rule-dark.png` |
+| Tagline | `readypackets-approved-header-tagline-light.png` | `readypackets-approved-header-tagline-dark.png` |
 
-The short marks inside the source documents are decorative document-content cues. They are **not** microcopy and must not be replaced by illegible lorem ipsum, handwritten marks, or invented labels.
+The `light` composition is for light backgrounds. The `dark` composition is for navy or other dark backgrounds. The icon, wordmark, divider, and tagline are rendered as one accessible visual group for full lockups. The compact icon may be used alone only where the full logo cannot fit, such as a favicon, installed web-app icon, compact navigation, or tightly constrained interface control.
 
-## 3. Approved colors
+## Derived app-icon assets
 
-| Token | Hex | Primary use |
-| --- | --- | --- |
-| Navy | `#0D1B2A` | Light-mode `Ready`, final packet face, document-content rules, dark surface |
-| Navy Raised | `#12263A` | Light final-packet backing sheet |
-| Navy Elevated | `#17304A` | Light final-packet rear backing sheet |
-| Teal | `#20A090` | Light process line, page outlines, supporting shape |
-| Teal Dark | `#1A7A6E` | Light-mode `Packets` text |
-| Teal Light | `#2EC4B6` | Dark process line, page outlines, `Packets` text on dark |
-| Gold | `#C9A84C` | Divider, quality point, and dark-mode slogan |
-| Gold Dark | `#A98C36` | Reserved supporting accent only |
-| Gray Dark | `#4A5568` | Light-mode slogan and supporting copy |
-| White | `#FFFFFF` | Dark-mode `Ready`, dark final packet, and open space |
+The following PNGs are deterministic, transparent resized derivatives of the approved **light** icon; they are not new artwork.
 
-## 4. Light and dark modes
+- `readypackets-approved-icon-light-192.png` — browser and Apple touch icon.
+- `readypackets-approved-icon-light-512.png` — PWA manifest icon.
+- `favicon.ico` — multi-resolution favicon rendered from the approved light icon.
 
-### Light mode
+Social and organization metadata use the supplied light approved icon. Do not point structured data or Open Graph metadata at an unapproved asset.
 
-Use `readypackets-document-flow-light.svg` on white or very light neutral backgrounds.
+## Layout and accessibility rules
 
-- `Ready`: Navy
-- `Packets`: Teal Dark
-- Slogan: Gray Dark
-- Divider / quality dot: Gold
-- Final packet front: Navy
+Keep every supplied image at its native aspect ratio with `object-fit: contain`; never stretch, rotate, mirror, skew, recolor, crop, or add a decorative replacement. The supplied light/dark assets must switch together. A full logo is conveyed to assistive technology with one meaningful accessible name; individual component images are decorative within that named group. When a containing link already has an accessible name, hide the composed component images from the accessibility tree to avoid repetition.
 
-### Dark mode
+The brand colors remain Navy `#0D1B2A`, Teal `#20A090`, Teal Light `#2EC4B6`, Teal Dark `#1A7A6E`, Gold `#C9A84C`, Gray Dark `#4A5568`, and White `#FFFFFF`. Color must never be the sole way that an interface communicates meaning. Maintain WCAG 2.2 AA contrast for all text and interactive controls; the logo itself is an image, not a substitute for accessible text.
 
-Use `readypackets-document-flow-dark.svg` on Navy or similarly dark photographic/solid backgrounds.
+## Release checklist
 
-- `Ready`: White
-- `Packets`: Teal Light
-- Slogan: Gold
-- Divider / quality dot: Gold
-- Final packet front: White with Navy content lines
+1. Use only files in the approved family above in deployable public asset directories.
+2. Delete superseded artwork from public/static bundles rather than leaving it reachable by a direct URL.
+3. Rebuild the website/Portal and verify light and dark headers, Portal sign-in, dashboard navigation, email header, browser icon, installed PWA icon, footer, hero/logo presentation, Organization schema, and Open Graph image.
+4. Confirm every logo image preserves its aspect ratio at desktop, mobile, 200% zoom, and 400% zoom.
+5. Run the repository brand regression tests and verify the deploy/archive file lists contain only the approved family.
+6. Treat brand changes as a reviewed release: document the asset source, update this guide, commit, push, and deploy the exact reviewed revision.
 
-Do not place the light lockup on dark backgrounds or the dark lockup on light backgrounds.
-
-## 5. Accessibility
-
-| Pair | Contrast ratio | Role |
-| --- | ---: | --- |
-| Navy on White | 17.39:1 | Light-mode primary name and document rules |
-| Teal Dark on White | 5.18:1 | Light-mode `Packets` text |
-| Gray Dark on White | 7.53:1 | Light-mode slogan |
-| White on Navy | 17.39:1 | Dark-mode `Ready` text |
-| Teal Light on Navy | 8.02:1 | Dark-mode `Packets` text |
-| Gold on Navy | 7.61:1 | Dark-mode slogan and divider |
-
-Gold on white is **not** sufficiently contrastive for small text (2.29:1). In light mode it remains a decorative rule/dot, never the sole carrier of information.
-
-## 6. Clear space and minimum size
-
-| Configuration | Minimum digital width | Clear-space rule |
-| --- | ---: | --- |
-| Full lockup with slogan | 650 px | Keep at least one gold-dot diameter around all sides |
-| Wordmark-only lockup | 320 px | Keep at least one gold-dot diameter around all sides |
-| Compact mark | 32 px for UI; 16 px only for favicon fallback | Keep 12.5% of mark width clear on every side |
-
-At narrow widths, switch from the full lockup to the supplied wordmark-only lockup, then to the compact mark. Do not shrink the tagline below legibility.
-
-## 7. Do and do not
-
-### Do
-
-- Use the supplied SVG whenever possible.
-- Use transparent PNGs only where SVG is unsupported.
-- Preserve proportions, colors, hierarchy, and element order.
-- Use a dark lockup for dark surfaces and a light lockup for light surfaces.
-- Use the compact mark only where the full name cannot fit.
-
-### Do not
-
-- Rotate, mirror, skew, stretch, crop, shadow, outline, or recolor the mark.
-- Remove the visible backing sheets from the final packet.
-- Replace source-document content cues with text or scribbles.
-- Rebuild the mark with generic folders, arrows, clip-art, or four-part geometric forms.
-- Place the slogan in Gold on white.
-- Use the full lockup at a size where the slogan becomes unreadable.
-
-## 8. Trademark usage
-
-The package includes default presentation lockups and separate `-tm.svg` legal-mark variants. Use trademark-mark variants only according to the company’s legal/marketing policy. This package is not a trademark clearance, legal opinion, or guarantee of registrability.
-
-## 9. Activation checklist
-
-Before replacing existing customer-facing assets:
-
-1. Obtain brand-owner approval for the final direction.
-2. Complete trademark availability/usage review with qualified counsel.
-3. Replace website, PWA, email, document, social, and mobile references in one versioned release.
-4. Validate light/dark contrast and small-size rendering in the actual product UI.
-5. Update the brand source of truth and retain prior artwork only as historical archive.
+This guide governs source and deployable output. Repository history may retain prior versions for auditability, but superseded artwork must never be copied into an active website, Portal, email, PWA, metadata, or release archive.

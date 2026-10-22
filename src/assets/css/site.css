@@ -103,7 +103,11 @@ p { margin: 0 0 1rem; }
 .brand-header-lockup__details { display: grid; min-width: 0; flex: 1 1 auto; align-content: center; gap: .05rem; }
 .brand-header-lockup__wordmark, .brand-header-lockup__rule, .brand-header-lockup__tagline { width: 100% !important; height: auto !important; max-width: none; }
 .brand-header-lockup__rule, .brand-header-lockup__tagline { object-fit: contain; }
-.brand--footer-square { width: min(13rem, 100%); }
+.brand--footer-approved-lockup { width: min(17rem, 100%); }
+.brand--footer-approved-lockup .brand-mark--dark { display: inline-flex; }
+.brand--hero-approved { display: inline-flex; width: min(100%, 27rem); justify-self: center; }
+.brand--showcase-approved { display: inline-flex; width: min(100%, 30rem); }
+.brand-showcase { display: flex; justify-content: center; margin-top: 2rem; }
 .brand-mark--dark { display: none; }
 :root[data-theme="dark"] .brand .brand-mark--light { display: none; }
 :root[data-theme="dark"] .brand .brand-mark--dark { display: block; }
