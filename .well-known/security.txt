@@ -1,0 +1,5 @@
+Contact: mailto:security@readypackets.com
+Preferred-Languages: en
+Canonical: https://www.readypackets.com/.well-known/security.txt
+Policy: https://www.readypackets.com/terms.html
+Expires: 2027-09-30T00:00:00.000Z
